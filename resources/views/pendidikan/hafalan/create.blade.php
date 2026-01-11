@@ -113,7 +113,22 @@
         return ['id' => $s->id, 'kelas_id' => $s->kelas_id];
     }));
     
-    document.querySelector('select[name="santri_id"]').addEventListener('change', function() {
+    $(document).ready(function() {
+        // Initialize Select2
+        $('select[name="santri_id"]').select2({
+            placeholder: "-- Pilih Santri --",
+            allowClear: true,
+            width: '100%'
+        });
+
+        // Listen for change on Select2 (using jQuery)
+        $('select[name="santri_id"]').on('change', function() {
+            updateHafalanSuggestion();
+        });
+    });
+
+    // Keep vanilla JS listener for 'jenis' as it's a standard select
+    document.querySelector('select[name="jenis"]').addEventListener('change', function() {
         updateHafalanSuggestion();
     });
 

@@ -105,3 +105,15 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('select[name="santri_id"]').select2({
+            placeholder: "-- Pilih Santri --",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
+@endpush

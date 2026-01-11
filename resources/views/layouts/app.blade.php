@@ -196,6 +196,49 @@
         }
     </style>
     
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        /* Custom Select2 Styling to match modern theme */
+        .select2-container--default .select2-selection--single {
+            height: 42px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            background-color: #fff !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #1f2937 !important;
+            line-height: normal !important;
+            padding-left: 12px !important;
+            font-size: 0.95rem !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px !important;
+            right: 8px !important;
+        }
+        .select2-dropdown {
+            border: 1px solid #d1d5db !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            overflow: hidden !important;
+        }
+        .select2-search--dropdown .select2-search__field {
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            padding: 6px 12px !important;
+        }
+        .select2-results__option--highlighted.select2-results__option--selectable {
+            background-color: #4caf50 !important; /* Primary Color */
+            color: white !important;
+        }
+        .select2-container--default .select2-results__option--selected {
+            background-color: #e8f5e9 !important;
+            color: #1f2937 !important;
+        }
+    </style>
+
     @stack('styles')
     <!-- Currency Formatter Script -->
     <script>
@@ -585,6 +628,10 @@
     @endphp
     
     @include('components.bottom-nav', ['active' => $active, 'context' => $context])
+    
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     @stack('scripts')
     
