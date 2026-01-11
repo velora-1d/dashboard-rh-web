@@ -66,4 +66,9 @@ class Santri extends Model
     {
         return $this->hasMany(UjianMingguan::class);
     }
+
+    public function syahriah()
+    {
+        return $this->hasMany(Syahriah::class);
+    }
 }

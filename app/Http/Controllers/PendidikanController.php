@@ -311,15 +311,52 @@ class PendidikanController extends Controller
         
         DB::beginTransaction();
         try {
+            // OPTIMIZATION: Bulk Processing to avoid N+1 Queries
+            
+            // 1. Prepare IDs
+            $allSantriIds = array_column($validated['santri'], 'id');
+            $allMapelIds = [];
+            foreach ($validated['santri'] as $s) {
+                if (isset($s['mapel']) && is_array($s['mapel'])) {
+                    foreach (array_keys($s['mapel']) as $mid) {
+                        $allMapelIds[] = $mid;
+                    }
+                }
+            }
+            $allMapelIds = array_unique($allMapelIds);
+
+            // 2. Pre-fetch MataPelajaran (Single Query)
+            $mapelMap = MataPelajaran::whereIn('id', $allMapelIds)->get()->keyBy('id');
+
+            // 3. Pre-fetch UjianMingguan (Single Query)
+            // Map using composite key "santri_id-mapel_id"
+            $ujianMingguanCollection = \App\Models\UjianMingguan::whereIn('santri_id', $allSantriIds)
+                ->whereIn('mapel_id', $allMapelIds)
+                ->where('tahun_ajaran', $validated['tahun_ajaran'])
+                ->where('semester', $validated['semester'])
+                ->get();
+            
+            $ujianMap = [];
+            foreach ($ujianMingguanCollection as $u) {
+                $ujianMap[$u->santri_id . '-' . $u->mapel_id] = $u;
+            }
+
+            // 4. Build Upsert Data in Memory
+            $upsertData = [];
+            $timestamp = now();
+
             foreach ($validated['santri'] as $santriData) {
                 $santriId = $santriData['id'];
                 
+                if (!isset($santriData['mapel']) || !is_array($santriData['mapel'])) continue;
+
                 foreach ($santriData['mapel'] as $mapelId => $nilaiSemester) {
-                    // Get subject info
-                    $mapel = MataPelajaran::find($mapelId);
+                    $mapel = $mapelMap[$mapelId] ?? null;
+                    if (!$mapel) continue;
+                    
                     $hasWeeklyExam = $mapel->has_weekly_exam ?? false;
                     
-                    // Initialize variables
+                    // Logic Reconstruction
                     $nilaiAsli = null;
                     $sourceType = 'semester';
                     $metadata = [
@@ -328,75 +365,76 @@ class PendidikanController extends Controller
                     ];
                     
                     if (!$hasWeeklyExam) {
-                        // NON-WEEKLY SUBJECT: Use semester score directly
                         $nilaiAsli = $nilaiSemester;
-                        $sourceType = 'semester';
                         $metadata['reason'] = 'Subject does not have weekly exam';
-                        
                     } else {
-                        // WEEKLY SUBJECT: Check weekly exam status and compare
-                        $ujianMingguan = \App\Models\UjianMingguan::where([
-                            'santri_id' => $santriId,
-                            'mapel_id' => $mapelId,
-                            'tahun_ajaran' => $validated['tahun_ajaran'],
-                            'semester' => $validated['semester'],
-                        ])->first();
+                        $ujianKey = $santriId . '-' . $mapelId;
+                        $ujianMingguan = $ujianMap[$ujianKey] ?? null;
                         
                         if (!$ujianMingguan || $ujianMingguan->status !== 'SAH') {
-                            // Weekly exam TIDAK SAH or doesn't exist: Use semester
                             $nilaiAsli = $nilaiSemester;
-                            $sourceType = 'semester';
                             $metadata['weekly_status'] = $ujianMingguan ? $ujianMingguan->status : 'NOT_FOUND';
-                            $metadata['reason'] = 'Weekly exam not valid (TIDAK SAH or not found)';
-                            
+                            $metadata['reason'] = 'Weekly exam not valid';
                         } else {
-                            // Weekly exam SAH: Compare and pick BEST
                             $nilaiMingguan = $ujianMingguan->nilai_hasil_mingguan;
                             $metadata['weekly_score'] = $nilaiMingguan;
                             $metadata['weekly_status'] = 'SAH';
                             $metadata['weekly_attendance'] = $ujianMingguan->jumlah_keikutsertaan;
                             
                             if ($nilaiMingguan >= $nilaiSemester) {
-                                // Weekly score is better or equal
                                 $nilaiAsli = $nilaiMingguan;
                                 $sourceType = 'merged_weekly_better';
-                                $metadata['reason'] = "Weekly score ({$nilaiMingguan}) >= Semester score ({$nilaiSemester})";
+                                $metadata['reason'] = "Weekly ({$nilaiMingguan}) >= Semester ({$nilaiSemester})";
                             } else {
-                                // Semester score is better
                                 $nilaiAsli = $nilaiSemester;
                                 $sourceType = 'merged_semester_better';
-                                $metadata['reason'] = "Semester score ({$nilaiSemester}) > Weekly score ({$nilaiMingguan})";
+                                $metadata['reason'] = "Semester ({$nilaiSemester}) > Weekly ({$nilaiMingguan})";
                             }
                         }
                     }
                     
-                    // Calculate nilai_rapor (minimum 5 rule for report cards)
                     $nilaiRapor = $nilaiAsli < 5 ? 5 : $nilaiAsli;
                     
-                    // Save to database
-                    $nilai = NilaiSantri::updateOrCreate(
+                    $upsertData[] = [
+                        'santri_id' => $santriId,
+                        'mapel_id' => $mapelId,
+                        'tahun_ajaran' => $validated['tahun_ajaran'],
+                        'semester' => $validated['semester'],
+                        'kelas_id' => $validated['kelas_id'],
+                        'nilai_ujian_semester' => $nilaiSemester,
+                        'nilai_asli' => $nilaiAsli,
+                        'nilai_rapor' => $nilaiRapor,
+                        'nilai_akhir' => $nilaiAsli, 
+                        'source_type' => $sourceType,
+                        'source_metadata' => json_encode($metadata), // Manual JSON encode for Upsert
+                        'updated_at' => $timestamp,
+                        'created_at' => $timestamp, 
+                    ];
+                }
+            }
+
+            // 5. Execute Bulk Upsert (Chunked for safety)
+            if (!empty($upsertData)) {
+                foreach (array_chunk($upsertData, 200) as $chunk) {
+                    NilaiSantri::upsert(
+                        $chunk,
+                        ['santri_id', 'mapel_id', 'tahun_ajaran', 'semester'], // Unique Keys
                         [
-                            'santri_id' => $santriId,
-                            'mapel_id' => $mapelId,
-                            'tahun_ajaran' => $validated['tahun_ajaran'],
-                            'semester' => $validated['semester'],
-                        ],
-                        [
-                            'kelas_id' => $validated['kelas_id'],
-                            'nilai_ujian_semester' => $nilaiSemester,
-                            'nilai_asli' => $nilaiAsli,
-                            'nilai_rapor' => $nilaiRapor,
-                            'nilai_akhir' => $nilaiAsli, // For compatibility with existing code
-                            'source_type' => $sourceType,
-                            'source_metadata' => $metadata,
-                            'updated_at' => now(),
+                            'kelas_id', 
+                            'nilai_ujian_semester', 
+                            'nilai_asli', 
+                            'nilai_rapor', 
+                            'nilai_akhir', 
+                            'source_type', 
+                            'source_metadata', 
+                            'updated_at'
                         ]
                     );
                 }
             }
             
-            // APPLY GRADE COMPENSATION TO nilai_asli (NOT nilai_rapor)
-            // This ensures fair ranking by redistributing points from higher grades
+            // 6. Apply Grade Compensation (Still looped, but strictly strictly necessary logic)
+            // (Ideally this should also be batched, but the algorithm is complex per student)
             foreach ($validated['santri'] as $santriData) {
                 $this->applyGradeCompensation(
                     $santriData['id'],

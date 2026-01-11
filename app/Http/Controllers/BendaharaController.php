@@ -1058,7 +1058,9 @@ class BendaharaController extends Controller
     // Cek Tunggakan (New Feature)
     public function cekTunggakan(Request $request)
     {
-        $query = Santri::where('is_active', true)->with(['kelas', 'asrama', 'kobong']);
+        $query = Santri::where('is_active', true)->with(['kelas', 'asrama', 'kobong', 'syahriah' => function($q) {
+            $q->where('is_lunas', true);
+        }]);
 
         // Apply Filters
         if ($request->filled('kelas_id')) {
@@ -1098,9 +1100,8 @@ class BendaharaController extends Controller
             }
 
             // Get paid months
-            $paidMonths = Syahriah::where('santri_id', $santri->id)
-                ->where('is_lunas', true)
-                ->get()
+            // Get paid months (Optimized: Eager Loaded via 'syahriah' relationship)
+            $paidMonths = $santri->syahriah
                 ->map(fn($item) => $item->bulan . '-' . $item->tahun)
                 ->toArray();
 
@@ -1234,7 +1235,9 @@ class BendaharaController extends Controller
 
     public function exportLaporanTunggakan(Request $request)
     {
-        $query = Santri::where('is_active', true)->with(['kelas', 'asrama', 'kobong']);
+        $query = Santri::where('is_active', true)->with(['kelas', 'asrama', 'kobong', 'syahriah' => function($q) {
+            $q->where('is_lunas', true);
+        }]);
 
         // Apply Filters
         if ($request->filled('kelas_id')) {
@@ -1268,9 +1271,7 @@ class BendaharaController extends Controller
                 $current->addMonth();
             }
 
-            $paidMonths = Syahriah::where('santri_id', $santri->id)
-                ->where('is_lunas', true)
-                ->get()
+            $paidMonths = $santri->syahriah
                 ->map(fn($item) => $item->bulan . '-' . $item->tahun)
                 ->toArray();
 

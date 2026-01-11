@@ -74,7 +74,11 @@ class SekretarisController extends Controller
             $query->where('gender', $request->gender);
         }
 
-        $santri = $query->with(['kelas'])->take(50)->get();
+        // OPTIMIZATION: Select only necessary columns
+        $santri = $query->select('id', 'nama_santri', 'nis', 'kelas_id', 'kobong_id')
+            ->with(['kelas:id,nama_kelas', 'kobong:id,nomor_kobong'])
+            ->take(50)
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -84,7 +88,7 @@ class SekretarisController extends Controller
                     'nama' => $s->nama_santri,
                     'nis' => $s->nis,
                     'kelas' => $s->kelas->nama_kelas ?? '-',
-                    'kamar' => $s->kamar ?? '-',
+                    'kamar' => $s->kobong->nomor_kobong ?? '-', // Fixed field source
                 ];
             })
         ]);
