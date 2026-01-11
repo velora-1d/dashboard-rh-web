@@ -11,6 +11,12 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
+    <a href="{{ route('admin.withdrawals.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.withdrawals*') ? 'active' : '' }}">
+        <i data-feather="external-link" class="sidebar-menu-icon"></i>
+        <span>Tracking Penarikan</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
     <a href="{{ route('admin.pengaturan') }}" class="sidebar-menu-link {{ request()->routeIs('admin.pengaturan*') ? 'active' : '' }}">
         <i data-feather="settings" class="sidebar-menu-icon"></i>
         <span>Pengaturan</span>

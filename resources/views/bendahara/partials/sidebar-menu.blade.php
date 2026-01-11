@@ -50,6 +50,18 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
+    <a href="{{ route('bendahara.bank-accounts.index') }}" class="sidebar-menu-link {{ request()->routeIs('bendahara.bank-accounts*') ? 'active' : '' }}">
+        <i data-feather="settings" class="sidebar-menu-icon"></i>
+        <span>Kelola Rekening</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
+    <a href="{{ route('bendahara.withdrawals') }}" class="sidebar-menu-link {{ request()->routeIs('bendahara.withdrawals*') ? 'active' : '' }}">
+        <i data-feather="external-link" class="sidebar-menu-icon"></i>
+        <span>Penarikan Dana</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
     <a href="{{ route('bendahara.laporan') }}" class="sidebar-menu-link {{ request()->routeIs('bendahara.laporan') ? 'active' : '' }}">
         <i data-feather="file-text" class="sidebar-menu-icon"></i>
         <span>Laporan</span>
