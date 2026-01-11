@@ -4,51 +4,7 @@
 @section('page-title', 'Perpindahan & Rotasi Santri')
 
 @section('sidebar-menu')
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.dashboard') }}" class="sidebar-menu-link">
-            <i data-feather="home" class="sidebar-menu-icon"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.data-santri') }}" class="sidebar-menu-link">
-            <i data-feather="users" class="sidebar-menu-icon"></i>
-            <span>Data Santri</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.mutasi-santri') }}" class="sidebar-menu-link">
-            <i data-feather="repeat" class="sidebar-menu-icon"></i>
-            <span>Mutasi Santri</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.kenaikan-kelas') }}" class="sidebar-menu-link">
-            <i data-feather="trending-up" class="sidebar-menu-icon"></i>
-            <span>Kenaikan Kelas</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.perpindahan') }}" class="sidebar-menu-link active">
-            <i data-feather="shuffle" class="sidebar-menu-icon"></i>
-            <span>Perpindahan</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.laporan') }}" class="sidebar-menu-link">
-            <i data-feather="file-text" class="sidebar-menu-icon"></i>
-            <span>Laporan</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="sidebar-menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
-                <i data-feather="log-out" class="sidebar-menu-icon"></i>
-                <span>Logout</span>
-            </button>
-        </form>
-    </li>
+    @include('sekretaris.partials.sidebar-menu')
 @endsection
 
 @section('content')
