@@ -77,5 +77,39 @@ class BendaharaController extends Controller
             'data' => $santri
         ]);
     }
+
+    public function storeKas(Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:pemasukan,pengeluaran',
+            'jumlah' => 'required|numeric',
+            'keterangan' => 'required|string',
+            'tanggal' => 'required|date',
+            'kategori' => 'nullable|string',
+        ]);
+
+        if ($request->type == 'pemasukan') {
+            $record = Pemasukan::create([
+                'jumlah' => $request->jumlah,
+                'keterangan' => $request->keterangan,
+                'tanggal' => $request->tanggal,
+                'kategori' => $request->kategori ?? 'Umum',
+            ]);
+        } else {
+            $record = Pengeluaran::create([
+                'jumlah' => $request->jumlah,
+                'keterangan' => $request->keterangan,
+                'tanggal' => $request->tanggal,
+                'kategori' => $request->kategori ?? 'Umum',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Catatan keuangan berhasil disimpan',
+            'data' => $record
+        ]);
+    }
 }
+
 
