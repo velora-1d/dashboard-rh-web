@@ -1578,7 +1578,50 @@ class PendidikanController extends Controller
         
         $event = \App\Models\KalenderPendidikan::create($validated);
         
-        // Send Telegram notification for new calendar event
+        // 1. Create System Notification (Database -> Web/Mobile App)
+        try {
+            \App\Models\Notification::createSystemNotification(
+                'Agenda Baru: ' . $validated['judul'],
+                "Kategori: {$validated['kategori']}\nTanggal: " . date('d M Y', strtotime($validated['tanggal_mulai'])),
+                'wali_santri' // Role target (bisa disesuaikan logic-nya di Notification model)
+            );
+        } catch (\Exception $e) {
+            Log::warning('System notification failed: ' . $e->getMessage());
+        }
+
+        // 2. Send WhatsApp Notification (Fonnte -> WA Group Wali Santri)
+        try {
+             $fonnte = new \App\Services\FonnteService();
+             // Mengambil ID Group Wali Santri dari Config/Env (Pastikan diset di .env: FONNTE_GROUP_WALI)
+             $targetWali = config('services.fonnte.group_wali'); 
+             
+             if ($targetWali) {
+                 $kategoriIcon = [
+                    'Libur' => '🏖️',
+                    'Ujian' => '📝',
+                    'Kegiatan' => '🎯',
+                    'Rapat' => '👥',
+                    'Lainnya' => '📅'
+                ];
+                 $tanggal = date('d M Y', strtotime($validated['tanggal_mulai']));
+                 if (!empty($validated['tanggal_selesai']) && $validated['tanggal_selesai'] != $validated['tanggal_mulai']) {
+                    $tanggal .= ' - ' . date('d M Y', strtotime($validated['tanggal_selesai']));
+                 }
+
+                 $fonnte->notify(
+                     $targetWali, 
+                     'AGENDA KALENDER AKADEMIK', 
+                     "📌 *{$validated['judul']}*\n" .
+                     "{$kategoriIcon[$validated['kategori']] ?? '📅'} Kategori: {$validated['kategori']}\n" .
+                     "🗓 Tanggal: {$tanggal}\n" .
+                     (!empty($validated['deskripsi']) ? "\n📝 Ket: {$validated['deskripsi']}" : "")
+                 );
+             }
+        } catch (\Exception $e) {
+             Log::warning('Fonnte notification failed: ' . $e->getMessage());
+        }
+
+        // 3. Send Telegram notification for new calendar event (Existing)
         try {
             $telegram = new \App\Services\TelegramService();
             $kategoriIcon = [
