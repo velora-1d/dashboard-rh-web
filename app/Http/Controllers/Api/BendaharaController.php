@@ -15,10 +15,7 @@ class BendaharaController extends Controller
     public function dashboard()
     {
         $today = Carbon::today();
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
-
-        // Statistik Saldo (Simplified for MVP, requires proper logic from Web Controller)
+        
         $totalPemasukan = Pemasukan::sum('jumlah') + Syahriah::sum('jumlah_bayar');
         $totalPengeluaran = Pengeluaran::sum('jumlah');
         $saldo = $totalPemasukan - $totalPengeluaran;
@@ -29,32 +26,56 @@ class BendaharaController extends Controller
         $pengeluaranHariIni = Pengeluaran::whereDate('tanggal', $today)->sum('jumlah');
 
         return response()->json([
-            'saldo_total' => $saldo,
-            'arus_kas_hari_ini' => [
-                'masuk' => $pemasukanHariIni,
-                'keluar' => $pengeluaranHariIni
+            'status' => 'success',
+            'data' => [
+                'saldo_total' => $saldo,
+                'arus_kas_hari_ini' => [
+                    'masuk' => $pemasukanHariIni,
+                    'keluar' => $pengeluaranHariIni
+                ]
             ]
+        ]);
+    }
+
+    public function kas(Request $request)
+    {
+        $type = $request->query('type', 'pemasukan'); // pemasukan or pengeluaran
+        
+        if ($type == 'pemasukan') {
+            $data = Pemasukan::orderBy('tanggal', 'desc')->take(50)->get();
+        } else {
+            $data = Pengeluaran::orderBy('tanggal', 'desc')->take(50)->get();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'keterangan' => $item->keterangan,
+                    'jumlah' => $item->jumlah,
+                    'tanggal' => $item->tanggal,
+                    'kategori' => $item->kategori ?? 'Umum',
+                ];
+            })
         ]);
     }
 
     public function cekTunggakan(Request $request)
     {
         $query = Santri::query();
-
         if ($request->has('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('nama_santri', 'like', "%{$search}%")
+            $query->where('nama_santri', 'like', "%{$search}%")
                   ->orWhere('nis', 'like', "%{$search}%");
-            });
         }
 
         $santri = $query->with(['kelas'])->take(20)->get();
-        // Note: Real tunggakan logic requires checking Syahriah table vs Months.
-        // For MVP, returning santri list first.
 
         return response()->json([
+            'status' => 'success',
             'data' => $santri
         ]);
     }
 }
+
