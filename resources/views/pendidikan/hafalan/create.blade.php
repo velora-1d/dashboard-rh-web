@@ -2,6 +2,10 @@
 
 @section('title', 'Input Hafalan')
 
+@section('sidebar-menu')
+    @include('pendidikan.partials.sidebar-menu')
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -62,3 +66,49 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Embed configuration from backend
+    const kitabConfig = @json($kitabConfig);
+    const santriData = @json($santri->map(function($s) {
+        return ['id' => $s->id, 'kelas_id' => $s->kelas_id];
+    }));
+    
+    document.querySelector('select[name="santri_id"]').addEventListener('change', function() {
+        updateHafalanSuggestion();
+    });
+
+    document.querySelector('select[name="jenis"]').addEventListener('change', function() {
+        updateHafalanSuggestion();
+    });
+
+    function updateHafalanSuggestion() {
+        const santriId = document.querySelector('select[name="santri_id"]').value;
+        const jenis = document.querySelector('select[name="jenis"]').value;
+        const hafalanInput = document.querySelector('input[name="nama_hafalan"]');
+        
+        if (!santriId || jenis !== 'Kitab') return;
+
+        // Find santri class
+        const santri = santriData.find(s => s.id == santriId);
+        if (santri && santri.kelas_id) {
+            // Get current semester (simple approximation or you can inject it)
+            const currentMonth = new Date().getMonth() + 1;
+            const currentSemester = (currentMonth >= 7) ? 1 : 2;
+            
+            // Check config
+            if (kitabConfig[santri.kelas_id]) {
+                const config = kitabConfig[santri.kelas_id].find(c => c.semester == currentSemester);
+                if (config) {
+                    hafalanInput.value = config.nama_kitab;
+                    hafalanInput.setAttribute('placeholder', 'Sesuai kelas: ' + config.nama_kitab);
+                    return;
+                }
+            }
+        }
+        
+        hafalanInput.setAttribute('placeholder', 'Misal: Juz 30 / Kitab Jurumiyah');
+    }
+</script>
+@endpush

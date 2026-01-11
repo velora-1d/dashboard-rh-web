@@ -289,118 +289,14 @@
         </div>
     @endforelse
 
-    <!-- Konfigurasi Kitab Talaran per Kelas -->
-    <div class="card" style="padding: 16px;">
-        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">
-            📚 Konfigurasi Kitab Talaran per Kelas
-        </h3>
-        <p style="font-size: 12px; color: #666; margin-bottom: 16px;">
-            Atur kitab yang dipelajari untuk talaran setoran di setiap kelas untuk Semester Ganjil dan Genap.
-        </p>
-        
-        <div class="table-container" style="overflow-x: auto;">
-            <table class="table" style="font-size: 12px; border-collapse: collapse; width: 100%;">
-                <thead>
-                    <tr style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white;">
-                        <th rowspan="2" style="padding: 10px; text-align: center; border: 1px solid #ddd; width: 50px;">No</th>
-                        <th rowspan="2" style="padding: 10px; text-align: left; border: 1px solid #ddd; min-width: 120px;">Kelas</th>
-                        <th colspan="2" style="padding: 10px; text-align: center; border: 1px solid #ddd; background: #2196f3;">Semester Ganjil</th>
-                        <th colspan="2" style="padding: 10px; text-align: center; border: 1px solid #ddd; background: #ff9800;">Semester Genap</th>
-                        <th rowspan="2" style="padding: 10px; text-align: center; border: 1px solid #ddd; width: 120px;">Aksi</th>
-                    </tr>
-                    <tr style="background: #f0f9ff; color: #333;">
-                        <th style="padding: 8px; text-align: left; border: 1px solid #ddd; background: #e3f2fd;">Kitab</th>
-                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd; background: #e3f2fd; width: 80px;">Edit</th>
-                        <th style="padding: 8px; text-align: left; border: 1px solid #ddd; background: #fff3e0;">Kitab</th>
-                        <th style="padding: 8px; text-align: center; border: 1px solid #ddd; background: #fff3e0; width: 80px;">Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $no = 1; @endphp
-                    @foreach($kelasList as $kelas)
-                        @php
-                            $kitabSem1 = \App\Models\KitabTalaran::where('kelas_id', $kelas->id)->where('semester', 1)->first();
-                            $kitabSem2 = \App\Models\KitabTalaran::where('kelas_id', $kelas->id)->where('semester', 2)->first();
-                            $kitabName1 = $kitabSem1->nama_kitab ?? '-';
-                            $kitabName2 = $kitabSem2->nama_kitab ?? '-';
-                        @endphp
-                        <tr style="border-bottom: 1px solid #e5e7eb;" id="kitab-row-{{ $kelas->id }}">
-                            <td style="padding: 10px; text-align: center; border: 1px solid #eee; font-weight: 600; color: #666;">{{ $no++ }}</td>
-                            <td style="padding: 10px; border: 1px solid #eee; font-weight: 600; color: #1e40af;">{{ $kelas->nama_kelas }}</td>
-                            
-                            <!-- Semester Ganjil -->
-                            <td style="padding: 10px; border: 1px solid #eee; background: #f8fafc;">
-                                <span id="kitab-display-{{ $kelas->id }}-1" style="color: {{ $kitabName1 == '-' ? '#999' : '#2c3e50' }}; font-weight: {{ $kitabName1 == '-' ? 'normal' : '600' }};">
-                                    {{ $kitabName1 }}
-                                </span>
-                            </td>
-                            <td style="padding: 10px; text-align: center; border: 1px solid #eee; background: #f8fafc;">
-                                <button onclick="showKitabModal({{ $kelas->id }}, 1, '{{ addslashes($kitabName1 != '-' ? $kitabName1 : '') }}')" class="btn btn-secondary" style="padding: 4px 10px; font-size: 10px;">
-                                    <i data-feather="edit-2" style="width: 11px; height: 11px;"></i>
-                                </button>
-                            </td>
-                            
-                            <!-- Semester Genap -->
-                            <td style="padding: 10px; border: 1px solid #eee; background: #fffbf5;">
-                                <span id="kitab-display-{{ $kelas->id }}-2" style="color: {{ $kitabName2 == '-' ? '#999' : '#2c3e50' }}; font-weight: {{ $kitabName2 == '-' ? 'normal' : '600' }};">
-                                    {{ $kitabName2 }}
-                                </span>
-                            </td>
-                            <td style="padding: 10px; text-align: center; border: 1px solid #eee; background: #fffbf5;">
-                                <button onclick="showKitabModal({{ $kelas->id }}, 2, '{{ addslashes($kitabName2 != '-' ? $kitabName2 : '') }}')" class="btn btn-secondary" style="padding: 4px 10px; font-size: 10px;">
-                                    <i data-feather="edit-2" style="width: 11px; height: 11px;"></i>
-                                </button>
-                            </td>
-                            
-                            <!-- Aksi Hapus -->
-                            <td style="padding: 10px; text-align: center; border: 1px solid #eee;">
-                                <button onclick="deleteKitab({{ $kelas->id }})" class="btn" style="padding: 4px 10px; font-size: 10px; background: #fee2e2; color: #dc2626; border: 1px solid #fecaca;">
-                                    <i data-feather="trash-2" style="width: 11px; height: 11px;"></i> Hapus
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    @empty
+        <div class="card" style="padding: 32px; text-align: center; color: #999;">
+            <i data-feather="calendar" style="width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+            <p>Belum ada jadwal pelajaran yang ditambahkan</p>
         </div>
-    </div>
+    @endforelse
 
-<!-- Kitab Talaran Edit Modal -->
-<div id="kitabModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
-    <div class="card" style="width: 100%; max-width: 400px; margin: 20px;">
-        <h3 class="card-header" style="padding: 16px; margin: 0; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white;">
-            📚 Edit Kitab Talaran
-        </h3>
-        <form id="kitabForm" style="padding: 20px;">
-            <input type="hidden" id="kitabKelasId" value="">
-            <input type="hidden" id="kitabSemester" value="">
-            
-            <div style="margin-bottom: 16px;">
-                <label style="font-size: 12px; font-weight: 500; display: block; margin-bottom: 6px; color: #666;">
-                    Semester
-                </label>
-                <span id="kitabSemesterLabel" class="badge" style="font-size: 13px; padding: 6px 14px;"></span>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 12px; font-weight: 500; display: block; margin-bottom: 6px; color: #666;">
-                    Nama Kitab Talaran
-                </label>
-                <input type="text" id="kitabNamaInput" class="form-input" placeholder="Contoh: Jurumiyah, Alfiyah, dll" required style="width: 100%; padding: 10px; font-size: 14px;" autofocus>
-            </div>
-            
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button type="button" onclick="closeKitabModal()" class="btn btn-secondary" style="padding: 10px 20px;">
-                    Batal
-                </button>
-                <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">
-                    <i data-feather="save" style="width: 14px; height: 14px;"></i>
-                    Simpan
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+@endsection
 
 @endsection
 

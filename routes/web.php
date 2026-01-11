@@ -238,9 +238,9 @@ Route::prefix('pendidikan')->middleware(['auth', 'role:pendidikan'])->group(func
     Route::post('/jadwal', [App\Http\Controllers\PendidikanController::class, 'storeJadwal'])->name('pendidikan.jadwal.store');
     Route::put('/jadwal/{id}', [App\Http\Controllers\PendidikanController::class, 'updateJadwal'])->name('pendidikan.jadwal.update');
     Route::delete('/jadwal/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyJadwal'])->name('pendidikan.jadwal.destroy');
-    Route::put('/jadwal/kitab/{id}', [App\Http\Controllers\PendidikanController::class, 'updateKitabTalaran'])->name('pendidikan.jadwal.update-kitab');
+    Route::put('/jadwal/kitab/{id}', [App\Http\Controllers\HafalanController::class, 'updateKitabTalaran'])->name('pendidikan.jadwal.update-kitab');
     Route::put('/jadwal/kitab-global/{semester}', [App\Http\Controllers\PendidikanController::class, 'updateKitabTalaranGlobal'])->name('pendidikan.jadwal.update-kitab-global');
-    Route::delete('/jadwal/kitab/delete-by-kelas/{kelasId}', [App\Http\Controllers\PendidikanController::class, 'deleteKitabByKelas'])->name('pendidikan.jadwal.delete-kitab-by-kelas');
+    Route::delete('/jadwal/kitab/delete-by-kelas/{kelasId}', [App\Http\Controllers\HafalanController::class, 'deleteKitabByKelas'])->name('pendidikan.jadwal.delete-kitab-by-kelas');
     Route::post('/jadwal/{id}/update-guru-badal', [App\Http\Controllers\PendidikanController::class, 'updateGuruBadalJadwal'])->name('pendidikan.jadwal.update-guru-badal');
     Route::post('/kelas/{id}/update-wali-kelas', [App\Http\Controllers\PendidikanController::class, 'updateWaliKelas'])->name('pendidikan.kelas.update-wali-kelas');
     Route::post('/kelas/{id}/update-wali-kelas-dual', [App\Http\Controllers\PendidikanController::class, 'updateWaliKelasDual'])->name('pendidikan.kelas.update-wali-kelas-dual');

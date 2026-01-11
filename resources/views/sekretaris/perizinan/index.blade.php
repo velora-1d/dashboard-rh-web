@@ -2,6 +2,10 @@
 
 @section('title', 'Perizinan Santri')
 
+@section('sidebar-menu')
+    @include('sekretaris.partials.sidebar-menu')
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -15,10 +19,37 @@
     @endif
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Pengajuan Izin</h6>
         </div>
         <div class="card-body">
+            <!-- Filter Form -->
+            <form method="GET" action="{{ route('sekretaris.perizinan.index') }}" class="mb-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" name="search" class="form-control" placeholder="Cari Santri/NIS..." value="{{ request('search') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <select name="status" class="form-control">
+                            <option value="">Semua Status</option>
+                            <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                            <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" name="start_date" class="form-control" value="{{ request('start_date') }}" placeholder="Dari Tanggal">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" name="end_date" class="form-control" value="{{ request('end_date') }}" placeholder="Sampai Tanggal">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Filter</button>
+                        <a href="{{ route('sekretaris.perizinan.index') }}" class="btn btn-secondary"><i class="fas fa-sync"></i> Reset</a>
+                    </div>
+                </div>
+            </form>
+
             <div class="table-responsive">
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
@@ -69,14 +100,20 @@
                                 <form action="{{ route('sekretaris.perizinan.approval', $item->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     <input type="hidden" name="status" value="Disetujui">
-                                    <button class="btn btn-success btn-sm">Terima</button>
+                                    <button class="btn btn-success btn-sm" title="Setujui"><i class="fas fa-check"></i></button>
                                 </form>
                                 <form action="{{ route('sekretaris.perizinan.approval', $item->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     <input type="hidden" name="status" value="Ditolak">
-                                    <button class="btn btn-danger btn-sm">Tolak</button>
+                                    <button class="btn btn-warning btn-sm" title="Tolak"><i class="fas fa-times"></i></button>
                                 </form>
                                 @endif
+
+                                <form action="{{ route('sekretaris.perizinan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" title="Hapus"><i class="fas fa-trash"></i></button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach

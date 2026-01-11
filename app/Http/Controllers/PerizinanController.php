@@ -8,9 +8,26 @@ use Illuminate\Support\Facades\Auth;
 
 class PerizinanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perizinan = Perizinan::with('santri')->orderBy('created_at', 'desc')->paginate(10);
+        $query = Perizinan::with('santri')->orderBy('created_at', 'desc');
+
+        // Filters
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('tgl_mulai', [$request->start_date, $request->end_date]);
+        }
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('santri', function($q) use ($search) {
+                $q->where('nama_santri', 'like', "%{$search}%")
+                  ->orWhere('nis', 'like', "%{$search}%");
+            });
+        }
+
+        $perizinan = $query->paginate(10);
         return view('sekretaris.perizinan.index', compact('perizinan'));
     }
 
@@ -27,5 +44,12 @@ class PerizinanController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Status perizinan berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $perizinan = Perizinan::findOrFail($id);
+        $perizinan->delete();
+        return redirect()->back()->with('success', 'Data perizinan berhasil dihapus.');
     }
 }
