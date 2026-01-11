@@ -16,6 +16,7 @@ class SekretarisController extends Controller
         $putri = Santri::where('is_active', true)->where('gender', 'putri')->count();
         $kelas = \App\Models\Kelas::count();
         $asrama = \App\Models\Asrama::count();
+        $kobong = \App\Models\Kobong::count();
 
         return response()->json([
             'status' => 'success',
@@ -25,6 +26,7 @@ class SekretarisController extends Controller
                 'putri' => $putri,
                 'total_kelas' => $kelas,
                 'total_asrama' => $asrama,
+                'total_kamar' => $kobong,
             ]
         ]);
     }
@@ -149,6 +151,22 @@ class SekretarisController extends Controller
             ],
         ]);
 
+        // Notify Admins & Sekretaris (FCM)
+        $users = \App\Models\User::whereIn('role', ['admin', 'sekretaris'])
+            ->whereNotNull('fcm_token')
+            ->where('id', '!=', \Illuminate\Support\Facades\Auth::id())
+            ->get();
+            
+        $fcm = new \App\Services\FcmService();
+        foreach ($users as $user) {
+            $fcm->sendNotification(
+                $user->fcm_token,
+                '📝 Perizinan Baru',
+                "Izin baru diajukan a.n {$santri->nama_santri}: {$request->alasan}",
+                ['type' => 'perizinan', 'id' => $perizinan->id]
+            );
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Data perizinan berhasil disimpan',
@@ -251,6 +269,25 @@ class SekretarisController extends Controller
             'status' => $request->status,
             'approved_by' => \Illuminate\Support\Facades\Auth::id()
         ]);
+
+        // Notify Admins & Sekretaris (FCM)
+        $users = \App\Models\User::whereIn('role', ['admin', 'sekretaris'])
+            ->whereNotNull('fcm_token')
+            ->where('id', '!=', \Illuminate\Support\Facades\Auth::id())
+            ->get();
+            
+        $fcm = new \App\Services\FcmService();
+        $statusLabel = $request->status == 'Disetujui' ? 'disetujui' : 'ditolak';
+        $emoji = $request->status == 'Disetujui' ? '✅' : '❌';
+        
+        foreach ($users as $user) {
+            $fcm->sendNotification(
+                $user->fcm_token,
+                $emoji . ' Update Perizinan',
+                "Izin a.n {$perizinan->santri->nama_santri} telah {$statusLabel}.",
+                ['type' => 'perizinan', 'id' => $perizinan->id, 'status' => $statusLabel]
+            );
+        }
 
         return response()->json([
             'status' => 'success',

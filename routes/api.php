@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/fcm-token', [AuthController::class, 'updateFcmToken']);
 
     // Sekretaris Routes
     Route::prefix('sekretaris')->group(function () {
@@ -33,8 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/perizinan/{id}/approval', [SekretarisController::class, 'approvePerizinan']);
     });
 
-
-
     // Bendahara Routes
     Route::prefix('bendahara')->group(function () {
         Route::get('/dashboard', [BendaharaController::class, 'dashboard']);
@@ -45,6 +44,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/bank-accounts', [BendaharaController::class, 'storeBankAccount']);
         Route::get('/withdrawals', [BendaharaController::class, 'getWithdrawals']);
         Route::post('/withdrawals', [BendaharaController::class, 'requestWithdrawal']);
+        Route::post('/syahriah', [BendaharaController::class, 'storeSyahriah']);
+        
+        // Pegawai
+        Route::get('/pegawai', [BendaharaController::class, 'getPegawai']);
+        Route::post('/pegawai', [BendaharaController::class, 'storePegawai']);
+        Route::put('/pegawai/{id}', [BendaharaController::class, 'updatePegawai']);
+        Route::delete('/pegawai/{id}', [BendaharaController::class, 'destroyPegawai']);
+
+        // Gaji
+        Route::get('/gaji', [BendaharaController::class, 'getGaji']);
+        Route::post('/gaji', [BendaharaController::class, 'storeGaji']);
+
+        // Laporan
+        Route::get('/laporan', [BendaharaController::class, 'getLaporanSummary']);
     });
 
     // Admin Routes
@@ -55,9 +68,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Pendidikan Routes
     Route::prefix('pendidikan')->group(function () {
-        Route::get('/kalender', [PendidikanController::class, 'kalender']);
-        Route::get('/e-rapor', [PendidikanController::class, 'eRapor']);
-        Route::get('/ijazah', [PendidikanController::class, 'ijazah']);
+        Route::get('/kalender', [PendidikanController::class, 'getKalender']);
+        Route::get('/kelas', [PendidikanController::class, 'getKelasList']);
+        Route::get('/kelas/{id}/santri', [PendidikanController::class, 'getSantriByKelas']);
+        Route::post('/rapor/url', [PendidikanController::class, 'getRaporUrl']);
+        Route::post('/ijazah/url', [PendidikanController::class, 'getIjazahUrl']);
+        Route::get('/mapel', [PendidikanController::class, 'getMapelList']);
+        Route::post('/nilai/bulk', [PendidikanController::class, 'storeNilaiBulk']);
     });
 
     // Notifications Routes
@@ -66,3 +83,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
 });
 
+// Public Signed Routes for Downloads
+Route::get('/pendidikan/rapor/download', [PendidikanController::class, 'downloadRapor'])
+    ->name('api.pendidikan.download-rapor')->middleware('signed');
+
+Route::get('/pendidikan/ijazah/download/{type}/{santriId}', [PendidikanController::class, 'downloadIjazah'])
+    ->name('api.pendidikan.download-ijazah')->middleware('signed');

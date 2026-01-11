@@ -433,22 +433,32 @@ class PendidikanController extends Controller
                 }
             }
             
-            // 6. Apply Grade Compensation (Still looped, but strictly strictly necessary logic)
-            // (Ideally this should also be batched, but the algorithm is complex per student)
-            foreach ($validated['santri'] as $santriData) {
-                $this->applyGradeCompensation(
-                    $santriData['id'],
-                    $validated['tahun_ajaran'],
-                    $validated['semester']
-                );
-            }
+            // 6. Apply Grade Compensation (Optimized Bulk Processing)
+            $santriIds = collect($validated['santri'])->pluck('id')->toArray();
+            $this->applyGradeCompensationBulk(
+                $santriIds,
+                $validated['tahun_ajaran'],
+                $validated['semester']
+            );
             
             DB::commit();
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Nilai ujian semester berhasil disimpan'
+                ]);
+            }
             return redirect()->route('pendidikan.nilai', $request->only(['kelas_id', 'tahun_ajaran', 'semester']))
                 ->with('success', 'Nilai ujian semester berhasil disimpan dan digabungkan dengan ujian mingguan');
                 
         } catch (\Exception $e) {
             DB::rollBack();
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ], 500);
+            }
             return redirect()->back()
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
                 ->withInput();
@@ -457,106 +467,112 @@ class PendidikanController extends Controller
     
     
     /**
-     * Apply Grade Compensation Algorithm
+     * Apply Grade Compensation Algorithm (Bulk Optimized)
      * Ensures no grade is below minimum threshold (5) by redistributing points from higher grades
      * 
-     * @param int $santriId
+     * @param array $santriIds
      * @param string $tahunAjaran
      * @param string $semester
      * @return void
      */
-    private function applyGradeCompensation($santriId, $tahunAjaran, $semester)
+    private function applyGradeCompensationBulk($santriIds, $tahunAjaran, $semester)
     {
-        $minThreshold = 5; // Minimum allowed grade
-        $donorThreshold = 7; // Only grades >= 7 can donate
+        $minThreshold = 5;
+        $donorThreshold = 7;
         
-        // Get all grades for this student
-        $grades = NilaiSantri::where('santri_id', $santriId)
+        // 1. Fetch all grades for all students in one query
+        $allGrades = NilaiSantri::whereIn('santri_id', $santriIds)
             ->where('tahun_ajaran', $tahunAjaran)
             ->where('semester', $semester)
-            ->get();
-        
-        if ($grades->isEmpty()) {
-            return;
+            ->get()
+            ->groupBy('santri_id');
+            
+        $upsertData = [];
+        $timestamp = now();
+
+        foreach ($allGrades as $santriId => $grades) {
+            // Recipient & Donor separation logic per student
+            $recipients = $grades->filter(fn($g) => ($g->nilai_asli ?? $g->nilai_akhir) < $minThreshold);
+            $donors = $grades->filter(fn($g) => ($g->nilai_asli ?? $g->nilai_akhir) >= $donorThreshold);
+            
+            if ($recipients->isEmpty() || $donors->isEmpty()) continue;
+            
+            // Calculation logic
+            $totalNeeded = $recipients->sum(fn($g) => $minThreshold - ($g->nilai_asli ?? $g->nilai_akhir));
+            $totalAvailable = $donors->sum(fn($g) => max(0, ($g->nilai_asli ?? $g->nilai_akhir) - 6));
+            
+            $compensationRatio = ($totalAvailable < $totalNeeded) ? ($totalAvailable / $totalNeeded) : 1.0;
+            
+            // Process Recipients
+            foreach ($recipients as $recipient) {
+                $currentNilai = (float)($recipient->nilai_asli ?? $recipient->nilai_akhir);
+                $needed = $minThreshold - $currentNilai;
+                $compensation = $needed * $compensationRatio;
+                $newNilaiAsli = $currentNilai + $compensation;
+                
+                $upsertData[] = [
+                    'id' => $recipient->id,
+                    'santri_id' => $recipient->santri_id,
+                    'mapel_id' => $recipient->mapel_id,
+                    'tahun_ajaran' => $recipient->tahun_ajaran,
+                    'semester' => $recipient->semester,
+                    'nilai_original' => $currentNilai,
+                    'nilai_kompensasi' => $compensation,
+                    'nilai_asli' => $newNilaiAsli,
+                    'nilai_akhir' => $newNilaiAsli,
+                    'nilai_rapor' => max(5, $newNilaiAsli),
+                    'is_compensated' => true,
+                    'compensation_metadata' => json_encode([
+                        'type' => 'recipient',
+                        'amount_received' => round($compensation, 2),
+                        'donors_count' => $donors->count(),
+                        'original_grade' => round($currentNilai, 2)
+                    ]),
+                    'updated_at' => $timestamp
+                ];
+            }
+            
+            // Process Donors
+            $donorTotal = $donors->sum(fn($g) => $g->nilai_asli ?? $g->nilai_akhir);
+            $totalCompensationGiven = $recipients->sum(fn($r) => ($minThreshold - ($r->nilai_asli ?? $r->nilai_akhir)) * $compensationRatio);
+            
+            foreach ($donors as $donor) {
+                $currentNilai = (float)($donor->nilai_asli ?? $donor->nilai_akhir);
+                $donorProportion = $currentNilai / max(1, $donorTotal);
+                $deduction = $totalCompensationGiven * $donorProportion;
+                $newNilaiAsli = $currentNilai - $deduction;
+                
+                $upsertData[] = [
+                    'id' => $donor->id,
+                    'santri_id' => $donor->santri_id,
+                    'mapel_id' => $donor->mapel_id,
+                    'tahun_ajaran' => $donor->tahun_ajaran,
+                    'semester' => $donor->semester,
+                    'nilai_original' => $currentNilai,
+                    'nilai_kompensasi' => -$deduction,
+                    'nilai_asli' => $newNilaiAsli,
+                    'nilai_akhir' => $newNilaiAsli,
+                    'nilai_rapor' => max(5, $newNilaiAsli),
+                    'is_compensated' => true,
+                    'compensation_metadata' => json_encode([
+                        'type' => 'donor',
+                        'amount_donated' => round($deduction, 2),
+                        'recipients_count' => $recipients->count()
+                    ]),
+                    'updated_at' => $timestamp
+                ];
+            }
         }
         
-        // Separate grades into recipients (< 5) and donors (>= 7)
-        // IMPORTANT: Use nilai_asli for ranking, NOT nilai_akhir
-        $recipients = $grades->filter(fn($g) => ($g->nilai_asli ?? $g->nilai_akhir) < $minThreshold);
-        $donors = $grades->filter(fn($g) => ($g->nilai_asli ?? $g->nilai_akhir) >= $donorThreshold);
-        
-        if ($recipients->isEmpty() || $donors->isEmpty()) {
-            // No compensation needed or not possible
-            return;
-        }
-        
-        // Calculate total compensation needed
-        $totalNeeded = $recipients->sum(fn($g) => $minThreshold - ($g->nilai_asli ?? $g->nilai_akhir));
-        
-        // Calculate total available from donors (keep donors at minimum 6)
-        $totalAvailable = $donors->sum(fn($g) => max(0, ($g->nilai_asli ?? $g->nilai_akhir) - 6));
-        
-        if ($totalAvailable < $totalNeeded) {
-            // Not enough points to compensate fully, distribute what's available
-            $compensationRatio = $totalAvailable / $totalNeeded;
-        } else {
-            $compensationRatio = 1.0;
-        }
-        
-        // Apply compensation to recipients
-        foreach ($recipients as $recipient) {
-            $currentNilai = $recipient->nilai_asli ?? $recipient->nilai_akhir;
-            $needed = $minThreshold - $currentNilai;
-            $compensation = $needed * $compensationRatio;
-            
-            $recipient->nilai_original = $currentNilai;
-            $recipient->nilai_kompensasi = $compensation;
-            $recipient->nilai_asli = $currentNilai + $compensation;
-            $recipient->nilai_akhir = $recipient->nilai_asli; // Keep in sync
-            $recipient->is_compensated = true;
-            
-            // Recalculate nilai_rapor (minimum 5 rule)
-            $recipient->calculateNilaiRapor();
-            $recipient->save();
-        }
-        
-        // Deduct from donors proportionally
-        $donorTotal = $donors->sum(fn($g) => $g->nilai_asli ?? $g->nilai_akhir);
-        $totalCompensationGiven = $recipients->sum('nilai_kompensasi');
-        
-        foreach ($donors as $donor) {
-            $currentNilai = $donor->nilai_asli ?? $donor->nilai_akhir;
-            // Proportional deduction based on donor's grade
-            $donorProportion = $currentNilai / $donorTotal;
-            $deduction = $totalCompensationGiven * $donorProportion;
-            
-            $donor->nilai_original = $currentNilai;
-            $donor->nilai_kompensasi = -$deduction; // Negative = donated
-            $donor->nilai_asli = $currentNilai - $deduction;
-            $donor->nilai_akhir = $donor->nilai_asli; // Keep in sync
-            $donor->is_compensated = true;
-            
-            // Store metadata about compensation
-            $donor->compensation_metadata = json_encode([
-                'type' => 'donor',
-                'amount_donated' => round($deduction, 2),
-                'recipients_count' => $recipients->count()
-            ]);
-            
-            // Recalculate nilai_rapor (minimum 5 rule)
-            $donor->calculateNilaiRapor();
-            $donor->save();
-        }
-        
-        // Update recipient metadata
-        foreach ($recipients as $recipient) {
-            $recipient->compensation_metadata = json_encode([
-                'type' => 'recipient',
-                'amount_received' => round((float)($recipient->nilai_kompensasi ?? 0), 2),
-                'donors_count' => $donors->count(),
-                'original_grade' => round((float)($recipient->nilai_original ?? 0), 2)
-            ]);
-            $recipient->save();
+        // 2. Perform Batch Upsert
+        if (!empty($upsertData)) {
+            foreach (array_chunk($upsertData, 200) as $chunk) {
+                NilaiSantri::upsert(
+                    $chunk,
+                    ['id'],
+                    ['nilai_original', 'nilai_kompensasi', 'nilai_asli', 'nilai_akhir', 'nilai_rapor', 'is_compensated', 'compensation_metadata', 'updated_at']
+                );
+            }
         }
     }
     
@@ -1699,6 +1715,26 @@ class PendidikanController extends Controller
             );
         } catch (\Exception $e) {
             Log::warning('Telegram notification failed: ' . $e->getMessage());
+        }
+
+        // 4. Send Push Notification (FCM)
+        try {
+            $fcm = new \App\Services\FcmService();
+            $users = \App\Models\User::whereNotNull('fcm_token')
+                ->where('id', '!=', \Illuminate\Support\Facades\Auth::id())
+                ->get();
+                
+            $tanggalStr = date('d M Y', strtotime($validated['tanggal_mulai']));
+            foreach ($users as $user) {
+                $fcm->sendNotification(
+                    $user->fcm_token,
+                    '🗓️ Agenda Akademik Baru',
+                    "{$validated['judul']} ({$validated['kategori']}) - {$tanggalStr}",
+                    ['type' => 'kalender', 'id' => $event->id]
+                );
+            }
+        } catch (\Exception $e) {
+            Log::warning('FCM notification failed: ' . $e->getMessage());
         }
         
         return redirect()->route('pendidikan.kalender')
