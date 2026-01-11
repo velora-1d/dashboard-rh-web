@@ -19,6 +19,12 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
+    <a href="{{ route('pendidikan.hafalan.index') }}" class="sidebar-menu-link {{ request()->routeIs('pendidikan.hafalan*') ? 'active' : '' }}">
+        <i data-feather="book" class="sidebar-menu-icon"></i>
+        <span>Hafalan Santri</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
     <a href="{{ route('talaran.index') }}" class="sidebar-menu-link {{ request()->routeIs('talaran*') ? 'active' : '' }}">
         <i data-feather="layers" class="sidebar-menu-icon"></i>
         <span>Sistem Talaran</span>

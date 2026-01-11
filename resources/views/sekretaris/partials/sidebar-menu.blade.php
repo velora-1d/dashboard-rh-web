@@ -43,6 +43,12 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
+    <a href="{{ route('sekretaris.perizinan.index') }}" class="sidebar-menu-link {{ request()->routeIs('sekretaris.perizinan*') ? 'active' : '' }}">
+        <i data-feather="user-check" class="sidebar-menu-icon"></i>
+        <span>Perizinan Santri</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
     <a href="{{ route('sekretaris.laporan') }}" class="sidebar-menu-link {{ request()->routeIs('sekretaris.laporan*') ? 'active' : '' }}">
         <i data-feather="file-text" class="sidebar-menu-icon"></i>
         <span>Laporan</span>

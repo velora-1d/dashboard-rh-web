@@ -118,7 +118,12 @@ Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->group(func
     Route::post('/perpindahan', [App\Http\Controllers\SekretarisBulkController::class, 'processPerpindahan'])->name('sekretaris.perpindahan.process');
     Route::get('/api/santri-filtered', [App\Http\Controllers\SekretarisBulkController::class, 'getSantriFiltered'])->name('sekretaris.api.santri-filtered');
     Route::get('/api/kobong-by-asrama/{asramaId}', [App\Http\Controllers\SekretarisBulkController::class, 'getKobongByAsrama'])->name('sekretaris.api.kobong-by-asrama');
+    Route::get('/api/kobong-by-asrama/{asramaId}', [App\Http\Controllers\SekretarisBulkController::class, 'getKobongByAsrama'])->name('sekretaris.api.kobong-by-asrama');
     Route::get('/api/kobong-stats/{asramaId}', [App\Http\Controllers\SekretarisBulkController::class, 'getKobongStats'])->name('sekretaris.api.kobong-stats');
+
+    // Perizinan Santri
+    Route::get('/perizinan', [App\Http\Controllers\PerizinanController::class, 'index'])->name('sekretaris.perizinan.index');
+    Route::post('/perizinan/{id}/approval', [App\Http\Controllers\PerizinanController::class, 'approval'])->name('sekretaris.perizinan.approval');
 });
 
 /*
@@ -264,6 +269,12 @@ Route::prefix('pendidikan')->middleware(['auth', 'role:pendidikan'])->group(func
     Route::put('/absensi/{id}', [App\Http\Controllers\PendidikanController::class, 'updateAbsensi'])->name('pendidikan.absensi.update');
     Route::delete('/absensi/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyAbsensi'])->name('pendidikan.absensi.destroy');
     Route::get('/absensi/rekap', [App\Http\Controllers\PendidikanController::class, 'rekapAbsensi'])->name('pendidikan.absensi.rekap');
+    
+    
+    // Hafalan Santri
+    Route::get('/hafalan', [App\Http\Controllers\HafalanController::class, 'index'])->name('pendidikan.hafalan.index');
+    Route::get('/hafalan/create', [App\Http\Controllers\HafalanController::class, 'create'])->name('pendidikan.hafalan.create');
+    Route::post('/hafalan', [App\Http\Controllers\HafalanController::class, 'store'])->name('pendidikan.hafalan.store');
     
 
 });
