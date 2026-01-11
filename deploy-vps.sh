@@ -78,17 +78,17 @@ fi
 # ===== 8. CLONE REPOSITORY =====
 echo "📥 Setting up repository..."
 cd /var/www
-if [ ! -d "dashboard-riyadlul-huda" ]; then
-    git clone https://github.com/mahinutsmannawawi20-svg/dashboard-riyadlul-huda.git
+if [ ! -d "riyadlulhuda" ]; then
+    git clone https://github.com/mahinutsmannawawi20-svg/dashboard-riyadlul-huda.git riyadlulhuda
 else
     echo "Directory exists, pulling changes..."
-    cd dashboard-riyadlul-huda
+    cd riyadlulhuda
     git stash
     git pull origin main
     cd ..
 fi
 
-cd dashboard-riyadlul-huda
+cd riyadlulhuda
 
 # ===== 9. INSTALL DEPENDENCIES =====
 echo "📚 Installing PHP dependencies..."
@@ -124,18 +124,18 @@ php artisan migrate --seed --force
 
 # ===== 12. SET PERMISSIONS =====
 echo "🔐 Setting permissions..."
-chown -R www-data:www-data /var/www/dashboard-riyadlul-huda
-chmod -R 755 /var/www/dashboard-riyadlul-huda
+chown -R www-data:www-data /var/www/riyadlulhuda
+chmod -R 755 /var/www/riyadlulhuda
 chmod -R 775 storage bootstrap/cache
 
 # ===== 13. CREATE NGINX CONFIG =====
-if [ ! -f /etc/nginx/sites-available/dashboard-riyadlul-huda ]; then
+if [ ! -f /etc/nginx/sites-available/riyadlulhuda ]; then
     echo "📝 Creating Nginx config..."
-    cat > /etc/nginx/sites-available/dashboard-riyadlul-huda << EOF
+    cat > /etc/nginx/sites-available/riyadlulhuda << EOF
 server {
     listen 80;
     server_name $DOMAIN;
-    root /var/www/dashboard-riyadlul-huda/public;
+    root /var/www/riyadlulhuda/public;
 
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options "nosniff";
@@ -181,14 +181,14 @@ server {
 }
 EOF
 
-    ln -sf /etc/nginx/sites-available/dashboard-riyadlul-huda /etc/nginx/sites-enabled/
+    ln -sf /etc/nginx/sites-available/riyadlulhuda /etc/nginx/sites-enabled/
     rm -f /etc/nginx/sites-enabled/default
     nginx -t && systemctl reload nginx
 else
     echo "⚠️ Nginx config already exists. Skipping overwrite to preserve SSL."
 fi
 
-ln -sf /etc/nginx/sites-available/dashboard-riyadlul-huda /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/riyadlulhuda /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 nginx -t && systemctl reload nginx
 
