@@ -21,6 +21,14 @@ class BendaharaController extends Controller
 {
     // Dashboard
     // Dashboard
+    protected $financialService;
+
+    public function __construct(\App\Services\FinancialService $financialService)
+    {
+        $this->financialService = $financialService;
+    }
+
+    // Dashboard
     public function dashboard(Request $request)
     {
         // Get filter values
@@ -32,43 +40,16 @@ class BendaharaController extends Controller
         $gender = $request->filled('gender') ? $request->gender : null;
         $statusLunas = $request->filled('status_lunas') ? $request->status_lunas : null;
         
-        // --- REALTIME DATA FETCHING (No Cache) ---
+        // --- 1. Financial Stats (From Service) ---
+        $finStats = $this->financialService->getDashboardStats($tahun, $bulan);
+        $totalPemasukan = $finStats['total_pemasukan'];
+        $totalPengeluaran = $finStats['total_pengeluaran'];
+        $syriahManual = $finStats['syahriah_manual'];
+        $syahriahGateway = $finStats['syahriah_gateway'];
+        $totalSyahriah = $finStats['total_syahriah'];
+        $saldoDana = $finStats['saldo'];
 
-        // 1. Total Pemasukan
-        $queryPemasukan = Pemasukan::whereYear('tanggal', $tahun);
-        if ($bulan) $queryPemasukan->whereMonth('tanggal', $bulan);
-        $totalPemasukan = $queryPemasukan->sum('nominal');
-        
-        // 2. Total Pengeluaran
-        $queryPengeluaran = Pengeluaran::whereYear('tanggal', $tahun);
-        if ($bulan) $queryPengeluaran->whereMonth('tanggal', $bulan);
-        $totalPengeluaran = $queryPengeluaran->sum('nominal');
-        
-        // 3. Syahriah Manual (Non-Midtrans)
-        $querySyahriahManual = Syahriah::where('tahun', $tahun)->where('is_lunas', true)
-            ->where(function($q) {
-                $q->whereNull('keterangan')
-                  ->orWhere('keterangan', 'not like', '%Midtrans%');
-            });
-        if ($bulan) $querySyahriahManual->where('bulan', $bulan);
-        $syriahManual = $querySyahriahManual->sum('nominal');
-
-        // 4. Syahriah Gateway (Midtrans)
-        $querySyahriahGateway = Syahriah::where('tahun', $tahun)->where('is_lunas', true)
-            ->where('keterangan', 'like', '%Midtrans%');
-        if ($bulan) $querySyahriahGateway->where('bulan', $bulan);
-        $syahriahGateway = $querySyahriahGateway->sum('nominal');
-
-        // 5. Total Syahriah & Lunas
-        $querySyahriah = Syahriah::where('tahun', $tahun);
-        if ($bulan) $querySyahriah->where('bulan', $bulan);
-        $totalSyahriah = $querySyahriah->sum('nominal');
-        $syahriahLunas = (clone $querySyahriah)->where('is_lunas', true)->sum('nominal');
-        
-        // Calculate Saldo
-        $saldoDana = ($totalPemasukan + $syahriahLunas) - $totalPengeluaran;
-        
-        // 6. Santri Counts
+        // --- 2. Santri Counts (Lightweight enough to keep here or move to SantriService later) ---
         $querySantri = Santri::where('is_active', true);
         if ($kelasId) $querySantri->where('kelas_id', $kelasId);
         if ($asramaId) $querySantri->where('asrama_id', $asramaId);
@@ -85,50 +66,17 @@ class BendaharaController extends Controller
         $totalSantriPutri = $santriCounts['putri'] ?? 0;
         $totalSantriAktif = array_sum($santriCounts);
         
-        // 7. Tunggakan Calculation (Optimized - No N+1)
-        $biayaBulanan = 500000;
-        $endDate = now();
-        $totalTunggakanValue = 0;
-        $totalSantriMenunggakCount = 0;
+        // --- 3. Tunggakan Calculation (From Service) ---
+        // Only run full calculation if necessary, otherwise use cached/simplified or run service
+        // For dashboard summary, we run it (Service handles optimization)
+        $tunggakanStats = $this->financialService->calculateTunggakan(); 
+        $totalTunggakan = $tunggakanStats['total_arrears'];
         
-        // Fetch all active santri
-        $allSantri = Santri::where('is_active', true)->select('id', 'tanggal_masuk', 'created_at')->get();
-        // Fetch all syahriah records for these santri
-        $allSyahriah = Syahriah::whereIn('santri_id', $allSantri->pluck('id'))
-            ->where('is_lunas', true)
-            ->select('santri_id', 'bulan', 'tahun')
-            ->get()
-            ->groupBy('santri_id');
-
-        foreach ($allSantri as $santri) {
-            $startDate = $santri->tanggal_masuk ?? $santri->created_at;
-            $current = $startDate->copy()->startOfMonth();
-            
-            $santriPaidMonths = isset($allSyahriah[$santri->id]) 
-                ? $allSyahriah[$santri->id]->map(fn($item) => $item->bulan . '-' . $item->tahun)->toArray()
-                : [];
-            
-            $unpaidCount = 0;
-            while ($current <= $endDate) {
-                $monthKey = $current->month . '-' . $current->year;
-                if (!in_array($monthKey, $santriPaidMonths)) {
-                    $unpaidCount++;
-                }
-                $current->addMonth();
-            }
-
-            if ($unpaidCount > 0) {
-                $totalTunggakanValue += $unpaidCount * $biayaBulanan;
-                $totalSantriMenunggakCount++;
-            }
-        }
-        $totalTunggakan = $totalTunggakanValue;
-        $totalSantriMenunggak = $totalSantriMenunggakCount;
-        
-        // 8. Santri Lunas Counts
+        // --- 4. Santri Lunas Counts ---
         $querySL = Syahriah::where('tahun', $tahun);
         if ($bulan) $querySL->where('bulan', $bulan);
-        $santriIdsLunas = $querySL->where('is_lunas', true)->pluck('santri_id')->unique();
+        $syahriahLunas = $querySL->where('is_lunas', true)->sum('nominal'); // Re-query for specific Lunas Sum if needed
+        $santriIdsLunas = $querySL->pluck('santri_id')->unique();
         
         $santriLunasCounts = Santri::whereIn('id', $santriIdsLunas)
             ->where('is_active', true)
@@ -140,20 +88,20 @@ class BendaharaController extends Controller
         $totalSantriPutraLunas = $santriLunasCounts['putra'] ?? 0;
         $totalSantriPutriLunas = $santriLunasCounts['putri'] ?? 0;
         
-        // 9. Gaji Data
+        // --- 5. Gaji Data (Could be moved to Service too, but simple enough) ---
         $queryGaji = GajiPegawai::where('tahun', $tahun);
         if ($bulan) $queryGaji->where('bulan', $bulan);
         $totalGajiBulanIni = (clone $queryGaji)->where('bulan', now()->month)->sum('nominal');
         $totalGajiTertunda = (clone $queryGaji)->where('is_dibayar', false)->sum('nominal');
         
-        // 10. Charts
-        $chartPemasukanPengeluaran = $this->getChartPemasukanPengeluaran($tahun);
+        // --- 6. Charts ---
+        $chartPemasukanPengeluaran = $this->financialService->getCashFlowChart($tahun); // From Service
         $chartPerAsrama = $this->getChartPerAsrama();
         $chartPerKelas = $this->getChartPerKelas();
         $chartDistribusiSantri = ['putra' => $totalSantriPutra, 'putri' => $totalSantriPutri];
         $chartLunasMenunggak = ['lunas' => $syahriahLunas, 'menunggak' => $totalTunggakan];
         
-        // 11. Lists (Santri Menunggak)
+        // --- 7. Recent Lists ---
         $querySM = Syahriah::where('tahun', $tahun);
         if ($bulan) $querySM->where('bulan', $bulan);
         $santriIdsMenunggak = $querySM->where('is_lunas', false)->pluck('santri_id')->unique();
@@ -166,7 +114,6 @@ class BendaharaController extends Controller
             ->where('gender', 'putri')->where('is_active', true)
             ->with(['kelas', 'asrama'])->limit(10)->get();
             
-        // 12. Recent Transactions
         $recentSyahriah = Syahriah::with('santri:id,nama_santri')->select('id', 'santri_id', 'bulan', 'tahun', 'nominal', 'is_lunas', 'created_at')
             ->latest()->limit(10)->get();
         $recentPemasukan = Pemasukan::select('id', 'tanggal', 'kategori', 'nominal', 'keterangan', 'created_at')
@@ -176,7 +123,6 @@ class BendaharaController extends Controller
         $recentGaji = GajiPegawai::with('pegawai:id,nama_pegawai')->select('id', 'pegawai_id', 'bulan', 'tahun', 'nominal', 'is_dibayar', 'created_at')
             ->latest()->limit(5)->get();
             
-        // 13. Summaries
         $totalPegawai = Pegawai::where('is_active', true)->count();
         $gajiTertundaCount = GajiPegawai::where('is_dibayar', false)->count();
         
@@ -184,7 +130,6 @@ class BendaharaController extends Controller
         $pemasukanBulanIni = Pemasukan::whereYear('tanggal', now()->year)->whereMonth('tanggal', now()->month)->sum('nominal');
         $pengeluaranBulanIni = Pengeluaran::whereYear('tanggal', now()->year)->whereMonth('tanggal', now()->month)->sum('nominal');
         
-        // 14. Filters
         $kelasList = \App\Models\Kelas::all();
         $asramaList = \App\Models\Asrama::all();
         $kobongList = \App\Models\Kobong::all();
@@ -290,32 +235,7 @@ class BendaharaController extends Controller
         return redirect()->route('bendahara.withdrawals')->with('success', 'Pengajuan penarikan berhasil dikirim');
     }
     
-    private function getChartPemasukanPengeluaran($tahun)
-    {
-        $pemasukanData = Pemasukan::whereYear('tanggal', $tahun)
-            ->selectRaw('MONTH(tanggal) as month, SUM(nominal) as total')
-            ->groupBy('month')
-            ->pluck('total', 'month')
-            ->toArray();
 
-        $pengeluaranData = Pengeluaran::whereYear('tanggal', $tahun)
-            ->selectRaw('MONTH(tanggal) as month, SUM(nominal) as total')
-            ->groupBy('month')
-            ->pluck('total', 'month')
-            ->toArray();
-
-        $data = [
-            'pemasukan' => array_fill(0, 12, 0),
-            'pengeluaran' => array_fill(0, 12, 0),
-        ];
-
-        for ($i = 1; $i <= 12; $i++) {
-            $data['pemasukan'][$i - 1] = $pemasukanData[$i] ?? 0;
-            $data['pengeluaran'][$i - 1] = $pengeluaranData[$i] ?? 0;
-        }
-
-        return $data;
-    }
     
     private function getChartPerAsrama()
     {

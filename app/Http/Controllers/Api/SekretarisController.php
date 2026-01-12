@@ -52,9 +52,8 @@ class SekretarisController extends Controller
     }
 
     public function index(Request $request)
-
     {
-        $query = Santri::query();
+        $query = Santri::where('is_active', true); // Default only active, unless specified
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -76,9 +75,9 @@ class SekretarisController extends Controller
             $query->where('gender', $request->gender);
         }
 
-        // OPTIMIZATION: Select only necessary columns
-        $santri = $query->select('id', 'nama_santri', 'nis', 'kelas_id', 'kobong_id')
-            ->with(['kelas:id,nama_kelas', 'kobong:id,nomor_kobong'])
+        // Return FULL details for Mobile Edit & ID Card
+        $santri = $query->with(['kelas:id,nama_kelas', 'kobong:id,nomor_kobong', 'asrama:id,nama_asrama'])
+            ->orderBy('nama_santri', 'asc')
             ->take(50)
             ->get();
 
@@ -90,7 +89,25 @@ class SekretarisController extends Controller
                     'nama' => $s->nama_santri,
                     'nis' => $s->nis,
                     'kelas' => $s->kelas->nama_kelas ?? '-',
-                    'kamar' => $s->kobong->nomor_kobong ?? '-', // Fixed field source
+                    'kamar' => $s->kobong->nomor_kobong ?? '-',
+                    'asrama' => $s->asrama->nama_asrama ?? '-',
+                    'foto_path' => $s->foto_path ?? '',
+                    'is_active' => $s->is_active,
+                    'virtual_account_number' => $s->virtual_account_number,
+                    
+                    // Detail fields for Edit Form
+                    'negara' => $s->negara,
+                    'provinsi' => $s->provinsi,
+                    'kota_kabupaten' => $s->kota_kabupaten,
+                    'kecamatan' => $s->kecamatan,
+                    'desa_kampung' => $s->desa_kampung,
+                    'rt_rw' => $s->rt_rw,
+                    'nama_ortu_wali' => $s->nama_ortu_wali,
+                    'no_hp_ortu_wali' => $s->no_hp_ortu_wali,
+                    'asrama_id' => $s->asrama_id,
+                    'kobong_id' => $s->kobong_id,
+                    'kelas_id' => $s->kelas_id,
+                    'gender' => $s->gender,
                 ];
             })
         ]);
@@ -258,6 +275,40 @@ class SekretarisController extends Controller
         ]);
     }
 
+    public function updatePerizinan(Request $request, $id)
+    {
+        $perizinan = Perizinan::findOrFail($id);
+        
+        $request->validate([
+            'alasan' => 'required|string',
+            'tgl_pulang' => 'required|date',
+            'tgl_kembali' => 'required|date',
+        ]);
+
+        $perizinan->update([
+            'alasan' => $request->alasan,
+            'tgl_pulang' => $request->tgl_pulang,
+            'tgl_kembali' => $request->tgl_kembali,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data perizinan berhasil diperbarui',
+            'data' => $perizinan
+        ]);
+    }
+
+    public function destroyPerizinan($id)
+    {
+        $perizinan = Perizinan::findOrFail($id);
+        $perizinan->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data perizinan berhasil dihapus'
+        ]);
+    }
+
     public function approvePerizinan(Request $request, $id)
     {
         $request->validate([
@@ -293,6 +344,36 @@ class SekretarisController extends Controller
             'status' => 'success',
             'message' => "Perizinan berhasil " . strtolower($request->status)
         ]);
+    }
+
+    public function getLaporanUrl(Request $request)
+    {
+        // Generate Signed URL for downloading PDF
+        // This avoids auth issues when downloading file in external browser
+        $url = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+            'api.sekretaris.download-laporan', 
+            now()->addMinutes(30),
+            ['type' => $request->type ?? 'semua']
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'data' => ['url' => $url]
+        ]);
+    }
+
+    public function downloadLaporan(Request $request)
+    {
+        // This would reuse the Web Controller logic or duplicate it
+        // Ideally reuse logic. For now, simple PDF generation.
+        // Assuming logic similar to Web's SekretarisController::exportPdf
+        
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('sekretaris.laporan.laporan-santri-pdf', [
+            'santri' => Santri::all(),
+            'title' => 'Laporan Data Santri'
+        ]);
+        
+        return $pdf->download('laporan_santri.pdf');
     }
 }
 
