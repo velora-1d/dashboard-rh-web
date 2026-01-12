@@ -30,11 +30,13 @@
             height: 350px;
             margin: 0 auto;
             position: relative;
-            background: linear-gradient(120deg, #047857 0%, #064e3b 100%);
+            /* Gradient removed for better PDF compatibility */
+            background-color: #1B5E20; 
+            /* background: linear-gradient(120deg, #047857 0%, #064e3b 100%); */
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-            border: 1px solid #10b981;
+            box-shadow: none; /* Shadow often causes issues in PDFs */
+            border: 2px solid #14532d; /* Darker border */
             color: white;
         }
         
