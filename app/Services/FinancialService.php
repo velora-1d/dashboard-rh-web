@@ -19,12 +19,12 @@ class FinancialService
         // 1. Pemasukan (General)
         $queryPemasukan = Pemasukan::whereYear('tanggal', $year);
         if ($month) $queryPemasukan->whereMonth('tanggal', $month);
-        $totalPemasukan = $queryPemasukan->sum('jumlah') ?? $queryPemasukan->sum('nominal'); // Handle inconsistent column name in older code if any
+        $totalPemasukan = $queryPemasukan->sum('nominal');
 
         // 2. Pengeluaran
         $queryPengeluaran = Pengeluaran::whereYear('tanggal', $year);
         if ($month) $queryPengeluaran->whereMonth('tanggal', $month);
-        $totalPengeluaran = $queryPengeluaran->sum('jumlah') ?? $queryPengeluaran->sum('nominal');
+        $totalPengeluaran = $queryPengeluaran->sum('nominal');
 
         // 3. Syahriah (SPP)
         $querySyahriah = Syahriah::where('tahun', $year)->where('is_lunas', true);
