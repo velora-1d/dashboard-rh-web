@@ -84,6 +84,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Pendidikan Routes
     Route::prefix('pendidikan')->group(function () {
         Route::get('/kalender', [PendidikanController::class, 'getKalender']);
+        Route::post('/kalender', [PendidikanController::class, 'storeKalender']);
+        Route::put('/kalender/{id}', [PendidikanController::class, 'updateKalender']);
+        Route::delete('/kalender/{id}', [PendidikanController::class, 'destroyKalender']);
         Route::get('/kelas', [PendidikanController::class, 'getKelasList']);
         Route::get('/kelas/{id}/santri', [PendidikanController::class, 'getSantriByKelas']);
         Route::post('/rapor/url', [PendidikanController::class, 'getRaporUrl']);

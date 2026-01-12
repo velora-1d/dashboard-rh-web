@@ -38,6 +38,58 @@ class PendidikanController extends Controller
         ]);
     }
 
+    public function storeKalender(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string',
+            'deskripsi' => 'nullable|string',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'warna' => 'required|string', // merah, hijau, biru, kuning, ungu
+            'kategori' => 'required|string',
+        ]);
+
+        $kalender = KalenderPendidikan::create($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Agenda berhasil ditambahkan',
+            'data' => $kalender
+        ]);
+    }
+
+    public function updateKalender(Request $request, $id)
+    {
+        $kalender = KalenderPendidikan::findOrFail($id);
+
+        $request->validate([
+            'judul' => 'required|string',
+            'deskripsi' => 'nullable|string',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'warna' => 'required|string',
+            'kategori' => 'required|string',
+        ]);
+
+        $kalender->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Agenda berhasil diperbarui',
+            'data' => $kalender
+        ]);
+    }
+
+    public function destroyKalender($id)
+    {
+        $kalender = KalenderPendidikan::findOrFail($id);
+        $kalender->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Agenda berhasil dihapus'
+        ]);
+
     // E-Rapor: Get Class List
     public function getKelasList()
     {
