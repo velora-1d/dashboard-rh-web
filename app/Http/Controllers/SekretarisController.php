@@ -9,6 +9,7 @@ use App\Models\Kobong;
 use App\Models\MutasiSantri;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SekretarisController extends Controller
@@ -113,6 +114,7 @@ class SekretarisController extends Controller
             'kobong_id' => 'required|exists:kobong,id',
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
+            'tanggal_masuk' => 'required|date',
         ]);
         
         $santri = Santri::create($validated);
@@ -138,7 +140,7 @@ class SekretarisController extends Controller
                 'asrama' => $asrama->nama_asrama ?? '-',
             ]);
         } catch (\Exception $e) {
-            \Log::warning('Telegram notification failed: ' . $e->getMessage());
+            Log::warning('Telegram notification failed: ' . $e->getMessage());
         }
         
         return redirect()->route('sekretaris.data-santri')
@@ -176,6 +178,7 @@ class SekretarisController extends Controller
             'kobong_id' => 'required|exists:kobong,id',
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
+            'tanggal_masuk' => 'required|date',
         ]);
         
         $santri->update($validated);
@@ -259,7 +262,7 @@ class SekretarisController extends Controller
                 $icon
             );
         } catch (\Exception $e) {
-            \Log::warning('Telegram notification failed: ' . $e->getMessage());
+            Log::warning('Telegram notification failed: ' . $e->getMessage());
         }
         
         return redirect()->route('sekretaris.mutasi-santri')
@@ -450,6 +453,7 @@ class SekretarisController extends Controller
             'Kelas ID',
             'Asrama ID',
             'Kobong ID',
+            'Tanggal Masuk (YYYY-MM-DD)',
         ];
         
         $callback = function() use ($columns) {
@@ -472,6 +476,7 @@ class SekretarisController extends Controller
                 '1',
                 '1',
                 '1',
+                '2025-07-01',
             ]);
             
             fclose($file);
@@ -517,6 +522,7 @@ class SekretarisController extends Controller
                             'kelas_id' => $row[11],
                             'asrama_id' => $row[12],
                             'kobong_id' => $row[13],
+                            'tanggal_masuk' => isset($row[14]) ? $row[14] : now(),
                             'is_active' => true,
                         ]);
                         

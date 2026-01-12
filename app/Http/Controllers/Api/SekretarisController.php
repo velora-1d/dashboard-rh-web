@@ -108,6 +108,7 @@ class SekretarisController extends Controller
                     'kobong_id' => $s->kobong_id,
                     'kelas_id' => $s->kelas_id,
                     'gender' => $s->gender,
+                    'tanggal_masuk' => $s->tanggal_masuk ? \Carbon\Carbon::parse($s->tanggal_masuk)->format('Y-m-d') : null,
                 ];
             })
         ]);
@@ -207,6 +208,7 @@ class SekretarisController extends Controller
             'kobong_id' => 'required|exists:kobong,id',
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
+            'tanggal_masuk' => 'required|date',
         ]);
 
         $santri = Santri::create($validated);
@@ -245,6 +247,7 @@ class SekretarisController extends Controller
             'kobong_id' => 'required|exists:kobong,id',
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
+            'tanggal_masuk' => 'required|date',
         ]);
 
         $santri->update($validated);

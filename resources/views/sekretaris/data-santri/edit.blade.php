@@ -108,6 +108,13 @@
                     </select>
                     @error('gender')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tanggal Masuk *</label>
+                    <input type="date" name="tanggal_masuk" class="form-input" value="{{ old('tanggal_masuk', $santri->tanggal_masuk ? $santri->tanggal_masuk->format('Y-m-d') : '') }}" required>
+                    @error('tanggal_masuk')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
             </div>
             
             <h3 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin: var(--spacing-xl) 0 var(--spacing-lg); color: var(--color-gray-900);">
