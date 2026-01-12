@@ -36,7 +36,7 @@
     @endif
 
     <div class="card">
-        <form method="POST" action="{{ route('sekretaris.data-santri.update', $santri->id) }}">
+        <form method="POST" action="{{ route('sekretaris.data-santri.update', $santri->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             
@@ -110,6 +110,18 @@
                 </div>
                 </div>
                 
+                <div class="form-group">
+                    <label class="form-label">Foto Santri (Opsional)</label>
+                    @if($santri->foto)
+                        <div style="margin-bottom: 8px;">
+                            <img src="{{ $santri->foto_url }}" alt="Foto Santri" style="max-height: 100px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        </div>
+                    @endif
+                    <input type="file" name="foto" class="form-input" accept="image/*">
+                    <small style="color: #64748b; font-size: 0.75rem;">Upload foto baru untuk mengganti. Format: JPG, PNG. Maks: 2MB.</small>
+                    @error('foto')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
+
                 <div class="form-group">
                     <label class="form-label">Tanggal Masuk *</label>
                     <input type="date" name="tanggal_masuk" class="form-input" value="{{ old('tanggal_masuk', $santri->tanggal_masuk ? $santri->tanggal_masuk->format('Y-m-d') : '') }}" required>

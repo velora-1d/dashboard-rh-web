@@ -115,7 +115,15 @@ class SekretarisController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
             'tanggal_masuk' => 'required|date',
+            'foto' => 'nullable|image|max:2048',
         ]);
+        
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/santri-photos', $filename);
+            $validated['foto'] = $filename;
+        }
         
         $santri = Santri::create($validated);
         
@@ -179,7 +187,20 @@ class SekretarisController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
             'tanggal_masuk' => 'required|date',
+            'foto' => 'nullable|image|max:2048',
         ]);
+        
+        if ($request->hasFile('foto')) {
+            // Delete old photo
+            if ($santri->foto && \Illuminate\Support\Facades\Storage::exists('public/santri-photos/' . $santri->foto)) {
+                \Illuminate\Support\Facades\Storage::delete('public/santri-photos/' . $santri->foto);
+            }
+            
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/santri-photos', $filename);
+            $validated['foto'] = $filename;
+        }
         
         $santri->update($validated);
         

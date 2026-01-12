@@ -24,7 +24,7 @@
     </div>
 
     <div class="card">
-        <form method="POST" action="{{ route('sekretaris.data-santri.store') }}">
+        <form method="POST" action="{{ route('sekretaris.data-santri.store') }}" enctype="multipart/form-data">
             @csrf
             
             <h3 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-lg); color: var(--color-gray-900);">
@@ -55,6 +55,13 @@
                 </div>
                 </div>
                 
+                <div class="form-group">
+                    <label class="form-label">Foto Santri (Opsional)</label>
+                    <input type="file" name="foto" class="form-input" accept="image/*">
+                    <small style="color: #64748b; font-size: 0.75rem;">Format: JPG, PNG. Maks: 2MB.</small>
+                    @error('foto')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
+
                 <div class="form-group">
                     <label class="form-label">Tanggal Masuk *</label>
                     <input type="date" name="tanggal_masuk" class="form-input" value="{{ old('tanggal_masuk', date('Y-m-d')) }}" required>

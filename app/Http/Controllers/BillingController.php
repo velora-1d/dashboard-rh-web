@@ -87,10 +87,10 @@ class BillingController extends Controller
         $tunggakan = number_format($request->tunggakan, 0, ',', '.');
         $details = $request->details;
 
-        $message = "⚠️ *TAGIHAN SYAHRIAH / SPP*\n\n";
-        $message .= "Yth. Wali Santri dari *$nama*,\n\n";
+        $message = "⚠️ TAGIHAN SYAHRIAH / SPP\n\n";
+        $message .= "Yth. Wali Santri dari $nama,\n\n";
         $message .= "Kami informasikan bahwa terdapat tunggakan Syahriah:\n";
-        $message .= "💰 Total: *Rp $tunggakan*\n";
+        $message .= "💰 Total: Rp $tunggakan\n";
         $message .= "📅 Rincian: $details\n\n";
         $message .= "Mohon segera melakukan pembayaran. Abaikan jika sudah membayar.\n";
         $message .= "_Sistem Informasi Riyadlul Huda_";

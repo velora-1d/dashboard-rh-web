@@ -14,6 +14,7 @@ class Santri extends Model
     protected $fillable = [
         'nis',
         'nama_santri',
+        'foto',
         'negara',
         'provinsi',
         'kota_kabupaten',
@@ -60,6 +61,14 @@ class Santri extends Model
     public function nilai()
     {
         return $this->hasMany(NilaiSantri::class);
+    }
+
+    public function getFotoUrlAttribute()
+    {
+        if ($this->foto) {
+            return asset('storage/santri-photos/' . $this->foto);
+        }
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->nama_santri) . '&background=random';
     }
 
     public function ujianMingguan()

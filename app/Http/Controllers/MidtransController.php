@@ -219,9 +219,9 @@ class MidtransController extends Controller
             }
 
             // 1. TELEGRAM (Admin Group)
-            $telegramMsg = "✅ **PEMBAYARAN DITERIMA**\n\n";
-            $telegramMsg .= "Santri: **{$santri->nama_santri}**\n";
-            $telegramMsg .= "Bulan: **{$monthName} {$year}**\n";
+            $telegramMsg = "✅ PEMBAYARAN DITERIMA\n\n";
+            $telegramMsg .= "Santri: {$santri->nama_santri}\n";
+            $telegramMsg .= "Bulan: {$monthName} {$year}\n";
             $telegramMsg .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
             $this->telegramService->sendMessage($telegramMsg);
             
@@ -286,9 +286,9 @@ class MidtransController extends Controller
             $monthName = \Carbon\Carbon::create()->month($nextMonth)->translatedFormat('F');
 
             // 1. TELEGRAM
-            $telegramMsg = "🌟 **PEMBAYARAN DEPOSIT (ADVANCE)**\n\n";
-            $telegramMsg .= "Santri: **{$santri->nama_santri}**\n";
-            $telegramMsg .= "Alokasi: **{$monthName} {$nextYear}**\n";
+            $telegramMsg = "🌟 PEMBAYARAN DEPOSIT (ADVANCE)\n\n";
+            $telegramMsg .= "Santri: {$santri->nama_santri}\n";
+            $telegramMsg .= "Alokasi: {$monthName} {$nextYear}\n";
             $telegramMsg .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
             $this->telegramService->sendMessage($telegramMsg);
 
