@@ -189,17 +189,19 @@ class BendaharaController extends Controller
 
         if ($request->type == 'pemasukan') {
             $record = Pemasukan::create([
-                'jumlah' => $request->jumlah,
+                'nominal' => $request->jumlah,
                 'keterangan' => $request->keterangan,
                 'tanggal' => $request->tanggal,
                 'kategori' => $request->kategori ?? 'Umum',
+                'sumber_pemasukan' => 'Kas Manual', // Default value required by schema
             ]);
         } else {
             $record = Pengeluaran::create([
-                'jumlah' => $request->jumlah,
+                'nominal' => $request->jumlah,
                 'keterangan' => $request->keterangan,
                 'tanggal' => $request->tanggal,
                 'kategori' => $request->kategori ?? 'Umum',
+                'jenis_pengeluaran' => 'Kas Manual', // Default value required by schema
             ]);
         }
 
@@ -572,7 +574,7 @@ class BendaharaController extends Controller
         }
 
         $record->update([
-            'jumlah' => $request->jumlah,
+            'nominal' => $request->jumlah,
             'keterangan' => $request->keterangan,
             'tanggal' => $request->tanggal,
             'kategori' => $request->kategori ?? 'Umum',
