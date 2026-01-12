@@ -10,7 +10,9 @@
         }
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
-            background-color: #f1f5f9;
+            background-color: #e2e8f0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
         }
         .container {
             width: 100%;
@@ -18,140 +20,210 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 50px;
+            padding-top: 20px;
         }
         .card {
-            width: 500px; /* Approx ID-1 scaled up for A4 pdf view */
-            height: 320px;
+            width: 85.6mm; /* ISO ID-1 width */
+            height: 53.98mm; /* ISO ID-1 height */
+            /* Scale up for PDF view clarity if needed, but let's stick to standard ratio relative sizes */
+            width: 550px; 
+            height: 350px;
             margin: 0 auto;
             position: relative;
-            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
-            border-radius: 16px;
+            background: linear-gradient(120deg, #047857 0%, #064e3b 100%);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border: 1px solid #047857;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            border: 1px solid #10b981;
+            color: white;
         }
         
+        /* Background decorative elements */
+        .circle-bg {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            top: -100px;
+            right: -50px;
+            z-index: 1;
+        }
+        .circle-bg-2 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            bottom: -50px;
+            left: -50px;
+            z-index: 1;
+        }
+
         /* Watermark */
         .watermark {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.08); /* Very subtle */
-            white-space: nowrap;
-            z-index: 0;
+            transform: translate(-50%, -50%) rotate(-0deg);
+            z-index: 2;
             width: 100%;
             text-align: center;
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.15;
+            background: rgba(255,255,255,0.05); /* subtle backdrop */
+            padding: 10px 0;
+        }
+        .watermark-text {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: white;
+        }
+        .watermark-sub {
+            font-size: 10px;
+            font-style: italic;
+            margin-top: 2px;
+            color: white;
         }
 
         .header {
             position: relative;
             z-index: 10;
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.15);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             object-fit: contain;
             float: left;
-            margin-right: 15px;
+            margin-right: 12px;
         }
         .header-text {
-            color: white;
-            text-align: left;
             float: left;
+            margin-top: 2px;
         }
         .school-name {
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.2;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
-        .school-sub {
-            font-size: 10px;
+        .school-address {
+            font-size: 9px;
             opacity: 0.9;
-            font-weight: normal;
+            margin-top: 4px;
+            font-weight: 300;
         }
 
         .content {
             position: relative;
             z-index: 10;
-            padding: 20px;
-            color: white;
-            clear: both;
+            padding: 15px 20px;
         }
         
-        .photo-container {
+        .photo-wrapper {
             float: left;
-            width: 100px;
-            height: 120px;
-            background: #e2e8f0;
-            border-radius: 8px;
+            width: 90px;
+            height: 110px;
+            background: #cbd5e1;
+            border-radius: 6px;
             overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.3);
-            margin-right: 20px;
+            border: 2px solid rgba(255,255,255,0.5);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-right: 15px;
         }
-        .photo {
+        .photo-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        .details {
+
+        .info-col {
             float: left;
-            width: 250px;
+            width: 280px;
+            padding-top: 0px;
         }
-        .row {
-            margin-bottom: 8px;
+        .info-row {
+            margin-bottom: 3px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 2px;
         }
-        .label {
-            font-size: 10px;
+        .info-label {
+            display: inline-block;
+            width: 60px;
+            font-size: 9px;
             color: rgba(255,255,255,0.7);
-            text-transform: uppercase;
-            width: 80px;
-            display: inline-block;
+            font-weight: 500;
         }
-        .value {
-            font-size: 12px;
-            font-weight: 600;
+        .info-value {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
             color: white;
-            display: inline-block;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.2);
         }
-        
-        .qr-container {
+
+        /* Virtual Account Box */
+        .va-box {
+            margin-top: 8px;
+            margin-bottom: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 4px 8px;
+            display: inline-block;
+            border: 1px dashed rgba(255,255,255,0.3);
+        }
+        .va-label {
+            font-size: 8px;
+            color: #d1fae5;
+            display: block;
+            margin-bottom: 1px;
+        }
+        .va-number {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+            color: #fbbf24; /* Amber color for visibility */
+        }
+
+        .qr-area {
             position: absolute;
-            bottom: 20px;
+            bottom: 40px;
             right: 20px;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: white;
-            border-radius: 8px;
-            padding: 5px;
+            padding: 3px;
+            border-radius: 4px;
             z-index: 10;
         }
-        
+
         .footer {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0,0,0,0.2);
-            padding: 8px;
+            background: linear-gradient(to top, rgba(0,0,0,0.3), rgba(0,0,0,0));
+            padding: 8px 0 12px 0;
             text-align: center;
-            font-size: 8px;
-            color: rgba(255,255,255,0.8);
+            font-size: 7px;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.6);
             z-index: 10;
         }
         
-        /* Helper for clearance */
         .clearfix::after {
             content: "";
             clear: both;
@@ -162,60 +234,61 @@
 <body>
     <div class="container">
         <div class="card">
+            <div class="circle-bg"></div>
+            <div class="circle-bg-2"></div>
+            
             <div class="watermark">
-                Management Riyadlul Huda<br>
-                Created by Mahin Utsman Nawawi
+                <div class="watermark-text">MANAGEMENT RIYADLUL HUDA</div>
+                <div class="watermark-sub">Dibuat Oleh : Mahin Utsman Nawawi, S.H</div>
             </div>
 
             <div class="header clearfix">
                 <img src="{{ public_path('images/logo.png') }}" class="logo" alt="Logo">
                 <div class="header-text">
                     <div class="school-name">PONPES RIYADLUL HUDA</div>
-                    <div class="school-sub">Ngetsi, Tlogorejo, Tegowanu, Grobogan</div>
+                    <div class="school-address">Ngetsi, Tlogorejo, Tegowanu, Grobogan</div>
                 </div>
             </div>
 
             <div class="content clearfix">
-                <!-- Santri Photo -->
-                <div class="photo-container">
+                <div class="photo-wrapper">
                     @if($santri->foto && file_exists(storage_path('app/public/santri-photos/' . $santri->foto)))
-                        <img src="{{ storage_path('app/public/santri-photos/' . $santri->foto) }}" class="photo">
+                        <img src="{{ storage_path('app/public/santri-photos/' . $santri->foto) }}" class="photo-img">
                     @else
-                        <!-- Fallback Avatar -->
-                        <div style="width: 100%; height: 100%; background: #cbd5e1; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 30px; font-weight: bold; text-align: center; line-height: 120px;">
+                        <div style="width: 100%; height: 100%; background: #94a3b8; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">
                             {{ substr($santri->nama_santri, 0, 1) }}
                         </div>
                     @endif
                 </div>
 
-                <!-- Details -->
-                <div class="details">
-                    <div class="row">
-                        <span class="label">NAMA</span>
-                        <span class="value">: {{ strtoupper($santri->nama_santri) }}</span>
+                <div class="info-col">
+                    <div class="info-row">
+                        <span class="info-label">NAMA</span>
+                        <span class="info-value">: {{ strtoupper($santri->nama_santri) }}</span>
                     </div>
-                    <div class="row">
-                        <span class="label">NIS</span>
-                        <span class="value">: {{ $santri->nis }}</span>
+                    <div class="info-row">
+                        <span class="info-label">NIS</span>
+                        <span class="info-value">: {{ $santri->nis }}</span>
                     </div>
-                    <div class="row">
-                        <span class="label">KELAS</span>
-                        <span class="value">: {{ $santri->kelas->nama_kelas ?? '-' }}</span>
+                    <div class="info-row">
+                        <span class="info-label">KELAS</span>
+                        <span class="info-value">: {{ $santri->kelas->nama_kelas ?? '-' }}</span>
                     </div>
-                    <div class="row">
-                        <span class="label">KAMAR</span>
-                        <span class="value">: {{ $santri->kobong->nomor_kobong ?? '-' }}</span>
+                    <div class="info-row">
+                        <span class="info-label">ASRAMA</span>
+                        <span class="info-value">: {{ $santri->asrama->nama_asrama ?? '-' }} ({{ $santri->kobong->nomor_kobong ?? '-' }})</span>
                     </div>
-                    <div class="row">
-                        <span class="label">ASRAMA</span>
-                        <span class="value">: {{ $santri->asrama->nama_asrama ?? '-' }}</span>
+                    
+                    <!-- Virtual Account Section -->
+                    <div class="va-box">
+                        <span class="va-label">NOMOR VIRTUAL ACCOUNT (VA)</span>
+                        <span class="va-number">{{ $santri->virtual_account_number ?? '-' }}</span>
                     </div>
                 </div>
             </div>
 
-            <!-- QR Code (Placeholder using explicit URL or API for simplicity, or just an image if text) -->
-            <div class="qr-container">
-                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode($santri->nis . ' - ' . $santri->nama_santri) }}" style="width: 100%; height: 100%;">
+            <div class="qr-area">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode($santri->nis . ' - ' . $santri->nama_santri) }}" style="width: 100%; height: 100%;">
             </div>
 
             <div class="footer">
