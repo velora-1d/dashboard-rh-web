@@ -89,6 +89,7 @@ class PendidikanController extends Controller
             'status' => 'success',
             'message' => 'Agenda berhasil dihapus'
         ]);
+    }
 
     // E-Rapor: Get Class List
     public function getKelasList()
