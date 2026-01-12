@@ -74,7 +74,7 @@ class BendaharaController extends Controller
                 return [
                     'id' => $item->id,
                     'keterangan' => $item->keterangan,
-                    'jumlah' => $item->jumlah,
+                    'jumlah' => $item->nominal,
                     'tanggal' => $item->tanggal,
                     'kategori' => $item->kategori ?? 'Umum',
                 ];
