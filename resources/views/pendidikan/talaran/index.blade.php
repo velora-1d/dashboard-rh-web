@@ -461,31 +461,35 @@
                                 </td>
 
                                 <!-- Period 1 -->
-                                <td><input type="number" name="minggu_1" value="{{ $talaran->minggu_1 ?? 0 }}" class="cell-input" min="0"></td>
-                                <td><input type="number" name="minggu_2" value="{{ $talaran->minggu_2 ?? 0 }}" class="cell-input" min="0"></td>
+                                <td><input type="number" name="minggu_1" value="{{ $talaran->minggu_1 ?? 0 }}" class="cell-input" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
+                                <td><input type="number" name="minggu_2" value="{{ $talaran->minggu_2 ?? 0 }}" class="cell-input" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
                                 <td class="text-sum">{{ $talaran->jumlah_1_2 ?? 0 }}</td>
-                                <td><input type="number" name="tamat_1_2" value="{{ $talaran->tamat_1_2 ?? 0 }}" class="cell-input cell-input-tamat" min="0"></td>
-                                <td><input type="number" name="alfa_1_2" value="{{ $talaran->alfa_1_2 ?? 0 }}" class="cell-input cell-input-alfa" min="0"></td>
+                                <td><input type="number" name="tamat_1_2" value="{{ $talaran->tamat_1_2 ?? 0 }}" class="cell-input cell-input-tamat" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
+                                <td><input type="number" name="alfa_1_2" value="{{ $talaran->alfa_1_2 ?? 0 }}" class="cell-input cell-input-alfa" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
                                 <td class="text-total">{{ $talaran->total_1_2 ?? '-' }}</td>
                                 <td class="text-alfa-display">
                                     @if(($talaran->alfa_1_2 ?? 0) > 0) ALFA {{ $talaran->alfa_1_2 }} @endif
                                 </td>
 
                                 <!-- Period 2 -->
-                                <td><input type="number" name="minggu_3" value="{{ $talaran->minggu_3 ?? 0 }}" class="cell-input" min="0"></td>
-                                <td><input type="number" name="minggu_4" value="{{ $talaran->minggu_4 ?? 0 }}" class="cell-input" min="0"></td>
+                                <td><input type="number" name="minggu_3" value="{{ $talaran->minggu_3 ?? 0 }}" class="cell-input" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
+                                <td><input type="number" name="minggu_4" value="{{ $talaran->minggu_4 ?? 0 }}" class="cell-input" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
                                 <td class="text-sum-2">{{ $talaran->jumlah_3_4 ?? 0 }}</td>
-                                <td><input type="number" name="tamat" value="{{ $talaran->tamat ?? 0 }}" class="cell-input cell-input-tamat" min="0"></td>
-                                <td><input type="number" name="alfa" value="{{ $talaran->alfa ?? 0 }}" class="cell-input cell-input-alfa" min="0"></td>
+                                <td><input type="number" name="tamat" value="{{ $talaran->tamat ?? 0 }}" class="cell-input cell-input-tamat" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
+                                <td><input type="number" name="alfa" value="{{ $talaran->alfa ?? 0 }}" class="cell-input cell-input-alfa" min="0" @if(auth()->user()->role === 'rois') disabled style="background:#f3f4f6; cursor:not-allowed;" @endif></td>
                                 <td class="text-total">{{ $talaran->total_3_4 ?? '-' }}</td>
                                 <td class="text-alfa-display">
                                     @if(($talaran->alfa ?? 0) > 0) ALFA {{ $talaran->alfa }} @endif
                                 </td>
 
                                 <td>
+                                    @if(auth()->user()->role !== 'rois')
                                     <button type="submit" class="btn-save" title="Simpan Perubahan">
                                         <i data-feather="save" style="width: 16px;"></i>
                                     </button>
+                                    @else
+                                    <span style="font-size: 10px; color: #ccc;">-</span>
+                                    @endif
                                 </td>
                             </form>
                         </tr>

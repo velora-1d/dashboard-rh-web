@@ -33,31 +33,31 @@
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Nama Yayasan (Kop Atas)</label>
                                 <input type="text" name="nama_yayasan" class="form-control" value="{{ $settings->nama_yayasan }}" required
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             </div>
 
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Nama Pondok / Sekolah (Kop Utama)</label>
                                 <input type="text" name="nama_pondok" class="form-control" value="{{ $settings->nama_pondok }}" required
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             </div>
 
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Alamat Lengkap</label>
                                 <textarea name="alamat" class="form-control" rows="2"
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">{{ $settings->alamat }}</textarea>
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>{{ $settings->alamat }}</textarea>
                             </div>
 
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Kontak / Telepon</label>
                                 <input type="text" name="telepon" class="form-control" value="{{ $settings->telepon }}"
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             </div>
                             
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Kota Terbit Rapor</label>
                                 <input type="text" name="kota_terbit" class="form-control" value="{{ $settings->kota_terbit }}" required
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             </div>
                         </div>
 
@@ -74,7 +74,7 @@
                                         </div>
                                     @endif
                                     <input type="file" name="logo_pondok" class="form-control" accept="image/*"
-                                        style="font-size: 12px;">
+                                        style="font-size: 12px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                                 </div>
                                 <div style="flex: 1;">
                                     <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Logo Pendidikan (Kanan)</label>
@@ -84,7 +84,7 @@
                                         </div>
                                     @endif
                                     <input type="file" name="logo_pendidikan" class="form-control" accept="image/*"
-                                        style="font-size: 12px;">
+                                        style="font-size: 12px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                                 </div>
                             </div>
 
@@ -95,13 +95,13 @@
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Nama Pimpinan</label>
                                 <input type="text" name="pimpinan_nama" class="form-control" value="{{ $settings->pimpinan_nama }}" required
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             </div>
                             
                             <div class="form-group mb-4">
                                 <label class="form-label" style="font-weight: 500; margin-bottom: 5px; display: block;">Jabatan</label>
                                 <input type="text" name="pimpinan_jabatan" class="form-control" value="{{ $settings->pimpinan_jabatan }}" required
-                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             </div>
 
                             <div class="form-group mb-4">
@@ -112,16 +112,23 @@
                                     </div>
                                 @endif
                                 <input type="file" name="pimpinan_ttd" class="form-control" accept="image/png"
-                                    style="font-size: 12px;">
+                                    style="font-size: 12px;" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                                 <small class="text-muted" style="display: block; margin-top: 4px; font-size: 11px;">* Wajib upload untuk fitur cetak otomatis</small>
                             </div>
                         </div>
                     </div>
 
                     <div class="text-right mt-4" style="text-align: right; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                        @if(auth()->user()->role !== 'rois')
                         <button type="submit" class="btn btn-primary" style="background: #3b82f6; color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">
                             <i data-feather="save" style="width: 16px; margin-right: 5px;"></i> Simpan Pengaturan
                         </button>
+                        @else
+                        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: #f1f5f9; color: #64748b; border-radius: 8px; font-weight: 600; font-size: 14px;">
+                            <i data-feather="lock" style="width: 18px; height: 18px;"></i>
+                            Mode Baca Saja
+                        </div>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -170,8 +177,12 @@
                                         <form action="{{ route('pendidikan.kelas.upload-ttd', $kelas->id) }}" method="POST" enctype="multipart/form-data" class="flex-center-end">
                                             @csrf
                                             <input type="hidden" name="type" value="putra">
+                                            @if(auth()->user()->role !== 'rois')
                                             <input type="file" name="ttd_file" required class="form-control" accept="image/png" style="width: 180px; font-size: 11px;">
                                             <button type="submit" class="btn btn-sm-upload"><i data-feather="upload" style="width: 12px;"></i> Upload</button>
+                                            @else
+                                            <span style="font-size: 11px; color: #94a3b8; font-style: italic;">Read-Only</span>
+                                            @endif
                                         </form>
                                     </td>
                                 </tr>
@@ -193,8 +204,12 @@
                                         <form action="{{ route('pendidikan.kelas.upload-ttd', $kelas->id) }}" method="POST" enctype="multipart/form-data" class="flex-center-end">
                                             @csrf
                                             <input type="hidden" name="type" value="putri">
+                                            @if(auth()->user()->role !== 'rois')
                                             <input type="file" name="ttd_file" required class="form-control" accept="image/png" style="width: 180px; font-size: 11px;">
                                             <button type="submit" class="btn btn-sm-upload"><i data-feather="upload" style="width: 12px;"></i> Upload</button>
+                                            @else
+                                            <span style="font-size: 11px; color: #94a3b8; font-style: italic;">Read-Only</span>
+                                            @endif
                                         </form>
                                     </td>
                                 </tr>
@@ -217,8 +232,12 @@
                                         <form action="{{ route('pendidikan.kelas.upload-ttd', $kelas->id) }}" method="POST" enctype="multipart/form-data" class="flex-center-end">
                                             @csrf
                                             <input type="hidden" name="type" value="umum">
+                                            @if(auth()->user()->role !== 'rois')
                                             <input type="file" name="ttd_file" required class="form-control" accept="image/png" style="width: 200px; font-size: 12px;">
                                             <button type="submit" class="btn btn-sm-upload"><i data-feather="upload" style="width: 14px;"></i> Upload</button>
+                                            @else
+                                            <span style="font-size: 11px; color: #94a3b8; font-style: italic;">Read-Only</span>
+                                            @endif
                                         </form>
                                     </td>
                                 </tr>

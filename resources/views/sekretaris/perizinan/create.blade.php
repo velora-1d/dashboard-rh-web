@@ -32,7 +32,7 @@
                     <!-- Santri Selection -->
                     <div style="grid-column: span 2;">
                         <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 8px;">Nama Santri <span style="color: #ef4444;">*</span></label>
-                        <select name="santri_id" class="form-control" required style="height: 42px; border-radius: 8px; border: 1px solid #d1d5db; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        <select name="santri_id" class="form-control" required style="height: 42px; border-radius: 8px; border: 1px solid #d1d5db; box-shadow: 0 1px 2px rgba(0,0,0,0.05); {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             <option value="">-- Pilih Santri --</option>
                             @foreach($santri as $s)
                             <option value="{{ $s->id }}">{{ $s->nis }} - {{ $s->nama_santri }}</option>
@@ -43,7 +43,7 @@
                     <!-- Jenis Izin -->
                     <div style="grid-column: span 2;">
                         <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 8px;">Jenis Izin <span style="color: #ef4444;">*</span></label>
-                        <select name="jenis" class="form-control" required style="height: 42px; border-radius: 8px; border: 1px solid #d1d5db; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        <select name="jenis" class="form-control" required style="height: 42px; border-radius: 8px; border: 1px solid #d1d5db; box-shadow: 0 1px 2px rgba(0,0,0,0.05); {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                             <option value="Izin">Izin Keluar</option>
                             <option value="Sakit">Sakit</option>
                             <option value="Pulang">Pulang ke Rumah</option>
@@ -54,28 +54,34 @@
                     <div>
                         <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 8px;">Tanggal Mulai <span style="color: #ef4444;">*</span></label>
                         <input type="date" name="tgl_mulai" value="{{ date('Y-m-d') }}" required
-                               style="display: block; width: 100%; height: 42px; padding: 8px 12px; font-size: 0.95rem; line-height: 1.5; color: #1f2937; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+                               style="display: block; width: 100%; height: 42px; padding: 8px 12px; font-size: 0.95rem; line-height: 1.5; color: #1f2937; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     </div>
 
                     <!-- Tanggal Selesai -->
                     <div>
                         <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 8px;">Tanggal Selesai <span style="font-weight: 400; color: #9ca3af;">(Opsional)</span></label>
                         <input type="date" name="tgl_selesai" 
-                               style="display: block; width: 100%; height: 42px; padding: 8px 12px; font-size: 0.95rem; line-height: 1.5; color: #1f2937; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+                               style="display: block; width: 100%; height: 42px; padding: 8px 12px; font-size: 0.95rem; line-height: 1.5; color: #1f2937; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     </div>
 
                     <!-- Alasan -->
                     <div style="grid-column: span 2;">
                         <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 8px;">Alasan <span style="color: #ef4444;">*</span></label>
                         <textarea name="alasan" rows="3" required
-                                  style="display: block; width: 100%; padding: 8px 12px; font-size: 0.95rem; line-height: 1.5; color: #1f2937; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); resize: vertical;"></textarea>
+                                  style="display: block; width: 100%; padding: 8px 12px; font-size: 0.95rem; line-height: 1.5; color: #1f2937; background-color: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); resize: vertical; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}></textarea>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 12px; border-top: 1px solid #f3f4f6; padding-top: 24px; margin-top: 8px;">
-                    <button type="submit" style="background: #4caf50; color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px -1px rgba(76, 175, 80, 0.3); transition: all 0.2s;" onmouseover="this.style.background='#43a047'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#4caf50'; this.style.transform='translateY(0)'">
-                        <i class="fas fa-save"></i> Simpan Izin
-                    </button>
+                <div style="display: flex; gap: 12px; border-top: 1px solid #f3f4f6; padding-top: 24px; margin-top: 8px; align-items: center;">
+                    @if(auth()->user()->role !== 'rois')
+                        <button type="submit" style="background: #4caf50; color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px -1px rgba(76, 175, 80, 0.3); transition: all 0.2s;" onmouseover="this.style.background='#43a047'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#4caf50'; this.style.transform='translateY(0)'">
+                            <i class="fas fa-save"></i> Simpan Izin
+                        </button>
+                    @else
+                        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: #f1f5f9; color: #64748b; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid #e2e8f0;">
+                            <i class="fas fa-lock"></i> Mode Baca Saja
+                        </div>
+                    @endif
                     <a href="{{ route('sekretaris.perizinan.index') }}" style="background: white; color: #6b7280; border: 1px solid #d1d5db; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;" onmouseover="this.style.background='#f9fafb'; this.style.color='#374151'" onmouseout="this.style.background='white'; this.style.color='#6b7280'">
                         Batal
                     </a>

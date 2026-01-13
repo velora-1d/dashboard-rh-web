@@ -1,5 +1,5 @@
 {{-- Bendahara Sidebar Menu --}}
-@if(auth()->check() && strtolower(auth()->user()->role ?? '') === 'admin')
+@if(auth()->check() && (strtolower(auth()->user()->role ?? '') === 'admin' || strtolower(auth()->user()->role ?? '') === 'rois'))
 <li class="sidebar-menu-item" style="margin-bottom: 12px;">
     <a href="{{ route('admin.dashboard') }}" class="sidebar-menu-link" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border-radius: 8px;">
         <i data-feather="arrow-left" class="sidebar-menu-icon" style="color: white;"></i>

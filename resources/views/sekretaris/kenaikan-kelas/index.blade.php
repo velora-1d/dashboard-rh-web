@@ -58,7 +58,7 @@
                         <i data-feather="book" style="width: 14px; height: 14px; color: #667eea;"></i>
                         Kelas Asal <span style="color: #ef4444;">*</span>
                     </label>
-                    <select name="kelas_asal_id" id="kelas_asal_id" required style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer;">
+                    <select name="kelas_asal_id" id="kelas_asal_id" required style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Kelas Asal</option>
                         @foreach($kelasList as $kelas)
                             <option value="{{ $kelas->id }}" data-nama="{{ $kelas->nama_kelas }}">{{ $kelas->nama_kelas }}</option>
@@ -75,7 +75,7 @@
                         <i data-feather="book-open" style="width: 14px; height: 14px; color: #43e97b;"></i>
                         Kelas Tujuan <span style="color: #ef4444;">*</span>
                     </label>
-                    <select name="kelas_tujuan_id" id="kelas_tujuan_id" required style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer;">
+                    <select name="kelas_tujuan_id" id="kelas_tujuan_id" required style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Kelas Tujuan</option>
                         @foreach($kelasList as $kelas)
                             <option value="{{ $kelas->id }}">{{ $kelas->nama_kelas }}</option>
@@ -89,14 +89,14 @@
                         <i data-feather="users" style="width: 14px; height: 14px; color: #f472b6;"></i>
                         Gender
                     </label>
-                    <select name="gender" id="gender_filter" style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer;">
+                    <select name="gender" id="gender_filter" style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Semua</option>
                         <option value="putra">Putra</option>
                         <option value="putri">Putri</option>
                     </select>
                 </div>
                 
-                <button type="button" id="load_santri_btn" style="height: 46px; padding: 0 20px; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                <button type="button" id="load_santri_btn" style="height: 46px; padding: 0 20px; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'opacity: 0.6; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     <i data-feather="users" style="width: 18px; height: 18px;"></i>
                     Tampilkan
                 </button>
@@ -156,6 +156,7 @@
                 </div>
 
                 <div style="text-align: right;">
+                    @if(auth()->user()->role !== 'rois')
                     <button type="submit" style="padding: 14px 40px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(67, 233, 123, 0.4); display: inline-flex; align-items: center; gap: 8px;">
                         <i data-feather="check-circle" style="width: 20px; height: 20px;"></i>
                         Proses Kenaikan Kelas
@@ -163,6 +164,12 @@
                     <p style="margin: 8px 0 0 0; font-size: 12px; color: #9ca3af;">
                         * Pastikan data sudah benar. Aksi ini tidak dapat dibatalkan dengan mudah.
                     </p>
+                    @else
+                    <div style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: #f3f4f6; color: #6b7280; border-radius: 12px; font-weight: 600;">
+                        <i data-feather="lock" style="width: 18px; height: 18px;"></i>
+                        Mode Baca Saja (Read-Only)
+                    </div>
+                    @endif
                 </div>
             </div>
         </form>

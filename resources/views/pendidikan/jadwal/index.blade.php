@@ -28,6 +28,7 @@
     </div>
 
 
+    @if(auth()->user()->role !== 'rois')
     <!-- Add Form with Modern Compact Design -->
     <div style="background: white; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid rgba(59,130,246,0.1);">
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
@@ -147,6 +148,7 @@
             </div>
         </form>
     </div>
+    @endif
 
     <!-- Jadwal Table -->
     <!-- Jadwal Table Grouped by Kelas -->
@@ -169,6 +171,7 @@
                 </div>
                 <!-- Dual Wali Kelas Inputs -->
                 <div style="display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap;">
+                    @if(auth()->user()->role !== 'rois')
                     <!-- Wali Kelas Putra -->
                     <div style="display: flex; align-items: center; gap: 6px;">
                         <span style="font-weight: 500; color: #1e40af; font-size: 12px;">👨 Wali Putra:</span>
@@ -198,6 +201,20 @@
                         <i data-feather="save" style="width: 11px; height: 11px;"></i>
                         Simpan Wali Kelas
                     </button>
+                    @else
+                    <!-- Read Only Wali Kelas -->
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="font-weight: 500; color: #1e40af; font-size: 12px;">👨 Wali Putra:</span>
+                            <span style="font-size: 12px; color: #4b5563;">{{ $kelas->wali_kelas_putra ?? '-' }}</span>
+                        </div>
+                        <div style="width: 1px; height: 16px; background: #cbd5e1;"></div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="font-weight: 500; color: #db2777; font-size: 12px;">👩 Wali Putri:</span>
+                            <span style="font-size: 12px; color: #4b5563;">{{ $kelas->wali_kelas_putri ?? '-' }}</span>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div style="overflow-x: auto;">
@@ -254,6 +271,7 @@
                                         <span style="display: inline-block; padding: 4px 8px; background: #e0f2fe; color: #0369a1; border-radius: 12px; font-size: 11px; font-weight: 600;">{{ $j->semester }}</span>
                                     </td>
                                     <td style="padding: 10px; text-align: center;">
+                                        @if(auth()->user()->role !== 'rois')
                                         <div style="display: flex; gap: 4px; justify-content: center;">
                                             <button type="button" onclick="editJadwal({{ $j->id }}, {{ $j->kelas_id }}, {{ $j->mapel_id }}, '{{ $j->hari }}', '{{ $j->jam_mulai }}', '{{ $j->jam_selesai }}', '{{ $j->ruangan }}', '{{ $j->tahun_ajaran }}', {{ $j->semester }}, '{{ $j->guru_badal }}')" 
                                                 style="padding: 6px 10px; background: white; color: #3b82f6; border: 1.5px solid #3b82f6; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;"
@@ -274,6 +292,9 @@
                                                 </button>
                                             </form>
                                         </div>
+                                        @else
+                                        <span class="badge bg-secondary" style="font-size: 10px; padding: 4px 8px; color: #64748b; background: #f1f5f9; border-radius: 4px;">Read-Only</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

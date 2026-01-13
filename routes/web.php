@@ -40,6 +40,7 @@ Route::get('/', function () {
     $user = Auth::user();
     return match($user->role) {
         'admin' => redirect()->route('admin.dashboard'),
+        'rois' => redirect()->route('admin.dashboard'),
         'pendidikan' => redirect()->route('pendidikan.dashboard'),
         'sekretaris' => redirect()->route('sekretaris.dashboard'),
         'bendahara' => redirect()->route('bendahara.dashboard'),

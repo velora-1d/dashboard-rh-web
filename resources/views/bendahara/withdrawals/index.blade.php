@@ -19,6 +19,7 @@
                 <p style="margin: 8px 0 0 0; font-size: 0.8rem; opacity: 0.8;">Dana yang tersedia untuk ditarik ke rekening yayasan.</p>
             </div>
 
+            @if(auth()->user()->role !== 'rois')
             <div style="background: white; border-radius: 20px; padding: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; position: sticky; top: 24px;">
                 <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e2937; margin-bottom: 8px;">Ajukan Penarikan</h3>
                 <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 24px;">Tarik saldo operasional ke rekening bank yang terdaftar.</p>
@@ -49,6 +50,7 @@
                     <button type="submit" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 16px; border-radius: 14px; font-weight: 700; border: none; cursor: pointer; font-size: 1.05rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); transition: all 0.2s ease;">Ajukan Penarikan Sekarang</button>
                 </form>
             </div>
+            @endif
         </div>
 
         <!-- Withdrawal History -->

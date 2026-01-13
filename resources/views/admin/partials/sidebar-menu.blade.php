@@ -45,11 +45,13 @@
     </a>
 </li>
 
+@if(auth()->user()->role !== 'rois')
 <li class="sidebar-menu-item" style="margin-top: 16px;">
     <a href="{{ route('backup.download') }}" class="sidebar-menu-link" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);">
         <i data-feather="download" class="sidebar-menu-icon" style="color: #22c55e;"></i>
         <span style="color: #22c55e;">Backup Database</span>
     </a>
 </li>
+@endif
 
 

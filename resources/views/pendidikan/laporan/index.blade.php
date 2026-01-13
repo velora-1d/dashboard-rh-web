@@ -75,9 +75,11 @@
                     <div class="form-group">
                         <label class="form-label" style="font-size: 13px; font-weight: 600; color: #374151;">
                             Tahun Ajaran
+                            @if(auth()->user()->role !== 'rois')
                             <button type="button" onclick="openTahunAjaranModal()" style="border: none; background: none; color: #3b82f6; cursor: pointer; font-size: 11px; margin-left: 4px; text-decoration: underline;">
                                 (Kelola)
                             </button>
+                            @endif
                         </label>
                         <select name="tahun_ajaran" class="form-select" required style="border: 1.5px solid #d1d5db; border-radius: 6px; padding: 8px;">
                             <option value="all">Semua</option>
@@ -254,6 +256,7 @@
                 </button>
             </div>
             <div style="padding: 20px;">
+                @if(auth()->user()->role !== 'rois')
                 <!-- Add Form -->
                 <form action="{{ route('pendidikan.tahun-ajaran.store') }}" method="POST" style="margin-bottom: 20px; display: flex; gap: 10px;">
                     @csrf
@@ -263,6 +266,7 @@
                         Tambah
                     </button>
                 </form>
+                @endif
 
                 <!-- List -->
                 <div style="max-height: 300px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
@@ -281,6 +285,7 @@
                                     <td style="padding: 8px 12px; border-bottom: 1px solid #f1f5f9; color: #64748b;">{{ $index + 1 }}</td>
                                     <td style="padding: 8px 12px; border-bottom: 1px solid #f1f5f9; color: #1e293b; font-weight: 500;">{{ $ta->nama }}</td>
                                     <td style="padding: 8px 12px; border-bottom: 1px solid #f1f5f9; text-align: right;">
+                                        @if(auth()->user()->role !== 'rois')
                                         <form action="{{ route('pendidikan.tahun-ajaran.destroy', $ta->id) }}" method="POST" onsubmit="return confirm('Hapus tahun ajaran {{ $ta->nama }}?');" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
@@ -288,6 +293,9 @@
                                                 <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
                                             </button>
                                         </form>
+                                        @else
+                                        -
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

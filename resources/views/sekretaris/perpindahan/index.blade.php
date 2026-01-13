@@ -87,10 +87,12 @@
                             <span id="checked_counter" style="display: none; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">0 dipilih</span>
                         </h4>
                         <div style="display: flex; gap: 8px;">
+                            @if(auth()->user()->role !== 'rois')
                             <button type="button" id="apply_bulk_btn" style="padding: 8px 14px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                                 <i data-feather="copy" style="width: 14px; height: 14px;"></i>
                                 Terapkan ke Terpilih
                             </button>
+                            @endif
                         </div>
                     </div>
 
@@ -147,7 +149,7 @@
                             <div style="font-size: 14px; color: #166534;">
                                 <strong id="changed_count">0</strong> santri akan dipindahkan
                             </div>
-                            <button type="submit" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 14px 32px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(67, 233, 123, 0.35);">
+                            <button type="submit" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 14px 32px; border-radius: 10px; font-weight: 600; font-size: 15px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(67, 233, 123, 0.35); {{ auth()->user()->role === 'rois' ? 'display: none !important;' : '' }}">
                                 <i data-feather="check-circle" style="width: 20px; height: 20px;"></i>
                                 Proses Perpindahan
                             </button>
@@ -296,12 +298,12 @@
                             <div style="font-size: 11px; color: #6b7280;">Kobong ${currentKobong}</div>
                         </td>
                         <td style="padding: 10px 16px;">
-                            <select name="assignments[${santri.id}][asrama_id]" class="asrama-select" data-santri-id="${santri.id}" style="width: 100%; height: 36px; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0 8px; font-size: 12px;">
+                            <select name="assignments[${santri.id}][asrama_id]" class="asrama-select" data-santri-id="${santri.id}" style="width: 100%; height: 36px; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0 8px; font-size: 12px; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}">
                                 ${asramaOptions}
                             </select>
                         </td>
                         <td style="padding: 10px 16px;">
-                            <select name="assignments[${santri.id}][kobong_id]" class="kobong-select" data-santri-id="${santri.id}" style="width: 100%; height: 36px; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0 8px; font-size: 12px;">
+                            <select name="assignments[${santri.id}][kobong_id]" class="kobong-select" data-santri-id="${santri.id}" style="width: 100%; height: 36px; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0 8px; font-size: 12px; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}">
                                 <option value="${kobongId}">${kobongId ? 'Kobong ' + currentKobong : '-'}</option>
                             </select>
                         </td>

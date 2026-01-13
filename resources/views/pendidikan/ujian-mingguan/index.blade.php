@@ -193,7 +193,7 @@
                                                    max="100"
                                                    step="0.01"
                                                    placeholder="-"
-                                                   style="width: 70px; padding: 6px; font-size: 13px; text-align: center; border: 2px solid #e0e0e0; border-radius: 4px; transition: all 0.2s;"
+                                                   @if(auth()->user()->role === 'rois') disabled style="width: 70px; padding: 6px; font-size: 13px; text-align: center; border: 2px solid #e0e0e0; border-radius: 4px; transition: all 0.2s; background-color: #f3f4f6; cursor: not-allowed;" @else style="width: 70px; padding: 6px; font-size: 13px; text-align: center; border: 2px solid #e0e0e0; border-radius: 4px; transition: all 0.2s;" @endif
                                                    onfocus="this.style.borderColor='#9c27b0'; this.style.boxShadow='0 0 0 3px rgba(156,39,176,0.1)'"
                                                    onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'">
                                         </td>
@@ -220,6 +220,7 @@
                 </div>
                 
                 <div style="padding: 20px; background: #f8f9fa; border-top: 2px solid #e0e0e0;">
+                    @if(auth()->user()->role !== 'rois')
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <button type="submit" class="btn btn-primary" style="padding: 10px 24px; font-size: 14px; background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%); border: none; border-radius: 6px; color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(156,39,176,0.3);">
                             <i data-feather="save" style="width: 16px; height: 16px;"></i>
@@ -230,6 +231,11 @@
                             Reset Semua
                         </button>
                     </div>
+                    @else
+                    <div style="padding: 12px; background: #e2e8f0; color: #475569; border-radius: 8px; font-weight: 600; text-align: center;">
+                        Mode Baca Saja (Read-Only)
+                    </div>
+                    @endif
                     
                     <div style="margin-top: 16px; padding: 12px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
                         <p style="margin: 0; font-size: 12px; color: #856404;">

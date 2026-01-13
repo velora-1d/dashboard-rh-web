@@ -179,6 +179,7 @@
             </div>
         </a>
 
+        @if(auth()->user()->role !== 'rois')
         <a href="{{ route('sekretaris.data-santri.create') }}" style="text-decoration: none;">
             <div class="card" style="text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                 <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
@@ -188,6 +189,7 @@
                 <p style="font-size: 12px; color: #6b7280; margin: 0;">Input santri baru</p>
             </div>
         </a>
+        @endif
 
         <a href="{{ route('sekretaris.mutasi-santri') }}" style="text-decoration: none;">
             <div class="card" style="text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">

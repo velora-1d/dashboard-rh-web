@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'midtrans/webhook',
             'api/midtrans/callback',
         ]);
+
+        // Append ReadOnly check for Rois to all web routes
+        $middleware->append(\App\Http\Middleware\EnsureReadOnly::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -34,19 +34,19 @@
             <div class="grid grid-cols-2">
                 <div class="form-group">
                     <label class="form-label">NIS *</label>
-                    <input type="text" name="nis" class="form-input" value="{{ old('nis') }}" required>
+                    <input type="text" name="nis" class="form-input" value="{{ old('nis') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     @error('nis')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Nama Santri *</label>
-                    <input type="text" name="nama_santri" class="form-input" value="{{ old('nama_santri') }}" required>
+                    <input type="text" name="nama_santri" class="form-input" value="{{ old('nama_santri') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     @error('nama_santri')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Gender *</label>
-                    <select name="gender" class="form-select" required>
+                    <select name="gender" class="form-select" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Gender</option>
                         <option value="putra" {{ old('gender') == 'putra' ? 'selected' : '' }}>Putra</option>
                         <option value="putri" {{ old('gender') == 'putri' ? 'selected' : '' }}>Putri</option>
@@ -55,21 +55,21 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Tanggal Lahir (Untuk Login Wali) *</label>
-                    <input type="date" name="tanggal_lahir" class="form-input" value="{{ old('tanggal_lahir') }}" required>
+                    <input type="date" name="tanggal_lahir" class="form-input" value="{{ old('tanggal_lahir') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     @error('tanggal_lahir')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Foto Santri (Opsional)</label>
-                    <input type="file" name="foto" class="form-input" accept="image/*">
+                    <input type="file" name="foto" class="form-input" accept="image/*" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     <small style="color: #64748b; font-size: 0.75rem;">Format: JPG, PNG. Maks: 2MB.</small>
                     @error('foto')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Tanggal Masuk *</label>
-                    <input type="date" name="tanggal_masuk" class="form-input" value="{{ old('tanggal_masuk', date('Y-m-d')) }}" required>
+                    <input type="date" name="tanggal_masuk" class="form-input" value="{{ old('tanggal_masuk', date('Y-m-d')) }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     @error('tanggal_masuk')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
             </div>
@@ -81,32 +81,32 @@
             <div class="grid grid-cols-2">
                 <div class="form-group">
                     <label class="form-label">Negara *</label>
-                    <input type="text" name="negara" class="form-input" value="{{ old('negara', 'Indonesia') }}" required>
+                    <input type="text" name="negara" class="form-input" value="{{ old('negara', 'Indonesia') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Provinsi *</label>
-                    <input type="text" name="provinsi" class="form-input" value="{{ old('provinsi') }}" required>
+                    <input type="text" name="provinsi" class="form-input" value="{{ old('provinsi') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Kota/Kabupaten *</label>
-                    <input type="text" name="kota_kabupaten" class="form-input" value="{{ old('kota_kabupaten') }}" required>
+                    <input type="text" name="kota_kabupaten" class="form-input" value="{{ old('kota_kabupaten') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Kecamatan *</label>
-                    <input type="text" name="kecamatan" class="form-input" value="{{ old('kecamatan') }}" required>
+                    <input type="text" name="kecamatan" class="form-input" value="{{ old('kecamatan') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Desa/Kampung *</label>
-                    <input type="text" name="desa_kampung" class="form-input" value="{{ old('desa_kampung') }}" required>
+                    <input type="text" name="desa_kampung" class="form-input" value="{{ old('desa_kampung') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">RT/RW *</label>
-                    <input type="text" name="rt_rw" class="form-input" placeholder="001/002" value="{{ old('rt_rw') }}" required>
+                    <input type="text" name="rt_rw" class="form-input" placeholder="001/002" value="{{ old('rt_rw') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
             </div>
             
@@ -117,12 +117,12 @@
             <div class="grid grid-cols-2">
                 <div class="form-group">
                     <label class="form-label">Nama Orang Tua/Wali *</label>
-                    <input type="text" name="nama_ortu_wali" class="form-input" value="{{ old('nama_ortu_wali') }}" required>
+                    <input type="text" name="nama_ortu_wali" class="form-input" value="{{ old('nama_ortu_wali') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">No. HP Orang Tua/Wali *</label>
-                    <input type="text" name="no_hp_ortu_wali" class="form-input" placeholder="08xxxxxxxxxx" value="{{ old('no_hp_ortu_wali') }}" required>
+                    <input type="text" name="no_hp_ortu_wali" class="form-input" placeholder="08xxxxxxxxxx" value="{{ old('no_hp_ortu_wali') }}" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
             </div>
             
@@ -133,7 +133,7 @@
             <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label class="form-label">Kelas *</label>
-                    <select name="kelas_id" class="form-select" required>
+                    <select name="kelas_id" class="form-select" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Kelas</option>
                         @foreach($kelasList as $kelas)
                             <option value="{{ $kelas->id }}" {{ old('kelas_id') == $kelas->id ? 'selected' : '' }}>
@@ -145,7 +145,7 @@
                 
                 <div class="form-group">
                     <label class="form-label">Asrama *</label>
-                    <select name="asrama_id" id="asrama_id" class="form-select" required>
+                    <select name="asrama_id" id="asrama_id" class="form-select" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Asrama</option>
                         @foreach($asramaList as $asrama)
                             <option value="{{ $asrama->id }}" {{ old('asrama_id') == $asrama->id ? 'selected' : '' }}>
@@ -157,17 +157,24 @@
                 
                 <div class="form-group">
                     <label class="form-label">Kobong *</label>
-                    <select name="kobong_id" id="kobong_id" class="form-select" required>
+                    <select name="kobong_id" id="kobong_id" class="form-select" required {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Asrama Dulu</option>
                     </select>
                 </div>
             </div>
             
-            <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-xl);">
-                <button type="submit" class="btn btn-primary">
-                    <i data-feather="save" style="width: 16px; height: 16px;"></i>
-                    Simpan
-                </button>
+            <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-xl); align-items: center;">
+                @if(auth()->user()->role !== 'rois')
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="save" style="width: 16px; height: 16px;"></i>
+                        Simpan
+                    </button>
+                @else
+                    <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: #f1f5f9; color: #64748b; border-radius: 8px; font-weight: 600; font-size: 14px; border: 1px solid #e2e8f0;">
+                        <i data-feather="lock" style="width: 18px; height: 18px;"></i>
+                        Mode Baca Saja
+                    </div>
+                @endif
                 <a href="{{ route('sekretaris.data-santri') }}" class="btn btn-secondary">Batal</a>
             </div>
         </form>

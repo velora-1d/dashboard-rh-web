@@ -25,10 +25,12 @@
                 <p style="color: rgba(255,255,255,0.95) !important; font-size: 1rem; margin: 0; font-weight: 500;">Kelola sistem, user, dan backup database dengan mudah</p>
             </div>
             <div style="display: flex; gap: 12px;">
+                @if(auth()->user()->role !== 'rois')
                 <a href="{{ route('backup.download') }}" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.3); transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
                     <i data-feather="download" style="width: 18px; height: 18px;"></i>
                     Backup Data
                 </a>
+                @endif
                 <a href="{{ route('admin.activity-log') }}" style="background: white; color: #6366f1; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                     <i data-feather="activity" style="width: 18px; height: 18px;"></i>
                     Riwayat Aktivitas
@@ -129,9 +131,11 @@
                     <h2 style="font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0;">Manajemen User</h2>
                     <p style="margin: 4px 0 0 0; color: #64748b; font-size: 0.85rem;">Kelola akses pengguna sistem</p>
                 </div>
+                @if(auth()->user()->role !== 'rois')
                 <button onclick="document.getElementById('addUserModal').style.display='flex'" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                     <i data-feather="plus" style="width: 16px; height: 16px;"></i> Tambah User
                 </button>
+                @endif
             </div>
             <div style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse;">
@@ -171,13 +175,15 @@
                             </td>
                             <td style="padding: 20px 24px; text-align: center;">
                                 @if($user->id !== auth()->id())
-                                <form action="{{ route('admin.user.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="return confirmDelete(event, 'User akan dihapus permanen.', 'Hapus User?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" style="background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s;" title="Hapus User" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
-                                        <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
-                                    </button>
-                                </form>
+                                    @if(auth()->user()->role !== 'rois')
+                                    <form action="{{ route('admin.user.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="return confirmDelete(event, 'User akan dihapus permanen.', 'Hapus User?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s;" title="Hapus User" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+                                            <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
+                                        </button>
+                                    </form>
+                                    @endif
                                 @else
                                 <span style="background: #f1f5f9; color: #94a3b8; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600;">YOU</span>
                                 @endif

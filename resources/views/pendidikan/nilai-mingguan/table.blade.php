@@ -11,10 +11,17 @@
                 <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: #1e293b;">
                     Input Ujian Mingguan
                 </h3>
+                @if(auth()->user()->role !== 'rois')
                 <button type="submit" style="padding: 10px 24px; background: #4f46e5; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
                     <i data-feather="save" style="width: 18px; height: 18px;"></i>
                     Simpan Perubahan
                 </button>
+                @else
+                <div style="padding: 10px 20px; background: #f1f5f9; color: #64748b; border-radius: 6px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+                    <i data-feather="lock" style="width: 16px; height: 16px;"></i>
+                    Baca Saja
+                </div>
+                @endif
             </div>
             
             <div style="overflow-x: auto;">
@@ -47,7 +54,8 @@
                                            class="mingguan-input"
                                            data-santri="{{ $santri->id }}"
                                            min="0" max="100" step="0.1"
-                                           style="width: 100%; padding: 8px; text-align: center; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                           style="width: 100%; padding: 8px; text-align: center; border: 1px solid #e2e8f0; border-radius: 6px; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}"
+                                           {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                                 </td>
                                 @endforeach
                                 <td style="padding: 16px; text-align: center; font-weight: 600; color: #4f46e5;">

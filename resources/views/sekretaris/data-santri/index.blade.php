@@ -76,6 +76,7 @@
                 </div>
             </div>
             <div style="display: flex; gap: 8px;">
+                @if(auth()->user()->role !== 'rois')
                 <button onclick="confirmAction('form-generate-va-bulk', 'Yakin ingin generate Virtual Account untuk SEMUA santri yang belum punya?', 'Generate VA Massal', 'Ya, Generate')" 
                     style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; backdrop-filter: blur(10px); transition: background 0.2s;" 
                     onmouseover="this.style.background='rgba(255,255,255,0.3)';" 
@@ -96,6 +97,7 @@
                     <i data-feather="user-plus" style="width: 18px; height: 18px;"></i>
                     Tambah Santri
                 </a>
+                @endif
             </div>
             
             <form id="form-generate-va-bulk" action="{{ route('santri.generate-va-bulk') }}" method="POST" style="display: none;">
@@ -107,6 +109,7 @@
         </div>
         
         <!-- Import Actions Row -->
+        @if(auth()->user()->role !== 'rois')
         <div style="display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 16px 20px; position: relative; z-index: 1;">
             <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
                 <i data-feather="upload" style="width: 20px; height: 20px; color: white;"></i>
@@ -138,6 +141,8 @@
                 </button>
             </form>
         </div>
+        @endif
+    </div>
     </div>
 
     <!-- Filter Section with Gradient -->
@@ -246,6 +251,7 @@
                         </td>
                         <td style="padding: 12px 16px; text-align: center;">
                             <div style="display: flex; gap: 6px; justify-content: center;">
+                                @if(auth()->user()->role !== 'rois')
                                 <a href="{{ route('sekretaris.data-santri.edit', $s->id) }}" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
                                     <i data-feather="edit-2" style="width: 14px; height: 14px; color: white;"></i>
                                 </a>
@@ -257,6 +263,9 @@
                                             <i data-feather="x-circle" style="width: 14px; height: 14px; color: white;"></i>
                                         </button>
                                     </form>
+                                @endif
+                                @else
+                                <span style="font-size: 12px; color: #9ca3af; font-style: italic;">Read-Only</span>
                                 @endif
                             </div>
                         </td>

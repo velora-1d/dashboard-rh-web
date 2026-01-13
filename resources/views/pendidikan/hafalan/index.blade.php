@@ -28,12 +28,14 @@
                 </div>
             </div>
             
+            @if(auth()->user()->role !== 'rois')
             <a href="{{ route('pendidikan.hafalan.create') }}" 
                style="background: white; color: #4caf50; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;"
                onmouseover="this.style.background='#f0fdf4'; this.style.transform='translateY(-1px)';"
                onmouseout="this.style.background='white'; this.style.transform='translateY(0)';">
                 <i class="fas fa-plus"></i> Tambah Hafalan
             </a>
+            @endif
         </div>
         
         <!-- Modern Filter Section -->
@@ -122,6 +124,7 @@
                             @endif
                         </td>
                         <td style="padding: 12px 16px;">
+                            @if(auth()->user()->role !== 'rois')
                             <div style="display: flex; gap: 6px;">
                                 <a href="{{ route('pendidikan.hafalan.edit', $item->id) }}" 
                                    style="padding: 6px 10px; background: #fff; border: 1px solid #e2e8f0; color: #f59e0b; border-radius: 6px; transition: all 0.2s;"
@@ -140,6 +143,9 @@
                                     </button>
                                 </form>
                             </div>
+                            @else
+                                <span class="text-muted" style="font-size: 11px; font-style: italic;">Read-Only</span>
+                            @endif
                         </td>
                     </tr>
                     @empty
@@ -206,10 +212,14 @@
                                 </span>
                             </td>
                             <td class="text-center" style="padding: 12px;">
-                                <button onclick="showKitabModal({{ $kelas->id }}, 1, '{{ addslashes($kitabName1 != '-' ? $kitabName1 : '') }}')" 
+                                @if(auth()->user()->role !== 'rois')
+                                <button onclick="showKitabModal({{ $kelas->id }}, 1, '{{ addslashes($kitabName1 != '-' ? $kitabName1 : '') }}')"
                                         style="background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;">
                                     <i class="fas fa-pencil-alt" style="font-size: 12px;"></i>
                                 </button>
+                                @else
+                                <span style="font-size: 11px; color: #ccc;">-</span>
+                                @endif
                             </td>
                             
                             <!-- Semester Genap -->
@@ -219,19 +229,25 @@
                                 </span>
                             </td>
                             <td class="text-center" style="padding: 12px;">
-                                <button onclick="showKitabModal({{ $kelas->id }}, 2, '{{ addslashes($kitabName2 != '-' ? $kitabName2 : '') }}')" 
+                                @if(auth()->user()->role !== 'rois')
+                                <button onclick="showKitabModal({{ $kelas->id }}, 2, '{{ addslashes($kitabName2 != '-' ? $kitabName2 : '') }}')"
                                         style="background: #fffbeb; border: 1px solid #fde68a; color: #d97706; width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;">
                                     <i class="fas fa-pencil-alt" style="font-size: 12px;"></i>
                                 </button>
+                                @else
+                                <span style="font-size: 11px; color: #ccc;">-</span>
+                                @endif
                             </td>
                             
                             <!-- Aksi Hapus -->
                             <td class="text-center" style="padding: 12px;">
+                                @if(auth()->user()->role !== 'rois')
                                 <button onclick="deleteKitab({{ $kelas->id }})" 
                                         style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;" 
                                         title="Hapus Semua">
                                     <i class="fas fa-trash" style="font-size: 12px;"></i>
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

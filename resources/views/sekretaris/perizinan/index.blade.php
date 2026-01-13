@@ -64,9 +64,11 @@
                 
                 <!-- Buttons -->
                 <div style="display: flex; gap: 8px;">
+                    @if(auth()->user()->role !== 'rois')
                     <a href="{{ route('sekretaris.perizinan.create') }}" style="height: 38px; padding: 0 16px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10b981'">
                         <i class="fas fa-plus"></i> Buat Izin
                     </a>
+                    @endif
                     <button type="submit" style="height: 38px; padding: 0 16px; background: #1e40af; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                         <i class="fas fa-search"></i> Filter
                     </button>
@@ -132,6 +134,7 @@
                         </td>
                         <td style="padding: 12px 16px;">
                             <div style="display: flex; gap: 6px;">
+                                @if(auth()->user()->role !== 'rois')
                                 <a href="{{ route('sekretaris.perizinan.edit', $item->id) }}"
                                    style="padding: 6px 10px; background: #fff; border: 1px solid #f59e0b; color: #f59e0b; border-radius: 6px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center;"
                                    title="Edit"
@@ -176,6 +179,9 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
+                                @else
+                                <span style="font-size: 11px; color: #64748b; font-style: italic;">Read-Only</span>
+                                @endif
                             </div>
                         </td>
                     </tr>

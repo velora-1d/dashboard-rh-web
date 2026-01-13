@@ -20,10 +20,12 @@
                     <p style="font-size: 14px; color: rgba(255,255,255,0.9); margin: 4px 0 0 0;">Kelola mata ujian dan kategori</p>
                 </div>
             </div>
+            @if(auth()->user()->role !== 'rois')
             <button onclick="openModal()" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: white; border: none; border-radius: 8px; color: #4f46e5; font-weight: 600; cursor: pointer;">
                 <i data-feather="plus" style="width: 18px; height: 18px;"></i>
                 Tambah Mata Ujian
             </button>
+            @endif
         </div>
     </div>
 
@@ -118,6 +120,7 @@
                         </td>
                         <td style="padding: 16px; text-align: center; color: #64748b; font-size: 14px;">{{ $m->kkm }}</td>
                         <td style="padding: 16px; text-align: right;">
+                            @if(auth()->user()->role !== 'rois')
                             <div style="display: flex; justify-content: flex-end; gap: 8px;">
                                 <button onclick="editMapel({{ $m->load('kelas') }})" style="padding: 6px; background: #fff7ed; border: 1px solid #ffedd5; border-radius: 6px; color: #ea580c; cursor: pointer;">
                                     <i data-feather="edit-2" style="width: 16px; height: 16px;"></i>
@@ -130,6 +133,9 @@
                                     </button>
                                 </form>
                             </div>
+                            @else
+                                <span class="badge bg-secondary" style="font-size: 10px; padding: 4px 8px; color: #64748b; background: #f1f5f9; border-radius: 4px;">Read-Only</span>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

@@ -15,9 +15,11 @@
             <h2 style="font-size: 1.5rem; font-weight: 800; color: #1e2937; margin: 0;">Daftar Rekening</h2>
             <p style="color: #64748b; margin-top: 4px;">Kelola rekening bank untuk tujuan pencairan dana.</p>
         </div>
+        @if(auth()->user()->role !== 'rois')
         <button onclick="document.getElementById('modalAdd').style.display='flex'" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 10px 20px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
             <i data-feather="plus" style="width: 18px; height: 18px;"></i> Tambah Rekening
         </button>
+        @endif
     </div>
 
     <!-- Alert Success -->
@@ -37,6 +39,7 @@
                         <i data-feather="credit-card" style="width: 24px; height: 24px; color: #64748b;"></i>
                     </div>
                     <div style="display: flex; gap: 8px;">
+                        @if(auth()->user()->role !== 'rois')
                         <button onclick="openEditModal({{ json_encode($account) }})" style="background: #f1f5f9; color: #475569; width: 32px; height: 32px; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;">
                             <i data-feather="edit-2" style="width: 14px; height: 14px;"></i>
                         </button>
@@ -47,6 +50,7 @@
                                 <i data-feather="trash-2" style="width: 14px; height: 14px;"></i>
                             </button>
                         </form>
+                        @endif
                     </div>
                 </div>
                 
@@ -70,7 +74,9 @@
                 </div>
                 <h3 style="font-size: 1.125rem; font-weight: 700; color: #64748b; margin: 0;">Belum Ada Rekening</h3>
                 <p style="color: #94a3b8; margin-top: 8px; max-width: 300px; margin-left: auto; margin-right: auto;">Tambahkan rekening bank untuk memproses penarikan dana.</p>
+                @if(auth()->user()->role !== 'rois')
                 <button onclick="document.getElementById('modalAdd').style.display='flex'" style="margin-top: 24px; background: #f1f5f9; color: #475569; padding: 10px 20px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer;">Tambah Sekarang</button>
+                @endif
             </div>
         @endforelse
     </div>

@@ -35,6 +35,7 @@
     @endif
 
     <div style="display: grid; grid-template-columns: 1fr; gap: 32px;">
+        @if(auth()->user()->role !== 'rois')
         <div style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; overflow: hidden;">
             <div style="padding: 24px 32px; border-bottom: 1px solid #f1f5f9; background: linear-gradient(to right, #f8fafc, white); display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -87,6 +88,7 @@
                 </form>
             </div>
         </div>
+        @endif
 
         <!-- Data Table Card -->
         <div style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; overflow: hidden;">
@@ -121,6 +123,7 @@
                                     </span>
                                 </td>
                                 <td style="padding: 16px 24px; text-align: center;">
+                                    @if(auth()->user()->role !== 'rois')
                                     <div style="display: flex; justify-content: center; gap: 8px;">
                                         <button onclick="toggleEdit({{ $p->id }})" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px; color: #475569; cursor: pointer; transition: all 0.2s;">
                                             <i data-feather="edit-2" style="width: 16px; height: 16px;"></i>
@@ -133,6 +136,9 @@
                                             </button>
                                         </form>
                                     </div>
+                                    @else
+                                    <span style="font-size: 11px; color: #64748b; font-style: italic;">Read-Only</span>
+                                    @endif
                                 </td>
                             </tr>
                             <!-- Edit Row -->

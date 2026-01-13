@@ -52,10 +52,12 @@
             
             <!-- Action Buttons -->
             <div style="display: flex; align-items: center; gap: 8px; padding-left: 16px; border-left: 2px solid #e2e8f0;">
+                @if(auth()->user()->role !== 'rois')
                 <button onclick="toggleBulkInput()" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; font-size: 12px; font-weight: 600; color: white; background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%); border: none; border-radius: 8px; box-shadow: 0 2px 6px rgba(22,163,74,0.3); cursor: pointer; white-space: nowrap; transition: all 0.2s;">
                     <i data-feather="plus" style="width: 14px; height: 14px;"></i>
                     Input Alfa
                 </button>
+                @endif
                 <a href="{{ route('pendidikan.absensi.rekap') }}" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; font-size: 12px; font-weight: 600; color: #374151; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-decoration: none; white-space: nowrap; transition: all 0.2s;">
                     <i data-feather="bar-chart-2" style="width: 14px; height: 14px;"></i>
                     Rekap
@@ -300,6 +302,7 @@
                         <td style="text-align: center;"><span class="badge {{ $a->alfa_tahajud > 0 ? 'badge-error' : 'badge-success' }}">{{ $a->alfa_tahajud }}</span></td>
                         <td style="text-align: center;"><strong>{{ $a->total_alfa }}</strong></td>
                         <td>
+                            @if(auth()->user()->role !== 'rois')
                             <button onclick="toggleEdit({{ $a->id }})" class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px;">
                                 <i data-feather="edit" style="width: 14px; height: 14px;"></i>
                                 Edit
@@ -312,6 +315,9 @@
                                     Hapus
                                 </button>
                             </form>
+                            @else
+                                <span class="badge bg-secondary" style="font-size: 10px; color: #999;">Read-Only</span>
+                            @endif
                         </td>
                     </tr>
                     <tr id="edit-{{ $a->id }}" style="display: none;">
@@ -355,10 +361,12 @@
                                     <i data-feather="inbox" style="width: 24px; height: 24px; color: #9ca3af;"></i>
                                 </div>
                                 <p style="font-size: 14px; margin: 0;">Belum ada data absensi yang tersedia.</p>
+                                @if(auth()->user()->role !== 'rois')
                                 <button onclick="toggleBulkInput()" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">
                                     <i data-feather="plus" style="width: 14px; height: 14px; margin-right: 6px;"></i>
                                     Input Alfa Baru
                                 </button>
+                                @endif
                             </div>
                         </td>
                     </tr>

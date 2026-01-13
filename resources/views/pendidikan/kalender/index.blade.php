@@ -18,6 +18,7 @@
         <!-- Event List & Add Form (Left Panel) -->
         <div class="md:col-span-1">
             <!-- Add Event Card -->
+            @if(auth()->user()->role !== 'rois')
             <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 24px; border: 1px solid #e2e8f0;">
                 <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
                     <i data-feather="plus-circle" style="color: #3b82f6;"></i> Tambah Agenda
@@ -69,6 +70,7 @@
                     </button>
                 </form>
             </div>
+            @endif
 
             <!-- Upcoming Events List -->
             <div style="background: white; border-radius: 12px; padding: 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; overflow: hidden;">
@@ -165,6 +167,7 @@
                                     </a>
                                     
                                     <!-- Delete Button -->
+                                    @if(auth()->user()->role !== 'rois')
                                     <form action="{{ route('pendidikan.kalender.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Hapus agenda ini?');">
                                         @csrf
                                         @method('DELETE')
@@ -175,6 +178,7 @@
                                             <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>

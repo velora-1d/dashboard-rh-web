@@ -69,7 +69,7 @@
     </div>
 
     <!-- Form Tambah Mutasi with Gradient -->
-    <div style="background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 24px;">
+        @if(auth()->user()->role !== 'rois')
         <!-- Form Header with Gradient -->
         <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px 24px; position: relative; overflow: hidden;">
             <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
@@ -84,6 +84,7 @@
                 </div>
             </div>
         </div>
+        @endif
         
         <!-- Form Content -->
         <form method="POST" action="{{ route('sekretaris.mutasi-santri.store') }}" style="padding: 24px;">
@@ -95,7 +96,7 @@
                         <i data-feather="user" style="width: 14px; height: 14px; color: #fa709a;"></i>
                         Santri <span style="color: #ef4444;">*</span>
                     </label>
-                    <select name="santri_id" required style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; transition: border-color 0.2s;" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';">
+                    <select name="santri_id" required style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; transition: border-color 0.2s; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Santri</option>
                         @foreach($santriAktif as $s)
                             <option value="{{ $s->id }}">{{ $s->nis }} - {{ $s->nama_santri }}</option>
@@ -109,7 +110,7 @@
                         <i data-feather="git-branch" style="width: 14px; height: 14px; color: #fa709a;"></i>
                         Jenis Mutasi <span style="color: #ef4444;">*</span>
                     </label>
-                    <select name="jenis_mutasi" required style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; transition: border-color 0.2s;" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';">
+                    <select name="jenis_mutasi" required style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; transition: border-color 0.2s; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                         <option value="">Pilih Jenis</option>
                         <option value="masuk">Masuk</option>
                         <option value="keluar">Keluar</option>
@@ -124,7 +125,7 @@
                         <i data-feather="calendar" style="width: 14px; height: 14px; color: #fa709a;"></i>
                         Tanggal Mutasi <span style="color: #ef4444;">*</span>
                     </label>
-                    <input type="date" name="tanggal_mutasi" required style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s;" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';">
+                    <input type="date" name="tanggal_mutasi" required style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <!-- Dari -->
@@ -133,7 +134,7 @@
                         <i data-feather="arrow-left-circle" style="width: 14px; height: 14px; color: #6b7280;"></i>
                         Dari
                     </label>
-                    <input type="text" name="dari" placeholder="Contoh: Kelas 1 Ibtida" style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s;" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';">
+                    <input type="text" name="dari" placeholder="Contoh: Kelas 1 Ibtida" style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <!-- Ke -->
@@ -142,7 +143,7 @@
                         <i data-feather="arrow-right-circle" style="width: 14px; height: 14px; color: #6b7280;"></i>
                         Ke
                     </label>
-                    <input type="text" name="ke" placeholder="Contoh: Kelas 2 Ibtida" style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s;" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';">
+                    <input type="text" name="ke" placeholder="Contoh: Kelas 2 Ibtida" style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
                 
                 <!-- Keterangan -->
@@ -151,14 +152,16 @@
                         <i data-feather="file-text" style="width: 14px; height: 14px; color: #6b7280;"></i>
                         Keterangan
                     </label>
-                    <input type="text" name="keterangan" placeholder="Keterangan tambahan" style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s;" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';">
+                    <input type="text" name="keterangan" placeholder="Keterangan tambahan" style="width: 100%; height: 44px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; transition: border-color 0.2s; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" onfocus="this.style.borderColor='#fa709a';" onblur="this.style.borderColor='#e5e7eb';" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                 </div>
             </div>
             
+            @if(auth()->user()->role !== 'rois')
             <button type="submit" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 12px 28px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(250, 112, 154, 0.35); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(250, 112, 154, 0.45)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(250, 112, 154, 0.35)';">
                 <i data-feather="plus" style="width: 18px; height: 18px;"></i>
                 Catat Mutasi
             </button>
+            @endif
         </form>
     </div>
 
@@ -202,6 +205,7 @@
                             <td>{{ $m->ke ?? '-' }}</td>
                             <td>{{ $m->keterangan ?? '-' }}</td>
                             <td style="text-align: center;">
+                                @if(auth()->user()->role !== 'rois')
                                 <div style="display: flex; gap: 6px; justify-content: center;">
                                     <button type="button" onclick="openEditModal({{ $m->id }}, {{ $m->santri_id }}, '{{ $m->jenis_mutasi }}', '{{ $m->tanggal_mutasi->format('Y-m-d') }}', '{{ $m->dari }}', '{{ $m->ke }}', '{{ $m->keterangan }}')" 
                                         style="padding: 6px 10px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
@@ -217,6 +221,9 @@
                                         </button>
                                     </form>
                                 </div>
+                                @else
+                                <span style="font-size: 11px; color: #64748b; font-style: italic;">Read-Only</span>
+                                @endif
                             </td>
                         </tr>
                     @empty

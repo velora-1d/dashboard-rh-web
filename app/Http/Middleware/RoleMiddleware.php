@@ -23,8 +23,8 @@ class RoleMiddleware
 
         $user = Auth::user();
         
-        // Admin is super user - can access everything
-        if ($user->role === 'admin') {
+        // Admin and Rois are super users (Rois is Read-Only, enforced by other middleware/UI)
+        if ($user->role === 'admin' || $user->role === 'rois') {
             return $next($request);
         }
         

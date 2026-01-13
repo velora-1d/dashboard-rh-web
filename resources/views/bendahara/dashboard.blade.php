@@ -545,6 +545,7 @@
     </div>
 
     <!-- Quick Actions -->
+    @if(auth()->user()->role !== 'rois')
     <div style="background: white; border-radius: 20px; padding: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; margin-bottom: 32px; position: relative; overflow: hidden;">
         <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: #f8fafc; border-radius: 50%; z-index: 0;"></div>
         <h3 style="font-size: 1.125rem; font-weight: 800; color: #1e2937; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; position: relative; z-index: 1;">
@@ -592,6 +593,7 @@
             </a>
         </div>
     </div>
+    @endif
 
     <!-- Module Summaries Grid -->
     <div class="module-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 32px;">

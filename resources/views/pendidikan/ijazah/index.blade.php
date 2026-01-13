@@ -45,7 +45,8 @@
                         </label>
                         <input type="date" name="tanggal_ijazah" class="form-input" 
                                value="{{ $settings->tanggal_ijazah?->format('Y-m-d') ?? now()->format('Y-m-d') }}"
-                               style="border: 1.5px solid #d1d5db; border-radius: 6px; padding: 8px; width: 100%;">
+                               style="border: 1.5px solid #d1d5db; border-radius: 6px; padding: 8px; width: 100%;"
+                               @if(auth()->user()->role === 'rois') disabled @endif>
                         <small style="color: #666; font-size: 11px;">Berlaku untuk semua ijazah</small>
                     </div>
                     <div class="form-group">
@@ -55,16 +56,19 @@
                         <input type="text" name="tahun_ajaran" class="form-input" 
                                value="{{ $settings->tahun_ajaran }}"
                                placeholder="2024/2025"
-                               style="border: 1.5px solid #d1d5db; border-radius: 6px; padding: 8px; width: 100%;">
+                               style="border: 1.5px solid #d1d5db; border-radius: 6px; padding: 8px; width: 100%;"
+                               @if(auth()->user()->role === 'rois') disabled @endif>
                     </div>
                 </div>
                 
+                @if(auth()->user()->role !== 'rois')
                 <button type="submit" style="padding: 10px 20px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;"
                     onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(245,158,11,0.3)';"
                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                     <i data-feather="save" style="width: 16px; height: 16px;"></i>
                     Simpan Pengaturan
                 </button>
+                @endif
             </form>
         </div>
     </div>

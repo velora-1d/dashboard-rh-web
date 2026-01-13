@@ -61,10 +61,12 @@
             <i data-feather="users" style="width: 18px; height: 18px; margin-right: 8px;"></i>
             Manajemen User
         </button>
+        @if(auth()->user()->role !== 'rois')
         <button onclick="showTab('backup')" id="tab-backup" class="tab-button" style="flex: 1; padding: 12px 24px; border: none; background: #f3f4f6; color: #6b7280; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
             <i data-feather="database" style="width: 18px; height: 18px; margin-right: 8px;"></i>
             Backup
         </button>
+        @endif
         <button onclick="showTab('system')" id="tab-system" class="tab-button" style="flex: 1; padding: 12px 24px; border: none; background: #f3f4f6; color: #6b7280; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
             <i data-feather="info" style="width: 18px; height: 18px; margin-right: 8px;"></i>
             Info Sistem
@@ -94,10 +96,17 @@
                         <input type="email" name="app_email" value="{{ session('app_email', 'info@riyadlulhuda.com') }}" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
                     </div>
                     
+                    @if(auth()->user()->role !== 'rois')
                     <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 32px; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.3)'">
                         <i data-feather="save" style="width: 18px; height: 18px; margin-right: 8px;"></i>
                         Simpan Pengaturan
                     </button>
+                    @else
+                    <div style="padding: 12px 16px; background: #f3f4f6; border-radius: 10px; color: #6b7280; font-weight: 600; text-align: center;">
+                        <i data-feather="lock" style="width: 16px; height: 16px; vertical-align: text-bottom; margin-right: 8px;"></i>
+                        Pengaturan hanya dapat diubah oleh Admin
+                    </div>
+                    @endif
                 </div>
             </form>
         </div>
@@ -139,10 +148,12 @@
                     </div>
                 </div>
                 
+                @if(auth()->user()->role !== 'rois')
                 <button type="submit" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 12px 28px; border: none; border-radius: 10px; font-weight: 700; margin-top: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
                     <i data-feather="user-plus" style="width: 18px; height: 18px; margin-right: 8px;"></i>
                     Tambah User
                 </button>
+                @endif
             </form>
         </div>
 
@@ -178,6 +189,7 @@
                             </td>
                             <td style="padding: 16px; color: #6b7280;">{{ $user->created_at->format('d M Y') }}</td>
                             <td style="padding: 16px; text-align: center;">
+                                @if(auth()->user()->role !== 'rois')
                                 <button onclick="editUser({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '{{ $user->role }}')" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 8px 16px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 8px;">
                                     <i data-feather="edit-2" style="width: 16px; height: 16px;"></i>
                                 </button>
@@ -190,6 +202,9 @@
                                         <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
                                     </button>
                                 </form>
+                                @endif
+                                @else
+                                <span class="text-muted" style="font-size: 11px; font-style: italic;">Read-Only</span>
                                 @endif
                             </td>
                         </tr>

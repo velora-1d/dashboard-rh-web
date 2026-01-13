@@ -344,9 +344,8 @@
                                                    data-has-weekly="{{ $hasWeekly ? 'true' : 'false' }}"
                                                    value="{{ $nilai ? $nilai->nilai_ujian_semester : '' }}" 
                                                    min="0" max="100" step="0.01" required
-                                                   style="width: 50px; padding: 4px; text-align: center; border: 1px solid #ccc; border-radius: 3px; font-weight: 600; font-size: 11px;"
-                                                   onfocus="this.style.borderColor='#0066cc'; this.style.background='#fff'"
-                                                   onblur="this.style.borderColor='#ccc'; this.style.background='#fff'">
+                                                   {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}
+                                                   style="width: 50px; padding: 4px; text-align: center; border: 1px solid #ccc; border-radius: 3px; font-weight: 600; font-size: 11px; {{ auth()->user()->role === 'rois' ? 'background-color: #f3f4f6; cursor: not-allowed;' : '' }}">
                                         </td>
                                         
                                         {{-- Weekly Score --}}
@@ -425,10 +424,17 @@
                     <div style="font-size: 12px; color: #64748b;">
                         <strong>Note:</strong> Nilai Final otomatis memilih yang terbaik antara Ujian Mingguan vs Semester (Smart Scoring).
                     </div>
+                    @if(auth()->user()->role !== 'rois')
                     <button type="submit" class="btn btn-primary" style="padding: 12px 32px; font-size: 14px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5); cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(59, 130, 246, 0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(59, 130, 246, 0.5)';">
                         <i data-feather="save" style="width: 16px; height: 16px; margin-right: 8px;"></i>
                         Simpan Nilai
                     </button>
+                    @else
+                    <div style="padding: 12px 24px; background: #f1f5f9; color: #64748b; border-radius: 8px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                        <i data-feather="lock" style="width: 16px; height: 16px;"></i>
+                        Mode Baca Saja (Read-Only)
+                    </div>
+                    @endif
                     
                 </div>
             </div>

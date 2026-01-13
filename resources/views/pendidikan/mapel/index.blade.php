@@ -85,6 +85,7 @@
 
 
     <!-- Add Form with Modern Design -->
+    @if(auth()->user()->role !== 'rois')
     <div style="background: white; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid rgba(76,175,80,0.1);">
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
             <div style="background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%); width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
@@ -192,6 +193,7 @@
             </button>
         </form>
     </div>
+    @endif
 
     <!-- Table with Modern Design -->
     <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid rgba(76,175,80,0.1);">
@@ -256,6 +258,7 @@
                             </td>
                             <td style="padding: 10px; text-align: center;">
                                 <div style="display: flex; gap: 4px; justify-content: center;">
+                                    @if(auth()->user()->role !== 'rois')
                                     <button onclick="toggleEdit({{ $m->id }})" 
                                         style="padding: 6px 10px; background: white; color: #3b82f6; border: 1.5px solid #3b82f6; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;"
                                         onmouseover="this.style.background='#3b82f6'; this.style.color='white';"
@@ -274,6 +277,9 @@
                                             Hapus
                                         </button>
                                     </form>
+                                    @else
+                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">Read-Only</span>
+                                    @endif
                                 </div>
                         </td>
                     </tr>

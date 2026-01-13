@@ -146,6 +146,7 @@
     </div>
 
     <!-- Blast WA Card -->
+    @if(auth()->user()->role !== 'rois')
     <div style="background: linear-gradient(to right, #4f46e5, #4338ca); border-radius: 16px; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2); overflow: hidden; color: white; display: flex; align-items: center; justify-content: space-between; padding: 24px; position: relative; margin-bottom: 24px;">
         <div style="position: relative; z-index: 2;">
             <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;">📢 Blast Tagihan WA</h3>
@@ -159,6 +160,7 @@
             <i data-feather="message-circle" style="width: 200px; height: 200px;"></i>
         </div>
     </div>
+    @endif
 
     <!-- Filter Card -->
     <div class="tunggakan-filter-card no-print">
@@ -263,6 +265,7 @@
                             Rp {{ number_format($item['total_arrears'], 0, ',', '.') }}
                         </td>
                         <td style="text-align: center;" class="no-print">
+                            @if(auth()->user()->role !== 'rois')
                             <div style="display: flex; gap: 8px; justify-content: center;">
                                 @if($item['santri']->no_hp_ortu_wali)
                                 @php
@@ -291,6 +294,9 @@
                                     </button>
                                 </form>
                             </div>
+                            @else
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase;">Read Only</span>
+                            @endif
                         </td>
                     </tr>
                 @empty

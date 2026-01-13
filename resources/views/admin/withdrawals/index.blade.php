@@ -79,6 +79,8 @@
                                 <button onclick="openApproveModal({{ json_encode($withdrawal) }})" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12px;">
                                     <i data-feather="check" style="width: 14px; height: 14px;"></i> Proses
                                 </button>
+                            @elseif($withdrawal->status == 'pending' && auth()->user()->role === 'rois')
+                                <span style="font-size: 11px; color: #64748b; font-style: italic;">Read-Only</span>
                             @else
                                 @if($withdrawal->proof_of_transfer)
                                     <a href="{{ asset('storage/' . $withdrawal->proof_of_transfer) }}" target="_blank" style="color: #6366f1; text-decoration: none; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;">
