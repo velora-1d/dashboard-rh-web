@@ -333,8 +333,17 @@ class SekretarisController extends Controller
         
         $pdf = Pdf::loadView('sekretaris.laporan.laporan-santri-pdf', compact('santri'));
         $pdf->setPaper('a4', 'landscape');
+
+        $filename = 'laporan-santri.pdf';
         
-        return $pdf->download('laporan-santri.pdf');
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            $filename,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
     
     // Export Statistik Santri per Kelas
@@ -365,8 +374,17 @@ class SekretarisController extends Controller
         
         $pdf = Pdf::loadView('sekretaris.laporan.statistik-kelas-pdf', compact('statistik'));
         $pdf->setPaper('a4', 'portrait');
+
+        $filename = 'statistik-santri-per-kelas.pdf';
         
-        return $pdf->download('statistik-santri-per-kelas.pdf');
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            $filename,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
     
     // Export Statistik Santri per Asrama
@@ -406,7 +424,16 @@ class SekretarisController extends Controller
         $pdf = Pdf::loadView('sekretaris.laporan.statistik-asrama-pdf', compact('statistik'));
         $pdf->setPaper('a4', 'portrait');
         
-        return $pdf->download('statistik-santri-per-asrama.pdf');
+        $filename = 'statistik-santri-per-asrama.pdf';
+
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            $filename,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
     
     // Export Laporan Mutasi Santri
@@ -434,8 +461,17 @@ class SekretarisController extends Controller
         
         $pdf = Pdf::loadView('sekretaris.laporan.mutasi-pdf', compact('mutasi', 'tanggalMulai', 'tanggalSelesai'));
         $pdf->setPaper('a4', 'portrait');
+
+        $filename = 'laporan-mutasi-santri.pdf';
         
-        return $pdf->download('laporan-mutasi-santri.pdf');
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            $filename,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
     
     // Download Template Excel

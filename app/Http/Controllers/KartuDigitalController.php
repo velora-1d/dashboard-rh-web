@@ -37,56 +37,76 @@ class KartuDigitalController extends Controller
         return view('sekretaris.kartu-digital.index', compact('santris', 'kelasList'));
     }
 
-    public function downloadPdf($id)
-    {
-        $santri = Santri::findOrFail($id);
-
-        // Generate QR Code as Base64 to ensure it renders in PDF
-        $qrData = $santri->nis . ' - ' . $santri->nama_santri;
-        $qrUrl = "https://quickchart.io/qr?text=" . urlencode($qrData) . "&size=300&margin=1&ecLevel=H";
-        
-        try {
-            // Fetch image with 5 second timeout
-            $context = stream_context_create(['http' => ['timeout' => 5]]);
-            $qrContent = file_get_contents($qrUrl, false, $context);
-            $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
-        } catch (\Exception $e) {
-            // Fallback if API fails (transparent pixel or simple error placeholder)
-            $qrBase64 = null; 
-        }
-
-        $pdf = app('dompdf.wrapper');
-        $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
-        $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
-        
-        // Horizontal Card (CR-80 size equivalent scaling)
-        $pdf->setPaper('A4', 'portrait'); 
-
-        return $pdf->download('Kartu-Syahriah-' . $santri->nis . '.pdf');
-    }
-
     public function previewPdf($id)
     {
         $santri = Santri::findOrFail($id);
         
-        // Generate QR Code as Base64 to ensure it renders in PDF
+        // Generate QR Code as Base64 (Safe for PDF)
         $qrData = $santri->nis . ' - ' . $santri->nama_santri;
         $qrUrl = "https://quickchart.io/qr?text=" . urlencode($qrData) . "&size=300&margin=1&ecLevel=H";
         
+        $qrBase64 = null;
         try {
             $context = stream_context_create(['http' => ['timeout' => 5]]);
-            $qrContent = file_get_contents($qrUrl, false, $context);
-            $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
+            $qrContent = @file_get_contents($qrUrl, false, $context);
+            if ($qrContent) {
+                 $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
+            }
         } catch (\Exception $e) {
-            $qrBase64 = null;
+            // Silently fail for QR to avoid breaking the PDF
         }
 
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
         $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
-        
         $pdf->setPaper('A4', 'portrait');
 
-        return $pdf->stream('Kartu-Syahriah-' . $santri->nis . '.pdf');
+        $filename = 'Kartu-Syahriah-' . $santri->nis . '.pdf';
+
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            $filename,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]
+        );
+    }
+
+    public function downloadPdf($id)
+    {
+        $santri = Santri::findOrFail($id);
+
+        // Generate QR Code as Base64 (Safe for PDF)
+        $qrData = $santri->nis . ' - ' . $santri->nama_santri;
+        // Same logic as preview - ideally refactor to private method but keeping inline for "No Theory" rule compliance
+        $qrUrl = "https://quickchart.io/qr?text=" . urlencode($qrData) . "&size=300&margin=1&ecLevel=H";
+        
+        $qrBase64 = null;
+        try {
+            $context = stream_context_create(['http' => ['timeout' => 5]]);
+            $qrContent = @file_get_contents($qrUrl, false, $context);
+             if ($qrContent) {
+                 $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
+            }
+        } catch (\Exception $e) {
+             // Silently fail
+        }
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
+        $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
+        $pdf->setPaper('A4', 'portrait');
+
+        $filename = 'Kartu-Syahriah-' . $santri->nis . '.pdf';
+
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            $filename,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
 }
