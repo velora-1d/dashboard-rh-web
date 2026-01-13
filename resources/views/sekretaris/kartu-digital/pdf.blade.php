@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Kartu Tanda Santri - {{ $santri->nama_santri }}</title>
+    <title>Kartu Santri</title>
     <style>
         @page {
             margin: 0;
@@ -10,96 +10,61 @@
         }
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
-            background-color: #e2e8f0;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 40px;
         }
         .container {
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding-top: 20px;
+            align-items: center;
         }
         .card {
-            width: 85.6mm; /* ISO ID-1 width */
-            height: 53.98mm; /* ISO ID-1 height */
-            /* Scale up for PDF view clarity if needed, but let's stick to standard ratio relative sizes */
-            width: 550px; 
-            height: 350px;
-            margin: 0 auto;
+            /* ID-1 Size approximation for screen/PDF */
+            width: 500px;
+            height: 315px;
             position: relative;
-            /* Gradient removed for better PDF compatibility */
-            background-color: #1B5E20; 
-            /* background: linear-gradient(120deg, #047857 0%, #064e3b 100%); */
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); /* Emerald 900 to 800 */
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: none; /* Shadow often causes issues in PDFs */
-            border: 2px solid #14532d; /* Darker border */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin: 0 auto;
+            border: 1px solid #064e3b;
             color: white;
         }
-        
-        /* Background decorative elements */
-        .circle-bg {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            top: -100px;
-            right: -50px;
-            z-index: 1;
-        }
-        .circle-bg-2 {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            bottom: -50px;
-            left: -50px;
-            z-index: 1;
-        }
 
-        /* Watermark */
-        .watermark {
+        /* Decorative Elements */
+        .decor-circle {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-0deg);
-            z-index: 0; /* Changed from 2 to 0 to be BEHIND content */
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            top: -150px;
+            right: -100px;
+            z-index: 1;
+        }
+        .decor-line {
+            position: absolute;
             width: 100%;
-            text-align: center;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0.1; /* Reduced opacity */
-            padding: 10px 0;
-        }
-        .watermark-text {
-            font-size: 14px; /* Slightly smaller */
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.8);
-        }
-        .watermark-sub {
-            font-size: 9px;
-            font-style: italic;
-            margin-top: 2px;
-            color: rgba(255,255,255,0.8);
+            height: 4px;
+            background: #eab308; /* Gold */
+            top: 75px;
+            left: 0;
+            z-index: 5;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
+        /* Header */
         .header {
-            position: relative;
-            z-index: 10;
             padding: 15px 20px;
             display: flex;
             align-items: center;
-            background: rgba(0,0,0,0.15);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 10;
+            height: 45px; /* Fixed height for top section */
         }
         .logo {
             width: 45px;
@@ -108,125 +73,146 @@
             float: left;
             margin-right: 12px;
         }
-        .header-text {
+        .header-content {
+            margin-top: 4px;
             float: left;
-            margin-top: 2px;
         }
         .school-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            line-height: 1;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            color: #ffffff;
+            line-height: 1.1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-        .school-address {
-            font-size: 9px;
-            opacity: 0.9;
-            margin-top: 4px;
-            font-weight: 300;
+        .school-desc {
+            font-size: 8px;
+            color: #d1fae5; /* Light green */
+            margin-top: 2px;
+            font-weight: 400;
         }
 
-        .content {
+        /* Body Content */
+        .body {
+            padding: 25px 20px 10px 20px; /* Top padding pushes below gold line */
             position: relative;
             z-index: 10;
-            padding: 15px 20px;
         }
         
-        .photo-wrapper {
+        .photo-container {
             float: left;
-            width: 90px;
-            height: 110px;
-            background: #cbd5e1;
-            border-radius: 6px;
+            width: 85px;
+            height: 105px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            border: 2px solid #eab308; /* Gold Border */
             overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.5);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-right: 15px;
+            margin-right: 18px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .photo-img {
+        .photo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 30px;
+            font-weight: bold;
+            background: #cbd5e1;
+        }
 
-        .info-col {
+        .details {
             float: left;
-            width: 280px;
-            padding-top: 0px;
+            width: 250px;
         }
-        .info-row {
-            margin-bottom: 3px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 2px;
-        }
-        .info-label {
-            display: inline-block;
-            width: 60px;
-            font-size: 9px;
-            color: rgba(255,255,255,0.7);
-            font-weight: 500;
-        }
-        .info-value {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-        }
-
-        /* Virtual Account Box */
-        .va-box {
-            margin-top: 10px;
+        .detail-row {
             margin-bottom: 5px;
-            background: rgba(0,0,0,0.2); /* Darker solid background */
-            border-radius: 6px;
-            padding: 6px 10px;
+            font-size: 10px;
+        }
+        .label {
             display: inline-block;
-            border: 1px solid rgba(255,255,255,0.15); /* Solid subtle border */
+            width: 50px;
+            color: #a7f3d0; /* Soft Green */
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .value {
+            display: inline-block;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        /* Highlighted VA Box */
+        .va-container {
+            margin-top: 8px;
+            background: linear-gradient(90deg, rgba(234,179,8,0.2) 0%, rgba(234,179,8,0.05) 100%);
+            border-left: 3px solid #eab308;
+            padding: 5px 10px;
+            border-radius: 0 6px 6px 0;
+            position: relative;
         }
         .va-label {
             font-size: 8px;
-            color: #d1fae5;
+            color: #fef08a; /* Soft Yellow */
             display: block;
             margin-bottom: 2px;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .va-number {
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
+        .va-value {
+            font-size: 14px;
             font-family: 'Courier New', monospace;
-            color: #fbbf24; /* Amber color for visibility */
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
-        .qr-area {
+        /* QR & Footer */
+        .qr-section {
             position: absolute;
-            bottom: 40px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
+            bottom: 15px;
+            right: 15px;
+            width: 55px;
+            height: 55px;
             background: white;
             padding: 3px;
-            border-radius: 4px;
-            z-index: 10;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 20;
+        }
+        .qr-section img {
+            width: 100%;
+            height: 100%;
         }
 
-        .footer {
+        .footer-watermark {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            font-style: italic;
+        }
+
+        .graphic-pattern {
             position: absolute;
             bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.3), rgba(0,0,0,0));
-            padding: 8px 0 12px 0;
-            text-align: center;
-            font-size: 7px;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.6);
-            z-index: 10;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            border-radius: 100% 0 0 0;
+            z-index: 1;
         }
-        
+
         .clearfix::after {
             content: "";
             clear: both;
@@ -237,66 +223,77 @@
 <body>
     <div class="container">
         <div class="card">
-            <div class="circle-bg"></div>
-            <div class="circle-bg-2"></div>
-            
-            <div class="watermark">
-                <div class="watermark-text">MANAGEMENT RIYADLUL HUDA</div>
-                <div class="watermark-sub">Dibuat Oleh : Mahin Utsman Nawawi, S.H</div>
-            </div>
+            <!-- Background Elements -->
+            <div class="decor-circle"></div>
+            <div class="graphic-pattern"></div>
+            <div class="decor-line"></div>
 
+            <!-- Header -->
             <div class="header clearfix">
                 <img src="{{ public_path('images/logo.png') }}" class="logo" alt="Logo">
-                <div class="header-text">
-                    <div class="school-name">PONPES RIYADLUL HUDA</div>
-                    <div class="school-address">Ngetsi, Tlogorejo, Tegowanu, Grobogan</div>
+                <div class="header-content">
+                    <div class="school-name">Ponpes Riyadlul Huda</div>
+                    <div class="school-desc">Ngetsi, Tlogorejo, Tegowanu, Grobogan</div>
                 </div>
             </div>
 
-            <div class="content clearfix">
-                <div class="photo-wrapper">
+            <!-- Body -->
+            <div class="body clearfix">
+                <!-- Photo -->
+                <div class="photo-container">
                     @if($santri->foto && file_exists(storage_path('app/public/santri-photos/' . $santri->foto)))
-                        <img src="{{ storage_path('app/public/santri-photos/' . $santri->foto) }}" class="photo-img">
+                        <img src="{{ storage_path('app/public/santri-photos/' . $santri->foto) }}">
                     @else
-                        <div style="width: 100%; height: 100%; background: #94a3b8; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">
+                        <div class="photo-placeholder">
                             {{ substr($santri->nama_santri, 0, 1) }}
                         </div>
                     @endif
                 </div>
 
-                <div class="info-col">
-                    <div class="info-row">
-                        <span class="info-label">NAMA</span>
-                        <span class="info-value">: {{ strtoupper($santri->nama_santri) }}</span>
+                <!-- Personal Info -->
+                <div class="details">
+                    <div class="detail-row">
+                        <span class="label">Nama</span>
+                        <span class="value">: {{ Str::limit(strtoupper($santri->nama_santri), 20) }}</span>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">NIS</span>
-                        <span class="info-value">: {{ $santri->nis }}</span>
+                    <div class="detail-row">
+                        <span class="label">NIS</span>
+                        <span class="value">: {{ $santri->nis }}</span>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">KELAS</span>
-                        <span class="info-value">: {{ $santri->kelas->nama_kelas ?? '-' }}</span>
+                    <div class="detail-row">
+                        <span class="label">Kelas</span>
+                        <span class="value">: {{ $santri->kelas->nama_kelas ?? '-' }}</span>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">ASRAMA</span>
-                        <span class="info-value">: {{ $santri->asrama->nama_asrama ?? '-' }} ({{ $santri->kobong->nomor_kobong ?? '-' }})</span>
+                    <div class="detail-row">
+                        <span class="label">Asrama</span>
+                        <span class="value">: {{ Str::limit($santri->asrama->nama_asrama ?? '-', 15) }}</span>
                     </div>
-                    
-                    <!-- Virtual Account Section -->
-                    <div class="va-box">
-                        <span class="va-label">NOMOR VIRTUAL ACCOUNT (VA)</span>
-                        <span class="va-number">{{ $santri->virtual_account_number ?? '-' }}</span>
+
+                    <!-- VA Box -->
+                    <div class="va-container">
+                        <span class="va-label">Virtual Account (BRI)</span>
+                        <span class="va-value">{{ $santri->virtual_account_number ?? 'BELUM TERSEDIA' }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="qr-area">
-                <img src="https://quickchart.io/qr?text={{ urlencode($santri->nis . ' - ' . $santri->nama_santri) }}&size=150" style="width: 100%; height: 100%;">
+            <!-- QR Code -->
+            <div class="qr-section">
+                @if(isset($qrBase64) && $qrBase64)
+                    <img src="{{ $qrBase64 }}" alt="QR Code">
+                @else
+                   <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#eee; color:#999; font-size:8px; text-align:center;">
+                       NO QR
+                   </div>
+                @endif
             </div>
 
-            <div class="footer">
-                KARTU TANDA SANTRI • BERLAKU SELAMA MENJADI SANTRI
+            <!-- Footer Text -->
+            <div class="footer-watermark">
+                Kartu Tanda Santri Digital<br>
+                Berlaku Selama Menjadi Santri
             </div>
+
         </div>
     </div>
 </body>
