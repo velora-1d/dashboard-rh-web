@@ -227,8 +227,8 @@
                     @if($santri->foto && file_exists(storage_path('app/public/santri-photos/' . $santri->foto)))
                         <img src="{{ storage_path('app/public/santri-photos/' . $santri->foto) }}">
                     @else
-                        <!-- Default Avatar (WhatsApp Style Silhouette) -->
-                        <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjY2JkNWUxIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjZmZmZmZmIi8+PHBhdGggZD0iTTQgMThDNHAxNS43OTA5IDUuNzkwODYgMTQgOCAxNEgxNkMxOC4yMDkxIDE0IDIwIDE1Ljc5MDkgMjAgMThWMjBINFYxOFoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=" style="width: 100%; height: 100%; object-fit: cover;">
+                        <!-- Default Avatar (PNG Solid - Safer for DomPDF) -->
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAMlBMVEX///+tra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6urq7u7u8vLzsFwclAAAARXRSTlMAf4C/v8DAwMDDw8PExMTExMTGxsbGxsbGxsbGxsbIyMjIyMjIyMnJycnJycnJycrKysrKysrLy8vLy8vMzMzMzMzNzc3NzdK/F6sAAACuSURBVHja7dDREMJAFAXQw7xQUyzFvyqW4l8V63A3c8E5581tbdv2fX/b9/3t+7/9/3/7/v/2/f/t+///twdaC7QWaC3QWqC1QGuB1gKtBVoLtBZoLdBaoLVAa4HWAr0f6D3QWqC1QGuB1gKtBVoLtBZoLdBaoLVAa4HWAq0FWgu0Fmgt0FqgtUBrgdYCrQVaC7QWaC3QWqC1QGuB1gKtBVoLtBZoLdBaoLVAa4HWAm0f6A236x51a16+qQAAAABJRU5ErkJggg==" style="width: 100%; height: 100%; object-fit: cover;">
                     @endif
                 </div>
 
