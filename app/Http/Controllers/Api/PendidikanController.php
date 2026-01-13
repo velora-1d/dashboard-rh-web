@@ -120,7 +120,7 @@ class PendidikanController extends Controller
         ]);
 
         // Security Check for Parent/Santri
-        if (\Illuminate\Support\Facades\Auth::user() instanceof \App\Models\Santri) {
+        if (\Illuminate\Support\Facades\Auth::user() instanceof Santri) {
             if ($request->santri_id != \Illuminate\Support\Facades\Auth::id()) {
                 return response()->json(['status' => 'error', 'message' => 'Unauthorized access'], 403);
             }
@@ -156,7 +156,7 @@ class PendidikanController extends Controller
         ]);
 
         // Security Check for Parent/Santri
-        if (\Illuminate\Support\Facades\Auth::user() instanceof \App\Models\Santri) {
+        if (\Illuminate\Support\Facades\Auth::user() instanceof Santri) {
             if ($request->santri_id != \Illuminate\Support\Facades\Auth::id()) {
                 return response()->json(['status' => 'error', 'message' => 'Unauthorized access'], 403);
             }
@@ -223,7 +223,7 @@ class PendidikanController extends Controller
         $query = \App\Models\Hafalan::with(['santri.kelas']);
         
         // Filter for Parent/Santri login
-        if (\Illuminate\Support\Facades\Auth::user() instanceof \App\Models\Santri) {
+        if (\Illuminate\Support\Facades\Auth::user() instanceof Santri) {
             $query->where('santri_id', \Illuminate\Support\Facades\Auth::id());
         }
 

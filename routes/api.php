@@ -20,7 +20,12 @@ Route::middleware(['auth:sanctum'])->prefix('parent')->group(function () {
 });
 
 // Protected Routes
+
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/payment/snap-token', [App\Http\Controllers\Api\PaymentController::class, 'getSnapToken']);
+    
+    // ... other protected routes
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });

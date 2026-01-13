@@ -15,12 +15,12 @@ return [
     */
 
     'postmark' => [
-        'key' => env('POSTMARK_API_KEY'),
+        'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'resend' => [
-        'key' => env('RESEND_API_KEY'),
-    ],
+
+
+
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
