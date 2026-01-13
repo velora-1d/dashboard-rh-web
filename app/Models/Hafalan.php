@@ -13,13 +13,18 @@ class Hafalan extends Model
 
     protected $fillable = [
         'santri_id',
-        'jenis',
-        'nama_hafalan',
-        'progress',
+        'jenis', // Quran, Kitab
+        'nama_hafalan', // e.g. Juz 30
+        'progress', // e.g. Surat An-Naba
         'tanggal',
         'nilai',
         'catatan',
         'created_by'
+    ];
+
+    protected $casts = [
+        'tanggal' => 'date',
+        'nilai' => 'integer',
     ];
 
     public function santri()

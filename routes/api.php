@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/perizinan/{id}/approval', [SekretarisController::class, 'approvePerizinan']);
         
         // Laporan
+        Route::get('/laporan', [SekretarisController::class, 'getResumeLaporan']);
         Route::post('/laporan/url', [SekretarisController::class, 'getLaporanUrl']);
     });
 
@@ -93,6 +94,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/ijazah/url', [PendidikanController::class, 'getIjazahUrl']);
         Route::get('/mapel', [PendidikanController::class, 'getMapelList']);
         Route::post('/nilai/bulk', [PendidikanController::class, 'storeNilaiBulk']);
+        
+        // Hafalan
+        Route::get('/hafalan', [PendidikanController::class, 'getHafalan']);
+        Route::post('/hafalan', [PendidikanController::class, 'storeHafalan']);
+        Route::put('/hafalan/{id}', [PendidikanController::class, 'updateHafalan']);
+        Route::delete('/hafalan/{id}', [PendidikanController::class, 'destroyHafalan']);
     });
 
     // Notifications Routes

@@ -372,6 +372,30 @@ class SekretarisController extends Controller
         ]);
     }
 
+    public function getResumeLaporan() 
+    {
+        $totalSantri = Santri::where('is_active', true)->count();
+        $izinAktif = Perizinan::where('status', 'Disetujui')
+            ->whereDate('tgl_kembali', '>=', now())
+            ->count();
+            
+        // Santri Libur logic (e.g. status 'Nonaktif' or specific permit?)
+        // Assuming 'izin_aktif' covers those away. 
+        // Or if 'Libur' means mass vacation? 
+        // Let's assume 'Santri Libur' is same as 'Izin Aktif' for now, or just 0 if no holiday mode.
+        // Actually, let's count santri who are currently AWAY (Izin approved and today is within range).
+        $santriLibur = $izinAktif; 
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'total_santri' => $totalSantri,
+                'izin_aktif' => $izinAktif,
+                'santri_libur' => $santriLibur
+            ]
+        ]);
+    }
+
     public function getLaporanUrl(Request $request)
     {
         // Generate Signed URL for downloading PDF

@@ -192,18 +192,7 @@ class PendidikanController extends Controller
     {
         $webController = new \App\Http\Controllers\PendidikanController();
         
-        // We reuse the web controller logic, but it returns a redirect.
-        // We need to handle exceptions and return JSON.
         try {
-            // The web controller's storeNilaiBulk expects certain structure
-            // and uses 'redirect()->route()'. For API, we'll try to catch it
-            // or we might need to refactor the Web controller to have a shared service.
-            // But to save time and ensure logic consistency, we'll call it.
-            
-            // NOTE: storeNilaiBulk in web PendidikanController returns a RedirectResponse.
-            // We should ideally wrap the logic in a Service or just copy/adapt it here.
-            // Since I edited PendidikanController earlier to optimize it, I'll adapt it here for API.
-            
             return $webController->storeNilaiBulk($request);
         } catch (\Exception $e) {
             return response()->json([
@@ -211,5 +200,101 @@ class PendidikanController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    // --- HAFALAN SANTRI ---
+
+    public function getHafalan(Request $request)
+    {
+        $query = \App\Models\Hafalan::with(['santri.kelas']);
+
+        if ($request->has('kelas_id')) {
+            $query->whereHas('santri', function($q) use ($request) {
+                $q->where('kelas_id', $request->kelas_id);
+            });
+        }
+
+        if ($request->has('santri_id')) {
+            $query->where('santri_id', $request->santri_id);
+        }
+
+        if ($request->has('jenis')) {
+            $query->where('jenis', $request->jenis);
+        }
+        
+        // Search by Santri Name
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->whereHas('santri', function($q) use ($search) {
+                $q->where('nama_santri', 'like', "%{$search}%");
+            });
+        }
+
+        $hafalan = $query->orderBy('tanggal', 'desc')->take(50)->get();
+
+        return response()->json(['status' => 'success', 'data' => $hafalan]);
+    }
+
+    public function storeHafalan(Request $request)
+    {
+        $request->validate([
+            'santri_id' => 'required|exists:santri,id',
+            'jenis' => 'required|in:Quran,Kitab',
+            'nama_hafalan' => 'required|string',
+            'progress' => 'required|string',
+            'tanggal' => 'required|date',
+            'nilai' => 'nullable|integer|min:0|max:100',
+            'catatan' => 'nullable|string',
+        ]);
+
+        $hafalan = \App\Models\Hafalan::create([
+            'santri_id' => $request->santri_id,
+            'jenis' => $request->jenis,
+            'nama_hafalan' => $request->nama_hafalan,
+            'progress' => $request->progress,
+            'tanggal' => $request->tanggal,
+            'nilai' => $request->nilai,
+            'catatan' => $request->catatan,
+            'created_by' => \Illuminate\Support\Facades\Auth::id(),
+        ]);
+
+        return response()->json([
+            'status' => 'success', 
+            'message' => 'Hafalan berhasil dicatat', 
+            'data' => $hafalan
+        ]);
+    }
+
+    public function updateHafalan(Request $request, $id)
+    {
+        $hafalan = \App\Models\Hafalan::findOrFail($id);
+
+        $request->validate([
+            'jenis' => 'required|in:Quran,Kitab',
+            'nama_hafalan' => 'required|string',
+            'progress' => 'required|string',
+            'tanggal' => 'required|date',
+            'nilai' => 'nullable|integer|min:0|max:100',
+            'catatan' => 'nullable|string',
+        ]);
+
+        $hafalan->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data hafalan diperbarui',
+            'data' => $hafalan
+        ]);
+    }
+
+    public function destroyHafalan($id)
+    {
+        $hafalan = \App\Models\Hafalan::findOrFail($id);
+        $hafalan->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data hafalan dihapus'
+        ]);
     }
 }
