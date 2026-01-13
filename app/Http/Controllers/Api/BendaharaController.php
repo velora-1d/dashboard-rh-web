@@ -33,10 +33,10 @@ class BendaharaController extends Controller
         // Use Service
         $stats = $this->financialService->getDashboardStats($year, $month);
 
-        $pemasukanHariIni = Pemasukan::whereDate('tanggal', $today)->sum('jumlah') + 
+        $pemasukanHariIni = Pemasukan::whereDate('tanggal', $today)->sum('nominal') + 
                             Syahriah::where('is_lunas', true)->whereDate('tanggal_bayar', $today)->sum('nominal');
         
-        $pengeluaranHariIni = Pengeluaran::whereDate('tanggal', $today)->sum('jumlah');
+        $pengeluaranHariIni = Pengeluaran::whereDate('tanggal', $today)->sum('nominal');
 
         return response()->json([
             'status' => 'success',
