@@ -245,9 +245,8 @@
                     @if($santri->foto && file_exists(storage_path('app/public/santri-photos/' . $santri->foto)))
                         <img src="{{ storage_path('app/public/santri-photos/' . $santri->foto) }}">
                     @else
-                        <div class="photo-placeholder">
-                            {{ substr($santri->nama_santri, 0, 1) }}
-                        </div>
+                        <!-- Default Avatar (WhatsApp Style Silhouette) -->
+                        <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjY2JkNWUxIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjZmZmZmZmIi8+PHBhdGggZD0iTTQgMThDNHAxNS43OTA5IDUuNzkwODYgMTQgOCAxNEgxNkMxOC4yMDkxIDE0IDIwIDE1Ljc5MDkgMjAgMThWMjBINFYxOFoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=" style="width: 100%; height: 100%; object-fit: cover;">
                     @endif
                 </div>
 
