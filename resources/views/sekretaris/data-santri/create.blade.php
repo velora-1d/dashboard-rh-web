@@ -53,6 +53,11 @@
                     </select>
                     @error('gender')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
+                <div class="form-group">
+                    <label class="form-label">Tanggal Lahir (Untuk Login Wali) *</label>
+                    <input type="date" name="tanggal_lahir" class="form-input" value="{{ old('tanggal_lahir') }}" required>
+                    @error('tanggal_lahir')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
                 </div>
                 
                 <div class="form-group">
