@@ -212,6 +212,25 @@ class BendaharaController extends Controller
         ]);
     }
 
+    public function getSyahriah(Request $request)
+    {
+        $query = Syahriah::with('santri');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->whereHas('santri', function($q) use ($search) {
+                $q->where('nama_santri', 'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->orderBy('created_at', 'desc')->take(50)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
     public function storeSyahriah(Request $request)
     {
         $request->validate([
