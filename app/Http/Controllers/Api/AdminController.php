@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -55,7 +56,7 @@ class AdminController extends Controller
                 $proofUrl = $uploadedFile->url;
 
             } catch (\Exception $e) {
-                \Log::error('UploadThing Upload Failed: ' . $e->getMessage());
+                Log::error('UploadThing Upload Failed: ' . $e->getMessage());
                  return response()->json([
                     'status' => 'error',
                     'message' => 'Gagal mengupload bukti transfer ke cloud: ' . $e->getMessage(),
