@@ -47,6 +47,7 @@ class KartuDigitalController extends Controller
         // For simplicity and printability, A4 with card graphic is safer. Or custom sleek rectangle.
         
         $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
         $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri'));
         
         // Horizontal Card (CR-80 size equivalent scaling)
@@ -61,6 +62,7 @@ class KartuDigitalController extends Controller
         $santri = Santri::findOrFail($id);
 
         $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
         $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri'));
         
         $pdf->setPaper('A4', 'portrait');

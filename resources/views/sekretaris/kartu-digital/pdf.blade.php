@@ -68,29 +68,28 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-0deg);
-            z-index: 2;
+            z-index: 0; /* Changed from 2 to 0 to be BEHIND content */
             width: 100%;
             text-align: center;
             pointer-events: none;
             display: flex;
             flex-direction: column;
             align-items: center;
-            opacity: 0.15;
-            background: rgba(255,255,255,0.05); /* subtle backdrop */
+            opacity: 0.1; /* Reduced opacity */
             padding: 10px 0;
         }
         .watermark-text {
-            font-size: 16px;
+            font-size: 14px; /* Slightly smaller */
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: white;
+            color: rgba(255,255,255,0.8);
         }
         .watermark-sub {
-            font-size: 10px;
+            font-size: 9px;
             font-style: italic;
             margin-top: 2px;
-            color: white;
+            color: rgba(255,255,255,0.8);
         }
 
         .header {
@@ -178,24 +177,26 @@
 
         /* Virtual Account Box */
         .va-box {
-            margin-top: 8px;
+            margin-top: 10px;
             margin-bottom: 5px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            padding: 4px 8px;
+            background: rgba(0,0,0,0.2); /* Darker solid background */
+            border-radius: 6px;
+            padding: 6px 10px;
             display: inline-block;
-            border: 1px dashed rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.15); /* Solid subtle border */
         }
         .va-label {
             font-size: 8px;
             color: #d1fae5;
             display: block;
-            margin-bottom: 1px;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .va-number {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             font-family: 'Courier New', monospace;
             color: #fbbf24; /* Amber color for visibility */
         }
@@ -290,7 +291,7 @@
             </div>
 
             <div class="qr-area">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode($santri->nis . ' - ' . $santri->nama_santri) }}" style="width: 100%; height: 100%;">
+                <img src="https://quickchart.io/qr?text={{ urlencode($santri->nis . ' - ' . $santri->nama_santri) }}&size=150" style="width: 100%; height: 100%;">
             </div>
 
             <div class="footer">
