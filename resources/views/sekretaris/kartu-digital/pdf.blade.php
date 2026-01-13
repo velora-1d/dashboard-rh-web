@@ -26,7 +26,8 @@
             width: 500px;
             height: 315px;
             position: relative;
-            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); /* Emerald 900 to 800 */
+            background-color: #064e3b; /* Solid Emerald 900 - PDF Safe */
+            background-image: none; /* Disable gradient for safety */
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
