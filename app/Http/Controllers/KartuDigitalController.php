@@ -41,17 +41,25 @@ class KartuDigitalController extends Controller
     {
         $santri = Santri::findOrFail($id);
 
-        // Generate PDF
-        // Using 'portrait' ID Card size is roughly 85.6mm x 53.98mm. 
-        // Or simple A4? User wants "Kartu". Let's try to set custom paper size if possible, or standard A4 with card centered.
-        // For simplicity and printability, A4 with card graphic is safer. Or custom sleek rectangle.
+        // Generate QR Code as Base64 to ensure it renders in PDF
+        $qrData = $santri->nis . ' - ' . $santri->nama_santri;
+        $qrUrl = "https://quickchart.io/qr?text=" . urlencode($qrData) . "&size=300&margin=1&ecLevel=H";
         
+        try {
+            // Fetch image with 5 second timeout
+            $context = stream_context_create(['http' => ['timeout' => 5]]);
+            $qrContent = file_get_contents($qrUrl, false, $context);
+            $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
+        } catch (\Exception $e) {
+            // Fallback if API fails (transparent pixel or simple error placeholder)
+            $qrBase64 = null; 
+        }
+
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
-        $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri'));
+        $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
         
         // Horizontal Card (CR-80 size equivalent scaling)
-        // 53.98mm x 85.60mm
         $pdf->setPaper('A4', 'portrait'); 
 
         return $pdf->download('Kartu-Syahriah-' . $santri->nis . '.pdf');
@@ -60,10 +68,22 @@ class KartuDigitalController extends Controller
     public function previewPdf($id)
     {
         $santri = Santri::findOrFail($id);
+        
+        // Generate QR Code as Base64 to ensure it renders in PDF
+        $qrData = $santri->nis . ' - ' . $santri->nama_santri;
+        $qrUrl = "https://quickchart.io/qr?text=" . urlencode($qrData) . "&size=300&margin=1&ecLevel=H";
+        
+        try {
+            $context = stream_context_create(['http' => ['timeout' => 5]]);
+            $qrContent = file_get_contents($qrUrl, false, $context);
+            $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
+        } catch (\Exception $e) {
+            $qrBase64 = null;
+        }
 
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
-        $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri'));
+        $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
         
         $pdf->setPaper('A4', 'portrait');
 
