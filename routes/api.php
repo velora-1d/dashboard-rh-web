@@ -12,6 +12,13 @@ use App\Http\Controllers\Api\NotificationController;
 // Public Routes
 Route::post('/login', [AuthController::class, 'login']);
 
+// Parent / Wali Santri Routes
+Route::post('/parent/login', [App\Http\Controllers\Api\ParentAuthController::class, 'login']);
+Route::middleware(['auth:sanctum'])->prefix('parent')->group(function () {
+    Route::get('/me', [App\Http\Controllers\Api\ParentAuthController::class, 'me']);
+    Route::post('/logout', [App\Http\Controllers\Api\ParentAuthController::class, 'logout']);
+});
+
 // Protected Routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {

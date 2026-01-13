@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogsActivity;
 
+use Laravel\Sanctum\HasApiTokens;
+
 class Santri extends Model
 {
-    use LogsActivity;
+    use LogsActivity, HasApiTokens;
     
     protected $table = 'santri';
     
@@ -29,12 +31,14 @@ class Santri extends Model
         'gender',
         'is_active',
         'tanggal_masuk',
+        'tanggal_lahir', // Added
         'virtual_account_number',
     ];
     
     protected $casts = [
         'is_active' => 'boolean',
         'tanggal_masuk' => 'date',
+        'tanggal_lahir' => 'date', // Added
     ];
     
     // Relationships
