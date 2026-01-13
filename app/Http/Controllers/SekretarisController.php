@@ -115,6 +115,7 @@ class SekretarisController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
             'tanggal_masuk' => 'required|date',
+            'tanggal_lahir' => 'required|date',
             'foto' => 'nullable|image|max:2048',
         ]);
         
@@ -187,6 +188,7 @@ class SekretarisController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
             'gender' => 'required|in:putra,putri',
             'tanggal_masuk' => 'required|date',
+            'tanggal_lahir' => 'required|date',
             'foto' => 'nullable|image|max:2048',
         ]);
         
