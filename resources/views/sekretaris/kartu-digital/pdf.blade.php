@@ -27,7 +27,7 @@
             height: 315px;
             position: relative;
             background-color: #064e3b; /* Solid Emerald 900 - PDF Safe */
-            background-image: none; /* Disable gradient for safety */
+            background-image: none;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -41,21 +41,21 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: rgba(255,255,255,0.03);
+            background-color: #065f46; /* Solid Emerald 800 (slightly lighter) */
             border-radius: 50%;
             top: -150px;
             right: -100px;
             z-index: 1;
+            opacity: 0.5;
         }
         .decor-line {
             position: absolute;
             width: 100%;
             height: 4px;
-            background: #eab308; /* Gold */
+            background-color: #eab308; /* Solid Gold */
             top: 75px;
             left: 0;
             z-index: 5;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         /* Header */
@@ -65,7 +65,7 @@
             align-items: center;
             position: relative;
             z-index: 10;
-            height: 45px; /* Fixed height for top section */
+            height: 45px;
         }
         .logo {
             width: 45px;
@@ -85,7 +85,6 @@
             letter-spacing: 0.5px;
             color: #ffffff;
             line-height: 1.1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         .school-desc {
             font-size: 8px;
@@ -96,7 +95,7 @@
 
         /* Body Content */
         .body {
-            padding: 25px 20px 10px 20px; /* Top padding pushes below gold line */
+            padding: 25px 20px 10px 20px;
             position: relative;
             z-index: 10;
         }
@@ -105,28 +104,16 @@
             float: left;
             width: 85px;
             height: 105px;
-            background: #e2e8f0;
+            background-color: #e2e8f0;
             border-radius: 8px;
             border: 2px solid #eab308; /* Gold Border */
             overflow: hidden;
             margin-right: 18px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
         .photo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-        .photo-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #64748b;
-            font-size: 30px;
-            font-weight: bold;
-            background: #cbd5e1;
         }
 
         .details {
@@ -154,7 +141,7 @@
         /* Highlighted VA Box */
         .va-container {
             margin-top: 8px;
-            background-color: #fef9c3; /* Solid Light Yellow (was gradient) */
+            background-color: #fef9c3; /* Solid Light Yellow */
             border-left: 3px solid #eab308;
             padding: 5px 10px;
             border-radius: 0 6px 6px 0;
@@ -162,7 +149,7 @@
         }
         .va-label {
             font-size: 8px;
-            color: #854d0e; /* Darker Gold for contrast on light yellow */
+            color: #854d0e; /* Darker Gold */
             display: block;
             margin-bottom: 2px;
             letter-spacing: 0.5px;
@@ -171,23 +158,35 @@
             font-size: 14px;
             font-family: 'Courier New', monospace;
             font-weight: 900;
-            color: #166534; /* Dark Green text for contrast */
+            color: #166534; /* Dark Green */
             letter-spacing: 1px;
-            text-shadow: none; /* Removed shadow for safety */
         }
-        
-        /* ... existing styles ... */
-        
-        .graphic-pattern {
+
+        /* QR & Footer */
+        .qr-section {
             position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 200px;
-            height: 200px;
-            background-color: rgba(255,255,255,0.05); /* Solid transparent white */
-            border-radius: 100% 0 0 0;
-            z-index: 1;
-            display: none; /* Hide pattern to be 100% safe against gradient usage */
+            bottom: 15px;
+            right: 15px;
+            width: 55px;
+            height: 55px;
+            background-color: white;
+            padding: 3px;
+            border-radius: 6px;
+            z-index: 20;
+        }
+        .qr-section img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer-watermark {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 8px;
+            color: #a7f3d0; /* Soft Green, easier to read than transparent white */
+            font-style: italic;
+            opacity: 0.7;
         }
 
         .clearfix::after {
@@ -201,8 +200,8 @@
     <div class="container">
         <div class="card">
             <!-- Background Elements -->
+             <!-- Simplified Decor: Solid Circle Only -->
             <div class="decor-circle"></div>
-            <div class="graphic-pattern"></div>
             <div class="decor-line"></div>
 
             <!-- Header -->
