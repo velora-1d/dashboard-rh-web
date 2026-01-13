@@ -17,7 +17,7 @@
         .container {
             width: 100%;
             height: 100%;
-            display: flex;
+            display: flex; /* Keeping flex for centering on preview, might need fallback for PDF if strictly ignored */
             justify-content: center;
             align-items: center;
         }
@@ -26,27 +26,25 @@
             width: 500px;
             height: 315px;
             position: relative;
-            background-color: #064e3b; /* Solid Emerald 900 - PDF Safe */
-            background-image: none;
+            background-color: #064e3b; /* Solid Emerald 900 */
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            /* Removed box-shadow (rgba) */
             margin: 0 auto;
             border: 1px solid #064e3b;
             color: white;
         }
 
-        /* Decorative Elements */
+        /* Decorative Elements - SOLID COLORS ONLY */
         .decor-circle {
             position: absolute;
             width: 400px;
             height: 400px;
-            background-color: #065f46; /* Solid Emerald 800 (slightly lighter) */
+            background-color: #065f46; /* Solid Emerald 800 (Lightened bg) - Replaces transparent white */
             border-radius: 50%;
             top: -150px;
             right: -100px;
-            z-index: 1;
-            opacity: 0.5;
+            z-index: 0; /* Lower z-index */
         }
         .decor-line {
             position: absolute;
@@ -56,16 +54,21 @@
             top: 75px;
             left: 0;
             z-index: 5;
+            /* Removed box-shadow */
         }
 
         /* Header */
         .header {
             padding: 15px 20px;
-            display: flex;
-            align-items: center;
+            /* Flex is partial in DomPDF, usually works for simple rows. Floats are backup if needed. */
+            height: 45px;
             position: relative;
             z-index: 10;
-            height: 45px;
+        }
+        .header:after {
+            content: "";
+            display: table;
+            clear: both;
         }
         .logo {
             width: 45px;
@@ -85,10 +88,11 @@
             letter-spacing: 0.5px;
             color: #ffffff;
             line-height: 1.1;
+            /* Removed text-shadow (rgba) */
         }
         .school-desc {
             font-size: 8px;
-            color: #d1fae5; /* Light green */
+            color: #a7f3d0; /* Solid light green - Replaces d1fae5 */
             margin-top: 2px;
             font-weight: 400;
         }
@@ -98,6 +102,11 @@
             padding: 25px 20px 10px 20px;
             position: relative;
             z-index: 10;
+        }
+        .body:after {
+            content: "";
+            display: table;
+            clear: both;
         }
         
         .photo-container {
@@ -109,6 +118,7 @@
             border: 2px solid #eab308; /* Gold Border */
             overflow: hidden;
             margin-right: 18px;
+            /* Removed box-shadow */
         }
         .photo-container img {
             width: 100%;
@@ -141,7 +151,7 @@
         /* Highlighted VA Box */
         .va-container {
             margin-top: 8px;
-            background-color: #fef9c3; /* Solid Light Yellow */
+            background-color: #fef9c3; /* Solid Light Yellow - Replaces gradient */
             border-left: 3px solid #eab308;
             padding: 5px 10px;
             border-radius: 0 6px 6px 0;
@@ -160,6 +170,7 @@
             font-weight: 900;
             color: #166534; /* Dark Green */
             letter-spacing: 1px;
+            /* Removed text-shadow */
         }
 
         /* QR & Footer */
@@ -169,10 +180,11 @@
             right: 15px;
             width: 55px;
             height: 55px;
-            background-color: white;
+            background-color: #ffffff;
             padding: 3px;
             border-radius: 6px;
             z-index: 20;
+            /* Removed box-shadow */
         }
         .qr-section img {
             width: 100%;
@@ -184,28 +196,23 @@
             bottom: 15px;
             left: 20px;
             font-size: 8px;
-            color: #a7f3d0; /* Soft Green, easier to read than transparent white */
+            color: #6ee7b7; /* Solid Emerald 300 - Replaces transparent white rgba */
             font-style: italic;
-            opacity: 0.7;
         }
 
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
+        /* Removed graphic-pattern entirely */
+
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
             <!-- Background Elements -->
-             <!-- Simplified Decor: Solid Circle Only -->
             <div class="decor-circle"></div>
             <div class="decor-line"></div>
 
             <!-- Header -->
-            <div class="header clearfix">
+            <div class="header">
                 <img src="{{ public_path('images/logo.png') }}" class="logo" alt="Logo">
                 <div class="header-content">
                     <div class="school-name">Ponpes Riyadlul Huda</div>
@@ -214,7 +221,7 @@
             </div>
 
             <!-- Body -->
-            <div class="body clearfix">
+            <div class="body">
                 <!-- Photo -->
                 <div class="photo-container">
                     @if($santri->foto && file_exists(storage_path('app/public/santri-photos/' . $santri->foto)))
