@@ -119,6 +119,13 @@ class PendidikanController extends Controller
             'semester' => 'required|in:1,2'
         ]);
 
+        // Security Check for Parent/Santri
+        if (\Illuminate\Support\Facades\Auth::user() instanceof \App\Models\Santri) {
+            if ($request->santri_id != \Illuminate\Support\Facades\Auth::id()) {
+                return response()->json(['status' => 'error', 'message' => 'Unauthorized access'], 403);
+            }
+        }
+
         $url = URL::temporarySignedRoute(
             'api.pendidikan.download-rapor',
             now()->addMinutes(30),
@@ -147,6 +154,13 @@ class PendidikanController extends Controller
             'santri_id' => 'required|exists:santri,id',
             'type' => 'required|in:ibtida,tsanawi'
         ]);
+
+        // Security Check for Parent/Santri
+        if (\Illuminate\Support\Facades\Auth::user() instanceof \App\Models\Santri) {
+            if ($request->santri_id != \Illuminate\Support\Facades\Auth::id()) {
+                return response()->json(['status' => 'error', 'message' => 'Unauthorized access'], 403);
+            }
+        }
 
         $url = URL::temporarySignedRoute(
             'api.pendidikan.download-ijazah',
@@ -207,6 +221,11 @@ class PendidikanController extends Controller
     public function getHafalan(Request $request)
     {
         $query = \App\Models\Hafalan::with(['santri.kelas']);
+        
+        // Filter for Parent/Santri login
+        if (\Illuminate\Support\Facades\Auth::user() instanceof \App\Models\Santri) {
+            $query->where('santri_id', \Illuminate\Support\Facades\Auth::id());
+        }
 
         if ($request->has('kelas_id')) {
             $query->whereHas('santri', function($q) use ($request) {

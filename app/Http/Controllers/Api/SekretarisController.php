@@ -63,6 +63,11 @@ class SekretarisController extends Controller
             });
         }
 
+        // Filter for Parent/Santri login (Restrict to self)
+        if (\Illuminate\Support\Facades\Auth::user() instanceof Santri) {
+            $query->where('id', \Illuminate\Support\Facades\Auth::id());
+        }
+
         if ($request->has('kelas_id')) {
             $query->where('kelas_id', $request->kelas_id);
         }

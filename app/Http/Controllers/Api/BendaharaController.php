@@ -216,6 +216,11 @@ class BendaharaController extends Controller
     {
         $query = Syahriah::with('santri');
 
+        // Filter for Parent/Santri login
+        if (Auth::user() instanceof Santri) {
+            $query->where('santri_id', Auth::id());
+        }
+
         if ($request->has('search')) {
             $search = $request->search;
             $query->whereHas('santri', function($q) use ($search) {
