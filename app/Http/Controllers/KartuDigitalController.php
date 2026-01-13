@@ -53,7 +53,7 @@ class KartuDigitalController extends Controller
                  $qrBase64 = 'data:image/png;base64,' . base64_encode($qrContent);
             }
         } catch (\Exception $e) {
-            // Silently fail for QR to avoid breaking the PDF
+            // Silently fail for QR
         }
 
         $pdf = app('dompdf.wrapper');
@@ -61,16 +61,8 @@ class KartuDigitalController extends Controller
         $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
         $pdf->setPaper('A4', 'portrait');
 
-        $filename = 'Kartu-Syahriah-' . $santri->nis . '.pdf';
-
-        return response()->streamDownload(
-            fn () => print($pdf->output()),
-            $filename,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $filename . '"',
-            ]
-        );
+        // Use standard stream() to ensure it opens INLINE (Preview works)
+        return $pdf->stream('Kartu-Syahriah-' . $santri->nis . '.pdf');
     }
 
     public function downloadPdf($id)
@@ -79,7 +71,6 @@ class KartuDigitalController extends Controller
 
         // Generate QR Code as Base64 (Safe for PDF)
         $qrData = $santri->nis . ' - ' . $santri->nama_santri;
-        // Same logic as preview - ideally refactor to private method but keeping inline for "No Theory" rule compliance
         $qrUrl = "https://quickchart.io/qr?text=" . urlencode($qrData) . "&size=300&margin=1&ecLevel=H";
         
         $qrBase64 = null;
@@ -98,15 +89,7 @@ class KartuDigitalController extends Controller
         $pdf->loadView('sekretaris.kartu-digital.pdf', compact('santri', 'qrBase64'));
         $pdf->setPaper('A4', 'portrait');
 
-        $filename = 'Kartu-Syahriah-' . $santri->nis . '.pdf';
-
-        return response()->streamDownload(
-            fn () => print($pdf->output()),
-            $filename,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-            ]
-        );
+        // Use standard download() to ensure correct FILENAME
+        return $pdf->download('Kartu-Syahriah-' . $santri->nis . '.pdf');
     }
 }
