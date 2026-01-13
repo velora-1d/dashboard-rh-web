@@ -154,7 +154,7 @@
         /* Highlighted VA Box */
         .va-container {
             margin-top: 8px;
-            background: linear-gradient(90deg, rgba(234,179,8,0.2) 0%, rgba(234,179,8,0.05) 100%);
+            background-color: #fef9c3; /* Solid Light Yellow (was gradient) */
             border-left: 3px solid #eab308;
             padding: 5px 10px;
             border-radius: 0 6px 6px 0;
@@ -162,7 +162,7 @@
         }
         .va-label {
             font-size: 8px;
-            color: #fef08a; /* Soft Yellow */
+            color: #854d0e; /* Darker Gold for contrast on light yellow */
             display: block;
             margin-bottom: 2px;
             letter-spacing: 0.5px;
@@ -171,47 +171,23 @@
             font-size: 14px;
             font-family: 'Courier New', monospace;
             font-weight: 900;
-            color: #ffffff;
+            color: #166534; /* Dark Green text for contrast */
             letter-spacing: 1px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            text-shadow: none; /* Removed shadow for safety */
         }
-
-        /* QR & Footer */
-        .qr-section {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            width: 55px;
-            height: 55px;
-            background: white;
-            padding: 3px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 20;
-        }
-        .qr-section img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .footer-watermark {
-            position: absolute;
-            bottom: 15px;
-            left: 20px;
-            font-size: 8px;
-            color: rgba(255,255,255,0.4);
-            font-style: italic;
-        }
-
+        
+        /* ... existing styles ... */
+        
         .graphic-pattern {
             position: absolute;
             bottom: 0;
             right: 0;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            background-color: rgba(255,255,255,0.05); /* Solid transparent white */
             border-radius: 100% 0 0 0;
             z-index: 1;
+            display: none; /* Hide pattern to be 100% safe against gradient usage */
         }
 
         .clearfix::after {
