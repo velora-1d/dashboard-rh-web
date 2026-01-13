@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\LogsActivity;
+use Illuminate\Notifications\Notifiable;
 
 use Laravel\Sanctum\HasApiTokens;
 
-class Santri extends Model
+class Santri extends Authenticatable
 {
-    use LogsActivity, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity;
     
     protected $table = 'santri';
     
