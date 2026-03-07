@@ -13,13 +13,17 @@ class PerizinanController extends Controller
     // List History Perizinan (Untuk Wali Santri)
     public function index(Request $request)
     {
-        // Asumsi: User Login adalah Wali Santri yang punya relasi ke data Santri
-        // Untuk MVP fase ini, kita ambil berdasarkan 'santri_id' yang dikirim param
-        // Nanti harus di-binding dengan User Login (Parent)
+        $santriId = $request->santri_id;
+
+        // Cek IDOR: Jika user yang login adalah Santri/Wali Santri, paksa santri_id ke ID login mereka
+        if ($request->user() && clone $request->user() instanceof \App\Models\Santri) {
+            $santriId = $request->user()->id;
+        } else {
+            // Jika admin/pendidikan/sekretaris, maka santri_id wajib ada dari request
+            $request->validate(['santri_id' => 'required|exists:santri,id']);
+        }
         
-        $request->validate(['santri_id' => 'required|exists:santri,id']);
-        
-        $data = Perizinan::where('santri_id', $request->santri_id)
+        $data = Perizinan::where('santri_id', $santriId)
                         ->orderBy('created_at', 'desc')
                         ->get();
 
@@ -29,6 +33,16 @@ class PerizinanController extends Controller
     // Request Izin Baru (Untuk Wali Santri)
     public function store(Request $request)
     {
+        $santriId = $request->santri_id;
+
+        // Cek IDOR: Jika user yang login adalah Santri/Wali Santri, paksa santri_id ke ID login mereka
+        if ($request->user() && clone $request->user() instanceof \App\Models\Santri) {
+            $santriId = $request->user()->id;
+        }
+
+        // Validate basic rules mapping $request->all() and injecting override
+        $request->merge(['santri_id' => $santriId]);
+
         $request->validate([
             'santri_id' => 'required|exists:santri,id',
             'jenis' => 'required|in:Izin Pulang,Izin Keluar,Sakit',

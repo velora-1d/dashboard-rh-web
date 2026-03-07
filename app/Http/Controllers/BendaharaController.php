@@ -325,7 +325,9 @@ class BendaharaController extends Controller
                 ->with('warning', "Pembayaran untuk {$santri->nama_santri} bulan {$bulanNama[$validated['bulan']]} {$validated['tahun']} sudah tercatat sebelumnya dengan status: {$statusLunas}. Silakan edit data yang sudah ada jika ingin mengubah.");
         }
         
-        $syahriah = Syahriah::create($validated);
+        $syahriah = DB::transaction(function () use ($validated) {
+            return Syahriah::create($validated);
+        });
         
         // Send Telegram notification for payment
         if ($validated['is_lunas']) {
@@ -435,7 +437,9 @@ class BendaharaController extends Controller
             'kategori' => 'required|string',
         ]);
         
-        $pemasukan = Pemasukan::create($validated);
+        $pemasukan = DB::transaction(function () use ($validated) {
+            return Pemasukan::create($validated);
+        });
         
         // Send Telegram notification
         try {
@@ -540,7 +544,9 @@ class BendaharaController extends Controller
             'kategori' => 'required|string',
         ]);
         
-        $pengeluaran = Pengeluaran::create($validated);
+        $pengeluaran = DB::transaction(function () use ($validated) {
+            return Pengeluaran::create($validated);
+        });
         
         // Send Telegram notification
         try {

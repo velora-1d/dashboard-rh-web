@@ -222,7 +222,7 @@ class SekretarisController extends Controller
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = $file->hashName();
             $file->storeAs('public/santri-photos', $filename);
             $validated['foto'] = $filename;
         }
@@ -275,7 +275,7 @@ class SekretarisController extends Controller
             }
             
             $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = $file->hashName();
             $file->storeAs('public/santri-photos', $filename);
             $validated['foto'] = $filename;
         }

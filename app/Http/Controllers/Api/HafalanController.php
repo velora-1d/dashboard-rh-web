@@ -11,9 +11,17 @@ class HafalanController extends Controller
     // List History Hafalan (Untuk Wali Santri & Pendidikan)
     public function index(Request $request)
     {
-        $request->validate(['santri_id' => 'required|exists:santri,id']);
+        $santriId = $request->santri_id;
 
-        $query = Hafalan::where('santri_id', $request->santri_id);
+        // Cek IDOR: Jika user yang login adalah Santri/Wali Santri, paksa santri_id ke ID login mereka
+        if ($request->user() && clone $request->user() instanceof \App\Models\Santri) {
+            $santriId = $request->user()->id;
+        } else {
+            // Jika admin/pendidikan, maka santri_id wajib ada dari request
+            $request->validate(['santri_id' => 'required|exists:santri,id']);
+        }
+
+        $query = Hafalan::where('santri_id', $santriId);
 
         if ($request->has('jenis')) {
             $query->where('jenis', $request->jenis);
@@ -27,6 +35,17 @@ class HafalanController extends Controller
     // Input Hafalan (Untuk Bagian Pendidikan via Mobile/Web)
     public function store(Request $request)
     {
+        $santriId = $request->santri_id;
+
+        // Cek IDOR: Jika user yang login adalah Santri/Wali Santri, paksa santri_id ke ID login mereka
+        // Biasanya store hafalan dilakukan oleh ustadz/admin, tapi jika wali santri bisa, kita amankan.
+        if ($request->user() && clone $request->user() instanceof \App\Models\Santri) {
+            $santriId = $request->user()->id;
+        }
+
+        // Validate basic rules mapping $request->all() and injecting override
+        $request->merge(['santri_id' => $santriId]);
+
         $request->validate([
             'santri_id' => 'required|exists:santri,id',
             'jenis' => 'required|in:Quran,Kitab',

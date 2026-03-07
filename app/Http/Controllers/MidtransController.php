@@ -39,10 +39,10 @@ class MidtransController extends Controller
 
         if ($response && isset($response['va_numbers'][0]['va_number'])) {
             $vaNumber = $response['va_numbers'][0]['va_number'];
-            
+
             // Update Santri
             $santri->update(['virtual_account_number' => $vaNumber]);
-            
+
             return back()->with('success', 'Virtual Account berhasil di-generate: ' . $vaNumber);
         } else if ($response && isset($response['permata_va_number'])) {
             // Fallback for Permata
@@ -88,17 +88,21 @@ class MidtransController extends Controller
                 $response = $this->midtransService->createTransaction($santri);
 
                 if ($response && isset($response['va_numbers'][0]['va_number'])) {
-                    $santri->update(['virtual_account_number' => $response['va_numbers'][0]['va_number']]);
+                    DB::transaction(function () use ($santri, $response) {
+                        $santri->update(['virtual_account_number' => $response['va_numbers'][0]['va_number']]);
+                    });
                     $successCount++;
                 } else if ($response && isset($response['permata_va_number'])) {
-                     $santri->update(['virtual_account_number' => $response['permata_va_number']]);
-                     $successCount++;
+                    DB::transaction(function () use ($santri, $response) {
+                        $santri->update(['virtual_account_number' => $response['permata_va_number']]);
+                    });
+                    $successCount++;
                 } else {
                     $failCount++;
                 }
-                
+
                 // Optional: Sleep to prevent rate rate limit if needed
-                // sleep(1); 
+                // sleep(1);
             } catch (\Exception $e) {
                 Log::error("Bulk VA Error for ID {$santri->id}: " . $e->getMessage());
                 $failCount++;
@@ -115,7 +119,7 @@ class MidtransController extends Controller
     {
         // Update all santri set va to null
         Santri::query()->update(['virtual_account_number' => null]);
-        
+
         return back()->with('success', 'Semua Virtual Account berhasil di-reset (dihapus). Silakan generate ulang massal jika diperlukan.');
     }
 
@@ -141,61 +145,85 @@ class MidtransController extends Controller
             return response()->json(['message' => 'Invalid Signature'], 400);
         }
 
-        // 2. Log Transaction to payment_gateway table
-        // Extract NIS from Order ID (Format: SPP-NIS-TIMESTAMP)
-        $parts = explode('-', $orderId);
-        $nis = isset($parts[1]) ? $parts[1] : null;
+        // 2. Idempotency check — cegah double processing webhook
+        $existingLog = DB::table('payment_gateway')->where('order_id', $orderId)->first();
+        if ($existingLog && $existingLog->transaction_status === $transactionStatus) {
+            Log::info("Midtrans Webhook duplicate ignored: $orderId (status: $transactionStatus)");
+            return response()->json(['message' => 'Already processed']);
+        }
 
-        // Store log
-        DB::table('payment_gateway')->updateOrInsert(
-            ['order_id' => $orderId],
-            [
-                'payment_type' => $type,
-                'transaction_status' => $transactionStatus,
-                'gross_amount' => $grossAmount,
-                'json_response' => json_encode($notification),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
+        // 3. Wrap semua operasi database dalam transaksi
+        $notificationData = null; // Data untuk notifikasi setelah commit
 
-        // 3. Process Status
-        if ($transactionStatus == 'capture') {
-            if ($fraudStatus == 'challenge') {
-                // TODO: Set pending
-            } else if ($fraudStatus == 'accept') {
-                $this->handleSuccess($nis, $grossAmount);
-            }
-        } else if ($transactionStatus == 'settlement') {
-            $this->handleSuccess($nis, $grossAmount);
-        } else if ($transactionStatus == 'cancel' || $transactionStatus == 'deny' || $transactionStatus == 'expire') {
-            // TODO: Handle Failed
-        } else if ($transactionStatus == 'pending') {
-            // TODO: Handle Pending
+        try {
+            $notificationData = DB::transaction(function () use (
+                $orderId, $statusCode, $grossAmount, $signatureKey,
+                $transactionStatus, $type, $fraudStatus, $notification
+            ) {
+                // Extract NIS from Order ID (Format: SPP-NIS-TIMESTAMP)
+                $parts = explode('-', $orderId);
+                $nis = isset($parts[1]) ? $parts[1] : null;
+
+                // Store/update payment log
+                DB::table('payment_gateway')->updateOrInsert(
+                    ['order_id' => $orderId],
+                    [
+                        'payment_type' => $type,
+                        'transaction_status' => $transactionStatus,
+                        'gross_amount' => $grossAmount,
+                        'json_response' => json_encode($notification),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+
+                // Process Status
+                if ($transactionStatus == 'capture' && $fraudStatus == 'accept') {
+                    return $this->handleSuccess($nis, $grossAmount);
+                } else if ($transactionStatus == 'settlement') {
+                    return $this->handleSuccess($nis, $grossAmount);
+                }
+
+                return null;
+            });
+        } catch (\Exception $e) {
+            Log::error("Midtrans Webhook Transaction Failed: {$orderId} - " . $e->getMessage());
+            return response()->json(['message' => 'Processing error'], 500);
+        }
+
+        // 4. Kirim notifikasi SETELAH commit (di luar transaksi)
+        if ($notificationData) {
+            $this->sendPaymentNotifications($notificationData);
         }
 
         return response()->json(['message' => 'OK']);
     }
 
+    /**
+     * Handle successful payment — HARUS dipanggil di dalam DB::transaction
+     * Menggunakan lockForUpdate() untuk mencegah race condition
+     *
+     * @return array|null Data notifikasi untuk dikirim setelah commit
+     */
     private function handleSuccess($nis, $amount)
     {
-        if (!$nis) return;
+        if (!$nis) return null;
 
         $santri = Santri::where('nis', $nis)->first();
-        if (!$santri) return;
+        if (!$santri) return null;
 
-        // Common Data
         $adminGroupId = env('FONNTE_ADMIN_GROUP_ID');
 
-        // SMART PAYMENT LOGIC: Find oldest unpaid month
+        // SMART PAYMENT LOGIC: Find oldest unpaid month WITH LOCKING
         $unpaidMonth = Syahriah::where('santri_id', $santri->id)
             ->where('is_lunas', false)
             ->orderBy('tahun', 'asc')
             ->orderBy('bulan', 'asc')
+            ->lockForUpdate()
             ->first();
 
         if ($unpaidMonth) {
-            // Mark as Paid
+            // Mark as Paid (atomic within transaction)
             $unpaidMonth->update([
                 'is_lunas' => true,
                 'tanggal_bayar' => now(),
@@ -206,56 +234,31 @@ class MidtransController extends Controller
             $monthName = \Carbon\Carbon::create()->month($unpaidMonth->bulan)->translatedFormat('F');
             $year = $unpaidMonth->tahun;
 
-            // Calculate Remaining Arrears for Notification
             $remainingArrearsCount = Syahriah::where('santri_id', $santri->id)->where('is_lunas', false)->count();
-            $arrearsInfo = "";
-            if ($remainingArrearsCount > 0) {
-                $totalArrears = Syahriah::where('santri_id', $santri->id)->where('is_lunas', false)->sum('nominal'); // approximation if nominal not set defined via relational default
-                // Better fallback if nominal is 0 in DB:
-                 $totalArrears = $remainingArrearsCount * 500000; // Assumption or need fetch
-                $arrearsInfo = "⚠️ Masih ada tunggakan $remainingArrearsCount bulan lagi.";
-            } else {
-                $arrearsInfo = "✅ Alhamdulillah lunas, tidak ada tunggakan.";
-            }
+            $arrearsInfo = $remainingArrearsCount > 0
+                ? "⚠️ Masih ada tunggakan $remainingArrearsCount bulan lagi."
+                : "✅ Alhamdulillah lunas, tidak ada tunggakan.";
 
-            // 1. TELEGRAM (Admin Group)
-            $telegramMsg = "✅ PEMBAYARAN DITERIMA\n\n";
-            $telegramMsg .= "Santri: {$santri->nama_santri}\n";
-            $telegramMsg .= "Bulan: {$monthName} {$year}\n";
-            $telegramMsg .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
-            $this->telegramService->sendMessage($telegramMsg);
-            
-            // 2. WHATSAPP (Parent - Japri Kuitansi)
-            if ($santri->no_hp_ortu_wali) {
-                $this->fonnteService->notifyPaymentSuccess(
-                    $santri->no_hp_ortu_wali, 
-                    $santri->nama_santri, 
-                    $amount, 
-                    $monthName, 
-                    $year,
-                    $arrearsInfo
-                );
-            }
-
-            // 3. WHATSAPP (Admin Group - Laporan)
-            if ($adminGroupId) {
-                $this->fonnteService->notifyAdminReport(
-                    $adminGroupId,
-                    $santri->nama_santri,
-                    $amount,
-                    $monthName,
-                    $year,
-                    'LUNAS'
-                );
-            }
-            
             Log::info("Payment Processed for Santri $nis - Month $monthName $year");
+
+            // Return data untuk notifikasi (dikirim SETELAH commit)
+            return [
+                'type' => 'payment',
+                'santri' => $santri,
+                'amount' => $amount,
+                'month_name' => $monthName,
+                'year' => $year,
+                'arrears_info' => $arrearsInfo,
+                'admin_group_id' => $adminGroupId,
+                'label' => 'LUNAS',
+            ];
 
         } else {
             // ADVANCE PAYMENT
             $lastBill = Syahriah::where('santri_id', $santri->id)
                 ->orderBy('tahun', 'desc')
                 ->orderBy('bulan', 'desc')
+                ->lockForUpdate()
                 ->first();
 
             $nextMonth = 1;
@@ -272,7 +275,6 @@ class MidtransController extends Controller
                 $nextMonth = date('n');
             }
 
-            // Create Advance Record
             Syahriah::create([
                 'santri_id' => $santri->id,
                 'bulan' => $nextMonth,
@@ -285,38 +287,64 @@ class MidtransController extends Controller
 
             $monthName = \Carbon\Carbon::create()->month($nextMonth)->translatedFormat('F');
 
+            Log::info("Advance Payment for Santri $nis - $monthName $nextYear");
+
+            return [
+                'type' => 'advance',
+                'santri' => $santri,
+                'amount' => $amount,
+                'month_name' => $monthName,
+                'year' => $nextYear,
+                'arrears_info' => "🌟 Dialokasikan untuk bulan depan (Advance).",
+                'admin_group_id' => $adminGroupId,
+                'label' => 'ADVANCE / DEPOSIT',
+            ];
+        }
+    }
+
+    /**
+     * Kirim notifikasi pembayaran — dipanggil SETELAH DB::commit
+     * Kegagalan notifikasi tidak akan merusak data keuangan
+     */
+    private function sendPaymentNotifications(array $data)
+    {
+        try {
+            $santri = $data['santri'];
+            $prefix = $data['type'] === 'advance' ? '🌟 PEMBAYARAN DEPOSIT (ADVANCE)' : '✅ PEMBAYARAN DITERIMA';
+            $bulanLabel = $data['type'] === 'advance' ? 'Alokasi' : 'Bulan';
+
             // 1. TELEGRAM
-            $telegramMsg = "🌟 PEMBAYARAN DEPOSIT (ADVANCE)\n\n";
+            $telegramMsg = "{$prefix}\n\n";
             $telegramMsg .= "Santri: {$santri->nama_santri}\n";
-            $telegramMsg .= "Alokasi: {$monthName} {$nextYear}\n";
-            $telegramMsg .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
+            $telegramMsg .= "{$bulanLabel}: {$data['month_name']} {$data['year']}\n";
+            $telegramMsg .= "Nominal: Rp " . number_format($data['amount'], 0, ',', '.') . "\n";
             $this->telegramService->sendMessage($telegramMsg);
 
             // 2. WHATSAPP (Parent)
             if ($santri->no_hp_ortu_wali) {
-                 $this->fonnteService->notifyPaymentSuccess(
-                    $santri->no_hp_ortu_wali, 
-                    $santri->nama_santri, 
-                    $amount, 
-                    $monthName, 
-                    $nextYear,
-                    "🌟 Dialokasikan untuk bulan depan (Advance)."
+                $this->fonnteService->notifyPaymentSuccess(
+                    $santri->no_hp_ortu_wali,
+                    $santri->nama_santri,
+                    $data['amount'],
+                    $data['month_name'],
+                    $data['year'],
+                    $data['arrears_info']
                 );
             }
 
             // 3. WHATSAPP (Admin Group)
-            if ($adminGroupId) {
-                 $this->fonnteService->notifyAdminReport(
-                    $adminGroupId,
+            if ($data['admin_group_id']) {
+                $this->fonnteService->notifyAdminReport(
+                    $data['admin_group_id'],
                     $santri->nama_santri,
-                    $amount,
-                    $monthName,
-                    $nextYear,
-                    'ADVANCE / DEPOSIT'
+                    $data['amount'],
+                    $data['month_name'],
+                    $data['year'],
+                    $data['label']
                 );
             }
-
-            Log::info("Advance Payment for Santri $nis - $monthName $nextYear");
+        } catch (\Exception $e) {
+            Log::warning('Payment notification failed (data already saved): ' . $e->getMessage());
         }
     }
 }
