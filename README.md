@@ -123,8 +123,8 @@ cd dashboard-riyadlul-huda
 
 # Install dependencies
 composer install
-npm install
-npm run build
+pnpm install
+pnpm run build
 
 # Copy environment file
 cp .env.example .env

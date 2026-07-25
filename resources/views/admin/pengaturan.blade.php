@@ -38,7 +38,7 @@
     @endif
 
     <!-- Page Header -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4); position: relative; overflow: hidden;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 20px; padding: 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(5, 150, 105, 0.4); position: relative; overflow: hidden;">
         <div style="position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
         <div style="display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; color: white;">
             <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -53,7 +53,7 @@
 
     <!-- Tabs Navigation -->
     <div style="background: white; border-radius: 16px; padding: 8px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; gap: 8px;">
-        <button onclick="showTab('app')" id="tab-app" class="tab-button active" style="flex: 1; padding: 12px 24px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+        <button onclick="showTab('app')" id="tab-app" class="tab-button active" style="flex: 1; padding: 12px 24px; border: none; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
             <i data-feather="sliders" style="width: 18px; height: 18px; margin-right: 8px;"></i>
             Aplikasi
         </button>
@@ -83,21 +83,21 @@
                 <div style="display: grid; gap: 20px;">
                     <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Nama Aplikasi</label>
-                        <input type="text" name="app_name" value="{{ session('app_name', 'Dashboard Riyadlul Huda') }}" required style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                        <input type="text" name="app_name" value="{{ session('app_name', 'Dashboard Riyadlul Huda') }}" required style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#059669'" onblur="this.style.borderColor='#e5e7eb'">
                     </div>
                     
                     <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Kontak</label>
-                        <input type="text" name="app_contact" value="{{ session('app_contact', '+62 xxx xxxx xxxx') }}" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                        <input type="text" name="app_contact" value="{{ session('app_contact', '+62 xxx xxxx xxxx') }}" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#059669'" onblur="this.style.borderColor='#e5e7eb'">
                     </div>
                     
                     <div>
-                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Email</label>
-                        <input type="email" name="app_email" value="{{ session('app_email', 'info@riyadlulhuda.com') }}" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Email Kontak</label>
+                        <input type="email" name="app_email" value="{{ session('app_email', 'info@riyadlulhuda.com') }}" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='#059669'" onblur="this.style.borderColor='#e5e7eb'">
                     </div>
                     
                     @if(auth()->user()->role !== 'rois')
-                    <button type="submit" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 32px; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.3)'">
+                    <button type="submit" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; padding: 14px 32px; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(5, 150, 105, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(5, 150, 105, 0.3)'">
                         <i data-feather="save" style="width: 18px; height: 18px; margin-right: 8px;"></i>
                         Simpan Pengaturan
                     </button>
@@ -134,7 +134,13 @@
                     
                     <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Password</label>
-                        <input type="password" name="password" required style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="create_user_password" name="password" required style="width: 100%; padding: 12px 46px 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                            <button type="button" onclick="togglePasswordVisibility('create_user_password', this)" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #64748b; display: flex; align-items: center; padding: 4px;" aria-label="Toggle password">
+                                <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <svg class="eye-closed" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                            </button>
+                        </div>
                     </div>
                     
                     <div>
@@ -290,7 +296,13 @@
                     
                     <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Password Baru (kosongkan jika tidak diubah)</label>
-                        <input type="password" id="edit_password" name="password" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="edit_password" name="password" style="width: 100%; padding: 12px 46px 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                            <button type="button" onclick="togglePasswordVisibility('edit_password', this)" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #64748b; display: flex; align-items: center; padding: 4px;" aria-label="Toggle password">
+                                <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <svg class="eye-closed" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                            </button>
+                        </div>
                     </div>
                     
                     <div>
@@ -335,7 +347,7 @@
             
             // Add active class to selected button
             const activeButton = document.getElementById('tab-' + tabName);
-            activeButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            activeButton.style.background = 'linear-gradient(135deg, #059669 0%, #0d9488 100%)';
             activeButton.style.color = 'white';
             
             // Re-initialize feather icons
@@ -364,5 +376,21 @@
                 closeEditModal();
             }
         });
+
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            const eyeOpen = btn.querySelector('.eye-open');
+            const eyeClosed = btn.querySelector('.eye-closed');
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'inline-block';
+            } else {
+                input.type = 'password';
+                eyeOpen.style.display = 'inline-block';
+                eyeClosed.style.display = 'none';
+            }
+        }
     </script>
 @endsection

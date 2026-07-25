@@ -111,12 +111,12 @@
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                         <div>
                             <label style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: #334155; margin-bottom: 10px;">
-                                <span style="width: 20px; height: 20px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                                <span style="width: 20px; height: 20px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 5px; display: flex; align-items: center; justify-content: center;">
                                     <i data-feather="user" style="width: 11px; height: 11px; color: white;"></i>
                                 </span>
                                 Pilih Santri <span style="color: #ef4444;">*</span>
                             </label>
-                            <select name="santri_id" id="santri-select" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 0.95rem; background: white; transition: all 0.2s; font-weight: 500;" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99, 102, 241, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';" required>
+                            <select name="santri_id" id="santri-select" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 0.95rem; background: white; transition: all 0.2s; font-weight: 500;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 4px rgba(5, 150, 105, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';" required>
                                 <option value="">Pilih Santri</option>
                                 @foreach($santriList as $s)
                                     <option value="{{ $s->id }}" 
@@ -168,12 +168,12 @@
                         </div>
                         <div>
                             <label style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: #334155; margin-bottom: 10px;">
-                                <span style="width: 20px; height: 20px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                                <span style="width: 20px; height: 20px; background: linear-gradient(135deg, #0d9488 0%, #059669 100%); border-radius: 5px; display: flex; align-items: center; justify-content: center;">
                                     <i data-feather="check-circle" style="width: 11px; height: 11px; color: white;"></i>
                                 </span>
                                 Status
                             </label>
-                            <select name="is_lunas" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 0.95rem; background: white; transition: all 0.2s; font-weight: 500;" onfocus="this.style.borderColor='#8b5cf6'; this.style.boxShadow='0 0 0 4px rgba(139, 92, 246, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';" required>
+                            <select name="is_lunas" style="width: 100%; padding: 14px 16px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 0.95rem; background: white; transition: all 0.2s; font-weight: 500;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 4px rgba(5, 150, 105, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';" required>
                                 <option value="1">✅ Lunas</option>
                                 <option value="0">⏳ Belum Lunas</option>
                             </select>
@@ -195,12 +195,14 @@
                 </form>
             </div>
             @endif
-        </div>!-- Filter & Search Card -->
+        </div>
+
+        <!-- Filter & Search Card -->
         <div style="background: white; border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; margin-bottom: 32px;">
             <form method="GET" action="{{ route('bendahara.syahriah') }}">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: #334155; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                    <div style="width: 28px; height: 28px; background: #eef2ff; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-                        <i data-feather="filter" style="width: 14px; height: 14px; color: #4f46e5;"></i>
+                    <div style="width: 28px; height: 28px; background: #ecfdf5; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                        <i data-feather="filter" style="width: 14px; height: 14px; color: #059669;"></i>
                     </div>
                     Filter Data Syahriah
                 </div>
@@ -208,11 +210,11 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; align-items: flex-end;">
                     <div>
                         <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 8px; text-transform: uppercase;">Tahun</label>
-                        <input type="number" name="tahun" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: 600; color: #1e2937; transition: all 0.2s;" onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';" value="{{ request('tahun', date('Y')) }}">
+                        <input type="number" name="tahun" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: 600; color: #1e2937; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 3px rgba(5, 150, 105, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';" value="{{ request('tahun', date('Y')) }}">
                     </div>
                     <div>
                         <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 8px; text-transform: uppercase;">Bulan</label>
-                        <select name="bulan" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: 600; color: #1e2937; transition: all 0.2s;" onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';">
+                        <select name="bulan" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: 600; color: #1e2937; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 3px rgba(5, 150, 105, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';">
                             <option value="">Semua Bulan</option>
                             @for($i = 1; $i <= 12; $i++)
                                 <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>
@@ -223,7 +225,7 @@
                     </div>
                     <div>
                         <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 8px; text-transform: uppercase;">Status</label>
-                        <select name="is_lunas" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: 600; color: #1e2937; transition: all 0.2s;" onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';">
+                        <select name="is_lunas" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem; font-weight: 600; color: #1e2937; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 3px rgba(5, 150, 105, 0.1)';" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none';">
                             <option value="">Semua Status</option>
                             <option value="1" {{ request('is_lunas') == '1' ? 'selected' : '' }}>Lunas</option>
                             <option value="0" {{ request('is_lunas') == '0' ? 'selected' : '' }}>Belum Lunas</option>
@@ -231,7 +233,7 @@
                     </div>
                     
                     <div style="display: flex; gap: 10px;">
-                        <button type="submit" style="flex: 1; height: 46px; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); color: white; border-radius: 10px; font-weight: 700; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 15px rgba(79, 70, 229, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(79, 70, 229, 0.25)';">
+                        <button type="submit" style="flex: 1; height: 46px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border-radius: 10px; font-weight: 700; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 15px rgba(5, 150, 105, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(5, 150, 105, 0.25)';">
                             <i data-feather="filter" style="width: 16px; height: 16px;"></i>
                             Terapkan
                         </button>

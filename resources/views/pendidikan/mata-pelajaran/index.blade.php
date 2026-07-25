@@ -9,7 +9,7 @@
 
 @section('content')
     <!-- Header -->
-    <div style="background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); border-radius: 12px; padding: 24px 28px; margin-bottom: 24px;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 12px; padding: 24px 28px; margin-bottom: 24px;">
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <div style="background: rgba(255,255,255,0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             @if(auth()->user()->role !== 'rois')
-            <button onclick="openModal()" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: white; border: none; border-radius: 8px; color: #4f46e5; font-weight: 600; cursor: pointer;">
+            <button onclick="openModal()" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: white; border: none; border-radius: 8px; color: #059669; font-weight: 600; cursor: pointer;">
                 <i data-feather="plus" style="width: 18px; height: 18px;"></i>
                 Tambah Mata Ujian
             </button>
@@ -35,13 +35,13 @@
             <!-- Search -->
             <div style="flex: 1; min-width: 250px;">
                 <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #64748b;">Cari Mata Ujian</label>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik nama mata ujian..." style="width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; transition: all 0.2s;" onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik nama mata ujian..." style="width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 3px rgba(5, 150, 105, 0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
             </div>
 
             <!-- Filter Kategori -->
             <div style="min-width: 180px;">
                 <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #64748b;">Kategori</label>
-                <select name="kategori" style="width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; background: white; cursor: pointer; transition: all 0.2s;" onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+                <select name="kategori" style="width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; background: white; cursor: pointer; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 3px rgba(5, 150, 105, 0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                     <option value="">Semua Kategori</option>
                     <option value="Wajib" {{ request('kategori') == 'Wajib' ? 'selected' : '' }}>Wajib (Kelas)</option>
                     <option value="Umum" {{ request('kategori') == 'Umum' ? 'selected' : '' }}>Umum</option>
@@ -52,7 +52,7 @@
             <!-- Filter Kelas -->
             <div style="min-width: 180px;">
                 <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #64748b;">Kelas</label>
-                <select name="kelas" style="width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; background: white; cursor: pointer; transition: all 0.2s;" onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
+                <select name="kelas" style="width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; background: white; cursor: pointer; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.boxShadow='0 0 0 3px rgba(5, 150, 105, 0.1)'" onblur="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'">
                     <option value="">Semua Kelas</option>
                     @foreach($kelasList as $k)
                         <option value="{{ $k->id }}" {{ request('kelas') == $k->id ? 'selected' : '' }}>{{ $k->nama_kelas }}</option>
@@ -62,7 +62,7 @@
 
             <!-- Buttons -->
             <div style="display: flex; gap: 8px;">
-                <button type="submit" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(79, 70, 229, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(79, 70, 229, 0.2)'">
+                <button type="submit" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(5, 150, 105, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(5, 150, 105, 0.2)'">
                     <i data-feather="filter" style="width: 16px; height: 16px;"></i>
                     Filter
                 </button>
@@ -194,20 +194,58 @@
                 </div>
                 <div style="margin-bottom: 24px;">
                     <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #334155;">Konfigurasi Tambahan</label>
-                    <div style="border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; background: #f8fafc;">
-                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                            <input type="checkbox" name="is_talaran" id="isTalaran" value="1" style="width: 16px; height: 16px; accent-color: #4f46e5;">
-                            <div>
-                                <span style="font-size: 14px; font-weight: 500; color: #334155; display: block;">Wajib Ujian Mingguan?</span>
-                                <small style="color: #64748b; font-size: 12px;">Jika dicentang, mapel ini akan muncul di menu Input Ujian Mingguan.</small>
-                            </div>
-                        </label>
+                <div id="methodField" style="padding: 20px 20px 0 20px;"></div>
+                
+                <div style="padding: 20px;">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #334155;">Nama Mata Ujian</label>
+                        <input type="text" name="nama_mapel" id="namaMapel" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #334155;">Kategori</label>
+                        <select name="kategori" id="kategoriMapel" required style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            <option value="Wajib">Wajib (Kelas)</option>
+                            <option value="Umum">Umum</option>
+                            <option value="Mulok">Mulok</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #334155;">KKM</label>
+                        <input type="number" name="kkm" id="kkmMapel" value="70" required min="0" max="100" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #334155;">Berlaku untuk Kelas</label>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; border: 1px solid #e2e8f0; padding: 10px; border-radius: 6px;">
+                            @foreach($kelasList as $kelas)
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+                                <input type="checkbox" name="kelas_ids[]" value="{{ $kelas->id }}" class="kelas-checkbox" style="width: 16px; height: 16px; accent-color: #059669;">
+                                {{ $kelas->nama_kelas }}
+                            </label>
+                            @endforeach
+                        </div>
+                        <small style="color: #64748b; font-size: 12px; margin-top: 4px; display: block;">* Kosongkan jika berlaku untuk semua kelas</small>
+                    </div>
+                    
+                    <div style="margin-bottom: 0;">
+                        <label style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #334155;">Konfigurasi Tambahan</label>
+                        <div style="border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; background: #f8fafc;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" name="is_talaran" id="isTalaran" value="1" style="width: 16px; height: 16px; accent-color: #059669;">
+                                <div>
+                                    <span style="font-size: 14px; font-weight: 500; color: #334155; display: block;">Wajib Ujian Mingguan?</span>
+                                    <small style="color: #64748b; font-size: 12px;">Jika dicentang, mapel ini akan muncul di menu Input Ujian Mingguan.</small>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div style="display: flex; justify-content: flex-end; gap: 12px;">
-                    <button type="button" onclick="closeModal()" style="padding: 10px 20px; background: white; border: 1px solid #e2e8f0; border-radius: 6px; font-weight: 500; color: #64748b; cursor: pointer;">Batal</button>
-                    <button type="submit" style="padding: 10px 20px; background: #4f46e5; border: none; border-radius: 6px; font-weight: 500; color: white; cursor: pointer;">Simpan</button>
+                <div style="padding: 16px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 12px 12px;">
+                    <button type="button" onclick="closeModal()" style="padding: 10px 20px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 500; color: #64748b; cursor: pointer;">Batal</button>
+                    <button type="submit" style="padding: 10px 20px; background: #059669; border: none; border-radius: 6px; font-weight: 500; color: white; cursor: pointer;">Simpan</button>
                 </div>
             </form>
         </div>

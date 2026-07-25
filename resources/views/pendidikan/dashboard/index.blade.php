@@ -63,7 +63,7 @@
     <!-- Sticky Header and Filter Container -->
     <div class="filter-sticky">
         <form method="GET" action="{{ route('pendidikan.dashboard') }}" style="width: 100%;">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px 24px; border-radius: 12px;">
+            <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); padding: 20px 24px; border-radius: 12px;">
                 <!-- Single Row Filter Layout -->
                 <div style="display: flex; align-items: flex-end; gap: 12px;">
                     <!-- Filter 1: Tahun Ajaran -->
@@ -157,7 +157,7 @@
                             Reset
                         </a>
                         <button type="submit" 
-                            style="height: 38px; padding: 0 20px; display: inline-flex; align-items: center; gap: 6px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"
+                            style="height: 38px; padding: 0 20px; display: inline-flex; align-items: center; gap: 6px; background: white; color: #059669; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"
                             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)';"
                             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.15)';">
                             <i data-feather="search" style="width: 14px; height: 14px;"></i>
@@ -172,7 +172,7 @@
     <!-- KPI Cards -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: var(--spacing-xl);">
         <!-- Card 1: Total Santri -->
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(102, 126, 234, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.3)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -186,7 +186,7 @@
         </div>
 
         <!-- Card 2: Total Kelas -->
-        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(240, 147, 251, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(240, 147, 251, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(240, 147, 251, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -200,7 +200,7 @@
         </div>
 
         <!-- Card 3: Total Mapel -->
-        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(79, 172, 254, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(79, 172, 254, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -214,7 +214,7 @@
         </div>
 
         <!-- Card 4: Rata-rata Nilai -->
-        <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(67, 233, 123, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(67, 233, 123, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(67, 233, 123, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -231,7 +231,7 @@
     <!-- Second Row KPI Cards -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: var(--spacing-xl);">
         <!-- Card 5: Santri Berprestasi -->
-        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(250, 112, 154, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(250, 112, 154, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(250, 112, 154, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -245,7 +245,7 @@
         </div>
 
         <!-- Card 6: Perlu Bimbingan -->
-        <div style="background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(255, 106, 0, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(255, 106, 0, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(255, 106, 0, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -259,7 +259,7 @@
         </div>
 
         <!-- Card 7: Tingkat Kehadiran -->
-        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(48, 207, 208, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(48, 207, 208, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(48, 207, 208, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
@@ -273,15 +273,15 @@
         </div>
 
         <!-- Card 8: Total Guru -->
-        <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(168, 237, 234, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(168, 237, 234, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(168, 237, 234, 0.3)';">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(5, 150, 105, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(5, 150, 105, 0.25)';">
             <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
                 <div style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
-                    <i data-feather="user-check" style="width: 32px; height: 32px; color: #666;"></i>
+                    <i data-feather="user-check" style="width: 32px; height: 32px; color: white;"></i>
                 </div>
                 <div style="flex: 1;">
-                    <div style="color: rgba(0,0,0,0.7); font-size: 13px; font-weight: 500; margin-bottom: 4px;">Total Guru/Ustadz</div>
-                    <div style="color: #333; font-size: 32px; font-weight: 700; line-height: 1;">{{ number_format($totalGuru) }}</div>
+                    <div style="color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 500; margin-bottom: 4px;">Total Guru</div>
+                    <div style="color: white; font-size: 32px; font-weight: 700; line-height: 1;">{{ number_format($totalGuru) }}</div>
                 </div>
             </div>
         </div>

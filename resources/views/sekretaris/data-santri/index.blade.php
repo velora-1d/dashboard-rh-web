@@ -60,7 +60,7 @@
     @endif
 
     <!-- Combined Aesthetic Header with Actions -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); position: relative; overflow: hidden;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3); position: relative; overflow: hidden;">
         <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
         <div style="position: absolute; bottom: -40px; left: 40%; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
         
@@ -93,7 +93,7 @@
                     Reset VA Massal
                 </button>
                 
-                <a href="{{ route('sekretaris.data-santri.create') }}" style="display: inline-flex; align-items: center; gap: 8px; background: white; color: #667eea; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
+                <a href="{{ route('sekretaris.data-santri.create') }}" style="display: inline-flex; align-items: center; gap: 8px; background: white; color: #059669; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
                     <i data-feather="user-plus" style="width: 18px; height: 18px;"></i>
                     Tambah Santri
                 </a>
@@ -146,7 +146,7 @@
     </div>
 
     <!-- Filter Section with Gradient -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(5, 150, 105, 0.25);">
         <form method="GET" action="{{ route('sekretaris.data-santri') }}">
             <div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
                 <!-- Search -->
@@ -205,7 +205,7 @@
                         <i data-feather="rotate-ccw" style="width: 14px; height: 14px;"></i>
                         Reset
                     </a>
-                    <button type="submit" style="height: 40px; padding: 0 20px; display: inline-flex; align-items: center; gap: 6px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                    <button type="submit" style="height: 40px; padding: 0 20px; display: inline-flex; align-items: center; gap: 6px; background: white; color: #059669; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                         <i data-feather="search" style="width: 14px; height: 14px;"></i>
                         Cari
                     </button>
@@ -218,7 +218,7 @@
     <div style="background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden;">
         <table style="width: 100%; border-collapse: collapse;">
             <thead>
-                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <tr style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%);">
                     <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.5px;">No</th>
                     <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.5px;">NIS</th>
                     <th style="padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.5px;">Nama Santri</th>
@@ -251,21 +251,22 @@
                         </td>
                         <td style="padding: 12px 16px; text-align: center;">
                             <div style="display: flex; gap: 6px; justify-content: center;">
+                                <a href="{{ route('sekretaris.data-santri.show', $s->id) }}" title="Lihat Detail Santri" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 8px; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                                    <i data-feather="eye" style="width: 14px; height: 14px; color: white;"></i>
+                                </a>
                                 @if(auth()->user()->role !== 'rois')
-                                <a href="{{ route('sekretaris.data-santri.edit', $s->id) }}" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                                <a href="{{ route('sekretaris.data-santri.edit', $s->id) }}" title="Edit Data Santri" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 8px; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
                                     <i data-feather="edit-2" style="width: 14px; height: 14px; color: white;"></i>
                                 </a>
                                 @if($s->is_active)
                                     <form method="POST" action="{{ route('sekretaris.data-santri.deactivate', $s->id) }}" style="display: inline;" onsubmit="return confirmDelete(event, 'Santri ini akan dinonaktifkan dan tidak bisa login lagi.', 'Nonaktifkan Santri?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%); border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                                        <button type="submit" title="Nonaktifkan Santri" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%); border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
                                             <i data-feather="x-circle" style="width: 14px; height: 14px; color: white;"></i>
                                         </button>
                                     </form>
                                 @endif
-                                @else
-                                <span style="font-size: 12px; color: #9ca3af; font-style: italic;">Read-Only</span>
                                 @endif
                             </div>
                         </td>
@@ -294,21 +295,21 @@
                         <i data-feather="chevron-left" style="width: 18px; height: 18px;"></i>
                     </span>
                 @else
-                    <a href="{{ $santri->previousPageUrl() }}" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                    <a href="{{ $santri->previousPageUrl() }}" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 8px; color: white; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
                         <i data-feather="chevron-left" style="width: 18px; height: 18px;"></i>
                     </a>
                 @endif
 
-                @foreach($santri->getUrlRange(max(1, $santri->currentPage() - 2), min($santri->lastPage(), $santri->currentPage() + 2)) as $page => $url)
-                    @if($page == $santri->currentPage())
-                        <span style="min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white; font-weight: 600; font-size: 13px;">{{ $page }}</span>
+                @foreach ($santri->getUrlRange(1, $santri->lastPage()) as $page => $url)
+                    @if ($page == $santri->currentPage())
+                        <span style="min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 8px; color: white; font-weight: 600; font-size: 13px;">{{ $page }}</span>
                     @else
-                        <a href="{{ $url }}" style="min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: #f3f4f6; border-radius: 8px; color: #374151; font-weight: 500; font-size: 13px; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb';" onmouseout="this.style.background='#f3f4f6';">{{ $page }}</a>
+                        <a href="{{ $url }}" style="min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 8px; color: #475569; text-decoration: none; font-weight: 500; font-size: 13px; transition: background 0.2s;" onmouseover="this.style.background='#e2e8f0';" onmouseout="this.style.background='#f1f5f9';">{{ $page }}</a>
                     @endif
                 @endforeach
 
-                @if($santri->hasMorePages())
-                    <a href="{{ $santri->nextPageUrl() }}" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                @if ($santri->hasMorePages())
+                    <a href="{{ $santri->nextPageUrl() }}" style="width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 8px; color: white; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
                         <i data-feather="chevron-right" style="width: 18px; height: 18px;"></i>
                     </a>
                 @else

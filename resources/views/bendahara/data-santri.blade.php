@@ -35,6 +35,7 @@
                     <th>Gender</th>
                     <th>Kelas</th>
                     <th>Asrama</th>
+                    <th style="text-align: center;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +50,11 @@
                         </td>
                         <td>{{ $s->kelas->nama_kelas ?? '-' }}</td>
                         <td>{{ $s->asrama->nama_asrama ?? '-' }}</td>
+                        <td style="text-align: center;">
+                            <a href="{{ route('sekretaris.data-santri.show', $s->id) }}" title="Lihat Detail Santri" style="width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 8px; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                                <i data-feather="eye" style="width: 14px; height: 14px; color: white;"></i>
+                            </a>
+                        </td>
                     </tr>
                 @empty
                     <tr>

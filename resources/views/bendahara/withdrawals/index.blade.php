@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-<div style="max-width: 1000px; margin: 0 auto;">
+<div style="width: 100%;">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px;">
         <!-- Withdrawal Form -->
         <div>

@@ -23,7 +23,7 @@
     @endif
 
     <!-- Header with Gradient -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); position: relative; overflow: hidden;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3); position: relative; overflow: hidden;">
         <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
         <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="background: rgba(255,255,255,0.2); width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -55,7 +55,7 @@
             <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 16px; margin-bottom: 24px; align-items: end;">
                 <div>
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #374151; text-transform: uppercase; margin-bottom: 6px;">
-                        <i data-feather="book" style="width: 14px; height: 14px; color: #667eea;"></i>
+                        <i data-feather="book" style="width: 14px; height: 14px; color: #059669;"></i>
                         Kelas Asal <span style="color: #ef4444;">*</span>
                     </label>
                     <select name="kelas_asal_id" id="kelas_asal_id" required style="width: 100%; height: 46px; border: 2px solid #e5e7eb; border-radius: 10px; padding: 0 14px; font-size: 14px; color: #1f2937; background: white; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'background-color: #f1f5f9; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
@@ -66,7 +66,7 @@
                     </select>
                 </div>
                 
-                <div style="display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%;">
+                <div style="display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 50%;">
                     <i data-feather="arrow-right" style="width: 22px; height: 22px; color: white;"></i>
                 </div>
                 
@@ -96,7 +96,7 @@
                     </select>
                 </div>
                 
-                <button type="button" id="load_santri_btn" style="height: 46px; padding: 0 20px; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'opacity: 0.6; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
+                <button type="button" id="load_santri_btn" style="height: 46px; padding: 0 20px; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; {{ auth()->user()->role === 'rois' ? 'opacity: 0.6; cursor: not-allowed;' : '' }}" {{ auth()->user()->role === 'rois' ? 'disabled' : '' }}>
                     <i data-feather="users" style="width: 18px; height: 18px;"></i>
                     Tampilkan
                 </button>
@@ -125,7 +125,7 @@
                 <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 20px; max-height: 400px; overflow-y: auto;">
                     <table style="width: 100%; border-collapse: collapse;">
                         <thead style="position: sticky; top: 0;">
-                            <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <tr style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%);">
                                 <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 600; color: white; width: 50px;">No</th>
                                 <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: white;">NIS</th>
                                 <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: white;">Nama Santri</th>

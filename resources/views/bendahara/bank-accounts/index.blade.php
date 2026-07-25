@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-<div style="max-width: 1000px; margin: 0 auto;">
+<div style="width: 100%;">
     <!-- Header Action -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
         <div>

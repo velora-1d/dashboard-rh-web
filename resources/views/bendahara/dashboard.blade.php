@@ -313,7 +313,7 @@
         </div>
 
         <!-- Total Pemasukan -->
-        <div style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.pemasukan') }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.pemasukan') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -329,7 +329,7 @@
         </div>
 
         <!-- Total Pengeluaran -->
-        <div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.pengeluaran') }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.pengeluaran') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -345,7 +345,7 @@
         </div>
 
         <!-- Total Santri Aktif -->
-        <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri') }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -361,7 +361,7 @@
         </div>
 
         <!-- Total Santri Putra -->
-        <div style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri', ['gender' => 'putra']) }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri', ['gender' => 'putra']) }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -377,7 +377,7 @@
         </div>
 
         <!-- Total Santri Putri -->
-        <div style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri', ['gender' => 'putri']) }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri', ['gender' => 'putri']) }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -409,7 +409,7 @@
         </div>
 
         <!-- Santri Putri Lunas -->
-        <div style="background: linear-gradient(135deg, #f472b6 0%, #db2777 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(244, 114, 182, 0.15); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.syahriah', ['gender' => 'putri', 'status_lunas' => 1]) }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.syahriah', ['gender' => 'putri', 'status_lunas' => 1]) }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -441,7 +441,7 @@
         </div>
 
         <!-- Syahriah Gateway -->
-        <div style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.15); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.syahriah') }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.syahriah') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -457,7 +457,7 @@
         </div>
 
         <!-- Total Tunggakan -->
-        <div style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.syahriah') }}'">
+        <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.syahriah') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1;">
                 <div style="width: 44px; height: 44px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -473,7 +473,7 @@
         </div>
 
         <!-- Total Gaji Bulan Ini -->
-        <div style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.gaji') }}'">
+        <div style="background: linear-gradient(135deg, #0d9488 0%, #059669 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(13, 148, 136, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.gaji') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
@@ -523,7 +523,7 @@
         </div>
         <div style="background: white; border-radius: 16px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #f3f4f6;">
             <h3 style="font-size: 0.75rem; font-weight: 800; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                <i data-feather="grid" style="width: 14px; height: 14px; color: #8b5cf6;"></i>
+                <i data-feather="grid" style="width: 14px; height: 14px; color: #0d9488;"></i>
                 Per Kelas
             </h3>
             <canvas id="chartPerKelas" style="max-height: 140px; width: 100%;"></canvas>
@@ -573,7 +573,7 @@
                 </div>
                 <span>Catat Pengeluaran</span>
             </a>
-            <a href="{{ route('bendahara.gaji') }}" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; padding: 16px; border-radius: 14px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(139, 92, 246, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(139, 92, 246, 0.2)';">
+            <a href="{{ route('bendahara.gaji') }}" style="background: linear-gradient(135deg, #0d9488 0%, #059669 100%); color: white; padding: 16px; border-radius: 14px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(13, 148, 136, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(13, 148, 136, 0.2)';">
                 <div style="background: rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                     <i data-feather="credit-card" style="width: 20px; height: 20px;"></i>
                 </div>
@@ -666,18 +666,18 @@
         </div>
 
         <!-- Pegawai Summary -->
-        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 2px solid transparent; background-image: linear-gradient(white, white), linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); background-origin: border-box; background-clip: padding-box, border-box; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
+        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 2px solid transparent; background-image: linear-gradient(white, white), linear-gradient(135deg, #0d9488 0%, #059669 100%); background-origin: border-box; background-clip: padding-box, border-box; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';">
             <div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                    <h4 style="font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase;">SDM / Pegawai</h4>
-                    <div style="width: 32px; height: 32px; background: #f5f3ff; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                        <i data-feather="briefcase" style="width: 16px; height: 16px; color: #8b5cf6;"></i>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <div style="width: 32px; height: 32px; background: #ecfdf5; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <i data-feather="briefcase" style="width: 16px; height: 16px; color: #0d9488;"></i>
                     </div>
+                    <span style="font-size: 0.7rem; font-weight: 700; padding: 4px 8px; background: #ecfdf5; color: #0d9488; border-radius: 20px;">PEGAWAI</span>
                 </div>
-                <div style="font-size: 1.5rem; font-weight: 800; color: #1e2937; margin-bottom: 2px;">{{ number_format($totalPegawai, 0, ',', '.') }}</div>
-                <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 500;">Guru & Staf Aktif</div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Total Pegawai</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: #1e293b; margin-top: 4px;">{{ number_format($totalPegawai ?? 0) }}</div>
             </div>
-            <a href="{{ route('bendahara.pegawai') }}" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; padding: 10px; background: #f5f3ff; border-radius: 10px; color: #8b5cf6; font-weight: 700; text-decoration: none; font-size: 0.8rem; transition: background 0.2s;" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='#f5f3ff'">
+            <a href="{{ route('bendahara.pegawai') }}" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; padding: 10px; background: #ecfdf5; border-radius: 10px; color: #0d9488; font-weight: 700; text-decoration: none; font-size: 0.8rem; transition: background 0.2s;" onmouseover="this.style.background='#e6fffa'" onmouseout="this.style.background='#ecfdf5'">
                 Kelola Pegawai
             </a>
         </div>
@@ -824,25 +824,24 @@
         <!-- Recent Gaji -->
         <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #f3f4f6;">
             <h3 style="font-size: 1.125rem; font-weight: 700; color: #1f2937; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
-                <span>Pembayaran Gaji Terbaru</span>
-                <i data-feather="credit-card" style="width: 18px; height: 18px; color: #8b5cf6;"></i>
+                <i data-feather="credit-card" style="width: 18px; height: 18px; color: #0d9488;"></i>
+                Gaji Pegawai Terakhir
             </h3>
             <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
                     <thead>
-                        <tr style="border-bottom: 2px solid #f1f5f9;">
-                            <th style="text-align: left; padding: 12px 8px; font-size: 0.875rem; color: #64748b; font-weight: 600;">Pegawai</th>
-                            <th style="text-align: left; padding: 12px 8px; font-size: 0.875rem; color: #64748b; font-weight: 600;">Periode</th>
-                            <th style="text-align: right; padding: 12px 8px; font-size: 0.875rem; color: #64748b; font-weight: 600;">Nominal</th>
-                            <th style="text-align: center; padding: 12px 8px; font-size: 0.875rem; color: #64748b; font-weight: 600;">Status</th>
+                        <tr style="border-bottom: 1px solid #f1f5f9; color: #94a3b8; font-weight: 700; font-size: 0.75rem; text-align: left;">
+                            <th style="padding: 8px;">Pegawai</th>
+                            <th style="padding: 8px;">Bulan</th>
+                            <th style="padding: 8px; text-align: right;">Nominal</th>
                         </tr>
                     </thead>
-                    <tbody style="font-size: 0.875rem;">
-                        @forelse($recentGaji as $gaji)
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td style="padding: 12px 8px; color: #1f2937; font-weight: 500;">{{ $gaji->pegawai->nama_pegawai ?? '-' }}</td>
-                                <td style="padding: 12px 8px; color: #64748b;">{{ date('M', mktime(0, 0, 0, $gaji->bulan, 1)) }} {{ $gaji->tahun }}</td>
-                                <td style="padding: 12px 8px; text-align: right; color: #6d28d9; font-weight: 600;">Rp {{ number_format($gaji->nominal, 0, ',', '.') }}</td>
+                    <tbody>
+                        @forelse($recentGaji ?? [] as $gaji)
+                            <tr style="border-bottom: 1px solid #f8fafc;">
+                                <td style="padding: 12px 8px; font-weight: 600; color: #1e293b;">{{ $gaji->pegawai->nama ?? '-' }}</td>
+                                <td style="padding: 12px 8px; color: #64748b;">{{ $gaji->bulan }} {{ $gaji->tahun }}</td>
+                                <td style="padding: 12px 8px; text-align: right; color: #0d9488; font-weight: 600;">Rp {{ number_format($gaji->nominal, 0, ',', '.') }}</td>
                                 <td style="padding: 12px 8px; text-align: center;">
                                     <span style="display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; {{ $gaji->is_dibayar ? 'background: #ecfdf5; color: #059669;' : 'background: #fef2f2; color: #dc2626;' }}">
                                         {{ $gaji->is_dibayar ? 'Dibayar' : 'Pending' }}

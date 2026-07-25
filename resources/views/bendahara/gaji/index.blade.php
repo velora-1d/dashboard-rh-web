@@ -9,7 +9,7 @@
 
 @section('content')
     <!-- Header Banner -->
-    <div style="background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%); border-radius: 20px; padding: 40px; margin-bottom: 32px; box-shadow: 0 20px 40px rgba(99, 102, 241, 0.25); position: relative; overflow: hidden; color: white;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 20px; padding: 40px; margin-bottom: 32px; box-shadow: 0 20px 40px rgba(5, 150, 105, 0.25); position: relative; overflow: hidden; color: white;">
         <div style="position: absolute; top: -50px; right: -50px; width: 250px; height: 250px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px);"></div>
         <div style="position: absolute; bottom: -30px; left: 15%; width: 150px; height: 150px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
         
@@ -28,7 +28,7 @@
     </div>
 
     @if(session('success'))
-        <div style="background: #eef2ff; border-left: 4px solid #6366f1; color: #3730a3; padding: 16px; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <div style="background: #ecfdf5; border-left: 4px solid #059669; color: #064e3b; padding: 16px; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
             <i data-feather="check-circle" style="width: 20px; height: 20px;"></i>
             <span style="font-weight: 500;">{{ session('success') }}</span>
         </div>
@@ -39,8 +39,8 @@
         <div style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; overflow: hidden;">
             <div style="padding: 24px 32px; border-bottom: 1px solid #f1f5f9; background: linear-gradient(to right, #f8fafc, white); display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 40px; height: 40px; background: #eef2ff; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i data-feather="plus-circle" style="width: 20px; height: 20px; color: #6366f1;"></i>
+                    <div style="width: 40px; height: 40px; background: #ecfdf5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i data-feather="plus-circle" style="width: 20px; height: 20px; color: #059669;"></i>
                     </div>
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e2937;">Tambah Data Gaji</h3>
                 </div>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div style="display: flex; justify-content: flex-end;">
-                        <button type="submit" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; padding: 14px 32px; border-radius: 12px; font-weight: 800; border: none; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 25px rgba(99, 102, 241, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px rgba(99, 102, 241, 0.25)';">
+                        <button type="submit" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; padding: 14px 32px; border-radius: 12px; font-weight: 800; border: none; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.25);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 25px rgba(5, 150, 105, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px rgba(5, 150, 105, 0.25)';">
                             <i data-feather="save" style="width: 20px; height: 20px;"></i>
                             Simpan Data Gaji
                         </button>
@@ -181,7 +181,7 @@
                                         </div>
                                         <div style="display: flex; justify-content: flex-end; gap: 12px;">
                                             <button type="button" onclick="toggleEdit({{ $g->id }})" style="background: white; border: 1px solid #e2e8f0; color: #475569; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">Batal</button>
-                                            <button type="submit" style="background: #6366f1; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                            <button type="submit" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
                                                 <i data-feather="check" style="width: 16px; height: 16px;"></i>
                                                 Simpan Perubahan
                                             </button>

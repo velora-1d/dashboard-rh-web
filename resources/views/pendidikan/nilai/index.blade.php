@@ -711,7 +711,7 @@ function initializeNilaiCalculations() {
             
             if (hasEmpty) {
                 e.preventDefault();
-                alert('⚠️ Semua nilai ujian semester WAJIB diisi!\n\nTidak boleh ada yang kosong.');
+                alert('Semua nilai ujian semester WAJIB diisi!\n\nTidak boleh ada yang kosong.');
                 return false;
             }
             
@@ -743,11 +743,11 @@ function initializeNilaiCalculations() {
                 rankBadge.style.fontSize = '14px';
                 
                 if (student.rank === 1) {
-                    rankBadge.innerHTML = '🥇 1';
+                    rankBadge.innerHTML = 'Rank 1';
                 } else if (student.rank === 2) {
-                    rankBadge.innerHTML = '🥈 2';
+                    rankBadge.innerHTML = 'Rank 2';
                 } else if (student.rank === 3) {
-                    rankBadge.innerHTML = '🥉 3';
+                    rankBadge.innerHTML = 'Rank 3';
                 } else {
                     rankBadge.textContent = student.rank;
                 }

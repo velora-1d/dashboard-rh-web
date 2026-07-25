@@ -175,7 +175,7 @@
             <h3 style="font-size: 16px; font-weight: 600; margin: 0; color: #6b21a8; display: flex; align-items: center; gap: 8px;">
                 <i data-feather="printer" style="width: 18px; height: 18px;"></i>
                 Cetak Rapor Massal Per Kelas
-                <span style="background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%); color: white; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">BARU</span>
+                <span style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">BARU</span>
             </h3>
         </div>
         <div style="padding: 20px;">
@@ -222,14 +222,13 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px;">
-                    <button type="submit" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(147,51,234,0.25);"
-                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(147,51,234,0.35)';"
-                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(147,51,234,0.25)';">
+                    <button type="submit" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(5,150,105,0.25);"
+                        onmouseover="this.style.transform='translateY(-2px)';"
+                        onmouseout="this.style.transform='translateY(0)';"
                         <i data-feather="printer" style="width: 18px; height: 18px;"></i>
                         Cetak Semua
                     </button>
                     
-                    <button type="submit" name="download" value="1" style="flex: 1; padding: 12px; background: white; color: #9333ea; border: 2px solid #9333ea; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
                         onmouseover="this.style.background='#f5f3ff'; this.style.transform='translateY(-2px)';"
                         onmouseout="this.style.background='white'; this.style.transform='translateY(0)';"
                         title="Simpan seluruh rapor kelas sebagai satu file PDF">
@@ -440,7 +439,7 @@
 
         <!-- Rekapitulasi Kehadiran -->
         <div style="background: white; border-radius: 10px; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid rgba(139,92,246,0.1); overflow: hidden;">
-            <div style="padding: 16px 20px; background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); border-bottom: 2px solid #8b5cf6;">
+            <div style="padding: 16px 20px; background: linear-gradient(135deg, #ecfdf5 0%, #e6fffa 100%); border-bottom: 2px solid #059669;">
                 <h3 style="font-size: 16px; font-weight: 600; margin: 0; color: #5b21b6; display: flex; align-items: center; gap: 8px;">
                     <i data-feather="check-circle" style="width: 18px; height: 18px;"></i>
                     Rekapitulasi Kehadiran
@@ -483,7 +482,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
+                    <button type="submit" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
                         onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(139,92,246,0.3)';"
                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         <i data-feather="calendar" style="width: 16px; height: 16px;"></i>

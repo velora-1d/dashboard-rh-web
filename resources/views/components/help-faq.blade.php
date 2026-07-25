@@ -144,7 +144,7 @@
         gap: 8px;
     }
     .help-fab-label {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         color: white;
         font-size: 11px;
         font-weight: 700;
@@ -158,7 +158,7 @@
     .help-fab {
         width: 60px;
         height: 60px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -213,7 +213,7 @@
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
     .help-modal-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         padding: 20px 24px;
         display: flex;
         align-items: center;

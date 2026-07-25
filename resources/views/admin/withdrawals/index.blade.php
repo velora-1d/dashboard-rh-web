@@ -8,7 +8,25 @@
 @endsection
 
 @section('content')
-<div style="max-width: 1200px; margin: 0 auto;">
+<div style="width: 100%;">
+    <!-- Header Banner -->
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3); position: relative; overflow: hidden; color: white;">
+        <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -40px; left: 40%; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="background: rgba(255,255,255,0.2); width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                    <i data-feather="dollar-sign" style="width: 28px; height: 28px; color: white;"></i>
+                </div>
+                <div>
+                    <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0 0 4px 0;">Tracking Pencairan Dana</h2>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 0.875rem; margin: 0;">Pantau dan kelola pengajuan pencairan dana</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Filter Card -->
     <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; margin-bottom: 24px;">
         <form action="{{ route('admin.withdrawals') }}" method="GET" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;">
@@ -21,7 +39,7 @@
                     <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected (Ditolak)</option>
                 </select>
             </div>
-            <button type="submit" style="background: #1e293b; color: white; padding: 10px 20px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer;">Filter</button>
+            <button type="submit" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; padding: 10px 24px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);">Filter</button>
             <a href="{{ route('admin.withdrawals') }}" style="background: #f1f5f9; color: #475569; padding: 10px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid #e2e8f0;">Reset</a>
         </form>
     </div>
@@ -83,7 +101,7 @@
                                 <span style="font-size: 11px; color: #64748b; font-style: italic;">Read-Only</span>
                             @else
                                 @if($withdrawal->proof_of_transfer)
-                                    <a href="{{ asset('storage/' . $withdrawal->proof_of_transfer) }}" target="_blank" style="color: #6366f1; text-decoration: none; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                    <a href="{{ asset('storage/' . $withdrawal->proof_of_transfer) }}" target="_blank" style="color: #059669; text-decoration: none; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;">
                                         <i data-feather="eye" style="width: 14px; height: 14px;"></i> Bukti
                                     </a>
                                 @else

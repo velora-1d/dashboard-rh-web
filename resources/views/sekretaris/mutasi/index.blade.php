@@ -168,7 +168,7 @@
     <div class="card">
         <h3 class="card-header" style="display: flex; align-items: center; gap: 12px;">
             Riwayat Mutasi
-            <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">{{ $mutasi->total() }} Total</span>
+            <span style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">{{ $mutasi->total() }} Total</span>
         </h3>
         <div class="table-container">
             <table class="table">

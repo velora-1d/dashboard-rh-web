@@ -48,43 +48,60 @@
         /* Gradient Sidebar */
         .sidebar {
             width: var(--sidebar-width);
-            background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
-            box-shadow: 4px 0 24px rgba(0,0,0,0.05);
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.12);
             border-right: none;
         }
         
         .sidebar-logo {
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 20px 24px;
         }
         
         .sidebar-logo-text {
             font-weight: 700;
-            background: linear-gradient(to right, #fff, #a0aec0);
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
         }
 
         .sidebar-menu-link {
             border-radius: 12px;
             margin: 4px 16px;
-            padding: 12px 16px;
-            transition: all 0.3s ease;
+            padding: 10px 16px;
+            transition: all 0.2s ease;
             font-weight: 500;
-            color: #a0aec0;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        
+        .sidebar-menu-link .sidebar-menu-icon {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
         }
         
         .sidebar-menu-link:hover {
-            background: rgba(255,255,255,0.05);
-            color: white;
+            background: rgba(255,255,255,0.06);
+            color: #ffffff;
             transform: translateX(4px);
         }
         
         .sidebar-menu-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+        }
+
+        .sidebar-menu-link.active .sidebar-menu-icon {
+            color: white;
         }
 
         /* Glass Header */
@@ -94,7 +111,7 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.3);
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            padding: 0 32px;
+            padding: 0 16px;
             height: var(--header-height);
             display: flex;
             align-items: center;
@@ -102,7 +119,7 @@
             position: sticky;
             top: 0;
             z-index: 40;
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
         
         .page-title {
@@ -124,24 +141,29 @@
 
         /* Backup Button */
         .backup-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            color: #a0aec0;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            color: #cbd5e1;
             font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             margin: 0 16px;
+            box-sizing: border-box;
         }
         
         .backup-btn:hover {
-            background: rgba(255,255,255,0.15);
-            color: white;
+            background: rgba(5, 150, 105, 0.18);
+            border-color: rgba(5, 150, 105, 0.35);
+            color: #ffffff;
+            transform: translateY(-1px);
         }
 
         /* Main Content Area */
@@ -277,46 +299,53 @@
     <aside class="sidebar" style="display: flex; flex-direction: column; overflow: hidden;">
         <!-- Fixed Header Section inside Sidebar -->
         <div style="flex-shrink: 0;">
-            <div class="sidebar-logo" style="display: flex; align-items: center; gap: 12px;">
-                <img src="{{ asset('images/logo-yayasan.png') }}" alt="Logo" style="width: 32px; height: 32px;">
-                <span class="sidebar-logo-text">Riyadlul Huda</span>
+            <div class="sidebar-logo" style="display: flex; align-items: center; gap: 12px; padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                <img src="{{ asset('images/logo-yayasan.png') }}" alt="Logo" style="width: 34px; height: 34px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <span class="sidebar-logo-text" style="font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Riyadlul Huda</span>
             </div>
             
-            <div style="padding: 16px 0;">
+            @if(auth()->check() && auth()->user()->role !== 'rois')
+            <div style="padding: 16px 0 8px 0;">
                 <a href="{{ route('backup.download') }}" class="backup-btn" title="Download Database Backup (Realtime)">
-                    <i data-feather="database" style="width: 14px; height: 14px;"></i>
+                    <i data-feather="database" style="width: 15px; height: 15px; color: #10b981;"></i>
                     <span>Backup Data</span>
                 </a>
             </div>
+            @endif
         </div>
         
         <!-- Scrollable Menu Section -->
-        <ul class="sidebar-menu" style="list-style: none; padding: 0; flex: 1; overflow-y: auto; overflow-x: hidden;">
+        <ul class="sidebar-menu" style="list-style: none; padding: 8px 0; margin: 0; flex: 1; overflow-y: auto; overflow-x: hidden;">
             @yield('sidebar-menu')
         </ul>
         
         <!-- Fixed Bottom Info (User & Logout) -->
-        <div class="sidebar-footer" style="flex-shrink: 0; padding: 20px 24px; border-top: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2);">
+        <div class="sidebar-footer" style="flex-shrink: 0; padding: 16px; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(0,0,0,0.25);">
             @auth
-            <div style="margin-bottom: 16px;">
-                <div style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">Logged in as</div>
-                <div style="font-size: 14px; color: white; font-weight: 700; margin-bottom: 2px;">{{ auth()->user()->name }}</div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.6);">{{ auth()->user()->email }}</div>
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 14px; margin-bottom: 12px;">
+                <div style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Logged In As</div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3); flex-shrink: 0;">
+                        {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size: 13px; color: white; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ auth()->user()->name }}</div>
+                        <div style="font-size: 11px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ auth()->user()->email }}</div>
+                    </div>
+                </div>
+                
+                <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                    @csrf
+                    <button type="submit" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 12px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; color: #f87171; cursor: pointer; transition: all 0.2s; font-size: 12px; font-weight: 700;" onmouseover="this.style.background='rgba(239, 68, 68, 0.25)'; this.style.borderColor='rgba(239, 68, 68, 0.4)'; this.style.color='#ffffff';" onmouseout="this.style.background='rgba(239, 68, 68, 0.12)'; this.style.borderColor='rgba(239, 68, 68, 0.25)'; this.style.color='#f87171';">
+                        <i data-feather="log-out" style="width: 15px; height: 15px;"></i>
+                        <span>Logout</span>
+                    </button>
+                </form>
             </div>
-            
-            <form method="POST" action="{{ route('logout') }}" style="margin-bottom: 20px;">
-                @csrf
-                <button type="submit" style="width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; color: #f87171; cursor: pointer; transition: all 0.2s;">
-                    <i data-feather="log-out" style="width: 16px; height: 16px;"></i>
-                    <span style="font-size: 13px; font-weight: 600;">Logout</span>
-                </button>
-            </form>
             @endauth
 
-            <div style="font-size: 11px; color: rgba(255,255,255,0.4); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">
-                &copy; {{ date('Y') }} Riyadlul Huda
-                <br>
-                <span style="opacity: 0.6;">Ver 2.0.0 (Aesthetic)</span>
+            <div style="font-size: 11px; color: #64748b; text-align: center;">
+                &copy; {{ date('Y') }} Riyadlul Huda <span style="opacity: 0.5;">· Ver 2.0.0</span>
             </div>
         </div>
     </aside>
@@ -367,7 +396,7 @@
                 </div>
                 
                 <div style="display: flex; align-items: center; gap: 10px; padding-left: 24px; border-left: 1px solid #e2e8f0;">
-                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
+                    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">
                         {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
                     </div>
                 </div>
@@ -375,7 +404,7 @@
         </div>
         
         <!-- Page Content -->
-        <div style="padding: 0 32px 32px 32px;">
+        <div style="padding: 0 16px 24px 16px;">
             @yield('content')
             
             <!-- Watermark -->
@@ -762,7 +791,7 @@
         }
 
         // Use for General Action Confirmation (onclick="confirmAction('form-id', 'Message')")
-        function confirmAction(formId, message = 'Apakah Anda yakin?', title = 'Konfirmasi', btnText = 'Ya, Lanjutkan!', btnColor = '#6366f1') {
+        function confirmAction(formId, message = 'Apakah Anda yakin?', title = 'Konfirmasi', btnText = 'Ya, Lanjutkan!', btnColor = '#059669') {
             Swal.fire({
                 title: title,
                 text: message,

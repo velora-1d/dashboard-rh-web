@@ -95,8 +95,8 @@ echo "📚 Installing PHP dependencies..."
 composer install --no-dev --optimize-autoloader
 
 echo "📦 Installing Node dependencies & building assets..."
-npm install
-npm run build
+pnpm install
+pnpm run build
 
 # ===== 10. CONFIGURE LARAVEL =====
 echo "⚙️ Configuring Laravel..."

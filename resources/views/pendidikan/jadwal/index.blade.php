@@ -244,7 +244,7 @@
                                 'Selasa' => 'background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);',
                                 'Rabu' => 'background: linear-gradient(135deg, #10b981 0%, #059669 100%);',
                                 'Kamis' => 'background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);',
-                                'Jumat' => 'background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);',
+                                'Jumat' => 'background: linear-gradient(135deg, #059669 0%, #0d9488 100%);',
                                 'Sabtu' => 'background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);',
                             ];
                         @endphp

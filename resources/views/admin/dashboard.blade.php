@@ -8,9 +8,9 @@
 @endsection
 
 @section('content')
-<div style="padding: 24px; max-width: 1400px; margin: 0 auto;">
+<div style="width: 100%;">
     <!-- Header -->
-    <div style="background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 100%); border-radius: 20px; padding: 32px; margin-bottom: 32px; color: white; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);">
+    <div style="background: linear-gradient(120deg, #059669 0%, #0d9488 100%); border-radius: 20px; padding: 32px; margin-bottom: 32px; color: white; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);">
         <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
         <div style="position: absolute; bottom: -30px; left: -30px; width: 140px; height: 140px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
         
@@ -31,7 +31,7 @@
                     Backup Data
                 </a>
                 @endif
-                <a href="{{ route('admin.activity-log') }}" style="background: white; color: #6366f1; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <a href="{{ route('admin.activity-log') }}" style="background: white; color: #059669; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                     <i data-feather="activity" style="width: 18px; height: 18px;"></i>
                     Riwayat Aktivitas
                 </a>
@@ -62,8 +62,8 @@
                     <span style="font-size: 0.875rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total User</span>
                     <div style="font-size: 2.25rem; font-weight: 800; color: #1e293b; margin-top: 4px;">{{ $userStats['total'] }}</div>
                 </div>
-                <div style="background: #f5f3ff; paddoing: 12px; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i data-feather="users" style="width: 24px; height: 24px; color: #7c3aed;"></i>
+                <div style="background: #ecfdf5; padding: 12px; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i data-feather="users" style="width: 24px; height: 24px; color: #0d9488;"></i>
                 </div>
             </div>
             <div style="font-size: 0.75rem; color: #94a3b8; display: flex; gap: 8px; flex-wrap: wrap;">
@@ -79,8 +79,8 @@
                     <span style="font-size: 0.875rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Santri Aktif</span>
                     <div style="font-size: 2.25rem; font-weight: 800; color: #1e293b; margin-top: 4px;">{{ $santriStats['aktif'] }}</div>
                 </div>
-                <div style="background: #eff6ff; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i data-feather="user-check" style="width: 24px; height: 24px; color: #2563eb;"></i>
+                <div style="background: #ecfdf5; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i data-feather="user-check" style="width: 24px; height: 24px; color: #059669;"></i>
                 </div>
             </div>
             <div style="font-size: 0.75rem; color: #94a3b8; display: flex; gap: 8px; flex-wrap: wrap;">
@@ -112,8 +112,8 @@
                     <span style="font-size: 0.875rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total Tunggakan</span>
                     <div style="font-size: 2.25rem; font-weight: 800; color: #dc2626; margin-top: 4px;">{{ $financialStats['total_tunggakan'] }}</div>
                 </div>
-                <div style="background: #fef2f2; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                    <i data-feather="alert-triangle" style="width: 24px; height: 24px; color: #dc2626;"></i>
+                <div style="background: #ecfdf5; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i data-feather="alert-triangle" style="width: 24px; height: 24px; color: #059669;"></i>
                 </div>
             </div>
             <div style="font-size: 0.75rem; color: #94a3b8;">
@@ -132,7 +132,7 @@
                     <p style="margin: 4px 0 0 0; color: #64748b; font-size: 0.85rem;">Kelola akses pengguna sistem</p>
                 </div>
                 @if(auth()->user()->role !== 'rois')
-                <button onclick="document.getElementById('addUserModal').style.display='flex'" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <button onclick="document.getElementById('addUserModal').style.display='flex'" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                     <i data-feather="plus" style="width: 16px; height: 16px;"></i> Tambah User
                 </button>
                 @endif
@@ -151,7 +151,7 @@
                         <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
                             <td style="padding: 20px 24px;">
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div style="width: 40px; height: 40px; background: #e0e7ff; color: #4338ca; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem;">
+                                    <div style="width: 40px; height: 40px; background: #ecfdf5; color: #047857; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem;">
                                         {{ substr($user->name, 0, 1) }}
                                     </div>
                                     <div>
@@ -234,7 +234,7 @@
                         </div>
                         Aktivitas
                     </h3>
-                    <a href="{{ route('admin.activity-log') }}" style="font-size: 0.8rem; color: #6366f1; text-decoration: none; font-weight: 600;">Lihat Semua</a>
+                    <a href="{{ route('admin.activity-log') }}" style="font-size: 0.8rem; color: #059669; text-decoration: none; font-weight: 600;">Lihat Semua</a>
                 </div>
                 <div style="overflow-y: auto; flex: 1; padding: 0 10px;">
                     @forelse($recentActivities as $activity)
@@ -271,20 +271,26 @@
             @csrf
             <div style="margin-bottom: 20px;">
                 <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 8px;">Nama Lengkap</label>
-                <input type="text" name="name" required style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#6366f1'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+                <input type="text" name="name" required style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
             </div>
             <div style="margin-bottom: 20px;">
                 <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 8px;">Email Address</label>
-                <input type="email" name="email" required style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#6366f1'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+                <input type="email" name="email" required style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
             </div>
             <div style="margin-bottom: 20px;">
                 <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 8px;">Password</label>
-                <input type="password" name="password" required minlength="6" style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#6366f1'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="modal_user_password" name="password" required minlength="6" style="width: 100%; padding: 12px 46px 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+                    <button type="button" onclick="togglePasswordVisibility('modal_user_password', this)" style="position: absolute; right: 12px; background: none; border: none; cursor: pointer; color: #64748b; display: flex; align-items: center; padding: 4px;" aria-label="Toggle password">
+                        <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg class="eye-closed" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                    </button>
+                </div>
             </div>
             <div style="margin-bottom: 28px;">
                 <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 8px;">Role</label>
                 <div style="position: relative;">
-                    <select name="role" required style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; appearance: none; background: white; cursor: pointer; transition: all 0.2s;" onfocus="this.style.borderColor='#6366f1'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+                    <select name="role" required style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; box-sizing: border-box; appearance: none; background: white; cursor: pointer; transition: all 0.2s;" onfocus="this.style.borderColor='#059669'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
                         <option value="admin">Admin</option>
                         <option value="sekretaris">Sekretaris</option>
                         <option value="bendahara">Bendahara</option>
@@ -295,9 +301,26 @@
             </div>
             <div style="display: flex; gap: 16px;">
                 <button type="button" onclick="document.getElementById('addUserModal').style.display='none'" style="flex: 1; padding: 12px; background: #f1f5f9; color: #64748b; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">Batal</button>
-                <button type="submit" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Simpan User</button>
+                <button type="submit" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Simpan User</button>
             </div>
         </form>
     </div>
 </div>
+<script>
+function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const eyeOpen = btn.querySelector('.eye-open');
+    const eyeClosed = btn.querySelector('.eye-closed');
+    if (input.type === 'password') {
+        input.type = 'text';
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'inline-block';
+    } else {
+        input.type = 'password';
+        eyeOpen.style.display = 'inline-block';
+        eyeClosed.style.display = 'none';
+    }
+}
+</script>
 @endsection

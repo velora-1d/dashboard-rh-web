@@ -15,7 +15,7 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
@@ -38,7 +38,7 @@
     
     .dev-profile-label {
         font-size: 0.7rem;
-        color: #6366f1;
+        color: #059669;
         font-weight: 600;
         text-align: center;
         white-space: nowrap;
@@ -128,7 +128,7 @@
         height: 100px;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid #6366f1;
+        border: 3px solid #059669;
         margin-bottom: 15px;
     }
     
@@ -141,7 +141,7 @@
     
     .dev-role {
         font-size: 0.9rem;
-        color: #6366f1;
+        color: #059669;
         font-weight: 600;
         margin: 0;
     }
@@ -194,7 +194,7 @@
     .dev-link-icon.whatsapp { background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); }
     .dev-link-icon.email { background: linear-gradient(135deg, #ea4335 0%, #c5221f 100%); }
     .dev-link-icon.github { background: linear-gradient(135deg, #333 0%, #24292e 100%); }
-    .dev-link-icon.website { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
+    .dev-link-icon.website { background: linear-gradient(135deg, #059669 0%, #0d9488 100%); }
     
     .dev-link-icon svg {
         width: 20px;
@@ -351,7 +351,7 @@
         <div class="dev-modal-footer">
             <div class="dev-company">
                 <span>Powered by</span>
-                <strong style="color: #8b5cf6;">Velora</strong>
+                <strong style="color: #0d9488;">Velora</strong>
             </div>
         </div>
     </div>

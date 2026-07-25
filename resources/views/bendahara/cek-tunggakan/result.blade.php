@@ -86,7 +86,7 @@
             <div class="card" style="border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); background-color: #fff; height: 100%;">
                 <div class="card-body" style="padding: 24px;">
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="width: 80px; height: 80px; background-color: #e0e7ff; color: #4f46e5; border-radius: 50%; font-size: 32px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                        <div style="width: 80px; height: 80px; background-color: #ecfdf5; color: #059669; border-radius: 50%; font-size: 32px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
                             {{ substr($santri->nama_santri, 0, 1) }}
                         </div>
                         <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">{{ $santri->nama_santri }}</h3>
@@ -163,7 +163,7 @@
                                             </span>
                                         </td>
                                         <td style="padding: 16px 20px; text-align: right;" class="no-print">
-                                            <a href="{{ route('bendahara.syahriah') }}" style="display: inline-block; padding: 6px 12px; border-radius: 6px; background-color: #4f46e5; color: white; text-decoration: none; font-size: 13px; font-weight: 600;">
+                                            <a href="{{ route('bendahara.syahriah') }}" style="display: inline-block; padding: 6px 12px; border-radius: 6px; background-color: #059669; color: white; text-decoration: none; font-size: 13px; font-weight: 600;">
                                                 Bayar
                                             </a>
                                         </td>

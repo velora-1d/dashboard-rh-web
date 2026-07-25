@@ -19,7 +19,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             position: relative;
             overflow: hidden;
         }
@@ -127,7 +127,7 @@
             color: white;
         }
 
-        .role-admin .role-icon { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .role-admin .role-icon { background: linear-gradient(135deg, #059669 0%, #0d9488 100%); }
         .role-pendidikan .role-icon { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
         .role-sekretaris .role-icon { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
         .role-bendahara .role-icon { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
@@ -161,7 +161,7 @@
             width: 60px;
             height: 60px;
             margin: 0 auto 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -204,14 +204,42 @@
         }
 
         .form-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            border-color: #059669;
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+        }
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper .form-input {
+            padding-right: 48px;
+        }
+
+        .toggle-password-btn {
+            position: absolute;
+            right: 14px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .toggle-password-btn:hover {
+            color: #4a5568;
         }
 
         .btn-login {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             color: white;
             border: none;
             border-radius: 12px;
@@ -280,7 +308,7 @@
         .watermark-icon {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -306,7 +334,7 @@
         .watermark-name {
             font-size: 14px;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -470,14 +498,20 @@
 
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="form-input" 
-                        placeholder="••••••••"
-                        required
-                    >
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="••••••••"
+                            required
+                        >
+                        <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('password', this)" aria-label="Tampilkan password">
+                            <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <svg class="eye-closed" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-login">
@@ -500,6 +534,22 @@
 
     <script>
         feather.replace();
+
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            const eyeOpen = btn.querySelector('.eye-open');
+            const eyeClosed = btn.querySelector('.eye-closed');
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'inline-block';
+            } else {
+                input.type = 'password';
+                eyeOpen.style.display = 'inline-block';
+                eyeClosed.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>

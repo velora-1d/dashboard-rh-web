@@ -8,9 +8,9 @@
 @endsection
 
 @section('content')
-<div style="padding: 24px; max-width: 1400px; margin: 0 auto;">
+<div style="width: 100%;">
     <!-- Header -->
-    <div style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white;">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
             <i data-feather="activity" style="width: 28px; height: 28px;"></i>
             <h1 style="font-size: 1.5rem; font-weight: 700; margin: 0;">Riwayat Aktivitas</h1>
@@ -19,11 +19,11 @@
     </div>
 
     <!-- Filters -->
-    <div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <form method="GET" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end;">
+    <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9;">
+        <form method="GET" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;">
             <div style="flex: 1; min-width: 150px;">
-                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 4px;">Model</label>
-                <select name="model" style="width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Model</label>
+                <select name="model" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem;">
                     <option value="">Semua Model</option>
                     @foreach($modelTypes as $type)
                         <option value="{{ $type }}" {{ request('model') == $type ? 'selected' : '' }}>{{ ucfirst($type) }}</option>
@@ -31,31 +31,31 @@
                 </select>
             </div>
             <div style="flex: 1; min-width: 150px;">
-                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 4px;">Event</label>
-                <select name="event" style="width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Event</label>
+                <select name="event" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem;">
                     <option value="">Semua Event</option>
-                    <option value="created" {{ request('event') == 'created' ? 'selected' : '' }}>✅ Created</option>
-                    <option value="updated" {{ request('event') == 'updated' ? 'selected' : '' }}>✏️ Updated</option>
-                    <option value="deleted" {{ request('event') == 'deleted' ? 'selected' : '' }}>🗑️ Deleted</option>
+                    <option value="created" {{ request('event') == 'created' ? 'selected' : '' }}>Created</option>
+                    <option value="updated" {{ request('event') == 'updated' ? 'selected' : '' }}>Updated</option>
+                    <option value="deleted" {{ request('event') == 'deleted' ? 'selected' : '' }}>Deleted</option>
                 </select>
             </div>
             <div style="flex: 1; min-width: 140px;">
-                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 4px;">Dari Tanggal</label>
-                <input type="date" name="from" value="{{ request('from') }}" style="width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Dari Tanggal</label>
+                <input type="date" name="from" value="{{ request('from') }}" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem;">
             </div>
             <div style="flex: 1; min-width: 140px;">
-                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 4px;">Sampai Tanggal</label>
-                <input type="date" name="to" value="{{ request('to') }}" style="width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Sampai Tanggal</label>
+                <input type="date" name="to" value="{{ request('to') }}" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem;">
             </div>
             <div style="flex: 2; min-width: 200px;">
-                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 4px;">Cari</label>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari deskripsi atau user..." style="width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px;">Cari</label>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari deskripsi atau user..." style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem;">
             </div>
             <div style="display: flex; gap: 8px;">
-                <button type="submit" style="background: #6366f1; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-                    <i data-feather="filter" style="width: 14px; height: 14px;"></i> Filter
+                <button type="submit" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);">
+                    <i data-feather="filter" style="width: 16px; height: 16px;"></i> Filter
                 </button>
-                <a href="{{ route('admin.activity-log') }}" style="background: #f1f5f9; color: #64748b; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; text-decoration: none;">Reset</a>
+                <a href="{{ route('admin.activity-log') }}" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 700; text-decoration: none;">Reset</a>
             </div>
         </form>
     </div>

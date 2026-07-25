@@ -523,7 +523,7 @@
                         Previous
                     </span>
                 @else
-                    <a href="{{ $santriList->previousPageUrl() }}" style="padding: 8px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                    <a href="{{ $santriList->previousPageUrl() }}" style="padding: 8px 16px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(5,150,105,0.4)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
                         <i data-feather="chevron-left" style="width: 16px; height: 16px;"></i>
                         Previous
                     </a>
@@ -548,7 +548,7 @@
 
                     @for ($i = $start; $i <= $end; $i++)
                         @if ($i == $santriList->currentPage())
-                            <span style="min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 13px; font-weight: 600; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; box-shadow: 0 2px 8px rgba(102,126,234,0.3);">
+                            <span style="min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 13px; font-weight: 600; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; box-shadow: 0 2px 8px rgba(5,150,105,0.3);">
                                 {{ $i }}
                             </span>
                         @else
@@ -570,7 +570,7 @@
 
                 {{-- Next Button --}}
                 @if ($santriList->hasMorePages())
-                    <a href="{{ $santriList->nextPageUrl() }}" style="padding: 8px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(102,126,234,0.4)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                    <a href="{{ $santriList->nextPageUrl() }}" style="padding: 8px 16px; background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(5,150,105,0.4)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
                         Next
                         <i data-feather="chevron-right" style="width: 16px; height: 16px;"></i>
                     </a>

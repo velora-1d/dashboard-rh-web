@@ -160,8 +160,8 @@
         <!-- Laporan Gaji -->
         <div style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; overflow: hidden; display: flex; flex-direction: column;">
             <div style="padding: 20px 24px; border-bottom: 1px solid #f1f5f9; background: linear-gradient(to right, #f8fafc, white); display: flex; align-items: center; gap: 12px;">
-                <div style="width: 36px; height: 36px; background: #eef2ff; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <i data-feather="users" style="width: 18px; height: 18px; color: #6366f1;"></i>
+                <div style="width: 36px; height: 36px; background: #ecfdf5; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i data-feather="users" style="width: 18px; height: 18px; color: #059669;"></i>
                 </div>
                 <h3 style="font-size: 1rem; font-weight: 800; color: #1e2937;">Gaji Pegawai</h3>
             </div>

@@ -137,9 +137,12 @@ class FinancialService
             'pengeluaran' => []
         ];
 
+        $driver = \Illuminate\Support\Facades\DB::connection()->getDriverName();
+        $monthSql = $driver === 'sqlite' ? "cast(strftime('%m', tanggal) as integer)" : "MONTH(tanggal)";
+
         // Efficient Aggregation
         $pemasukanData = Pemasukan::whereYear('tanggal', $year)
-            ->selectRaw('MONTH(tanggal) as month, SUM(nominal) as total') // Check column name 'nominal' or 'jumlah'
+            ->selectRaw("{$monthSql} as month, SUM(nominal) as total")
             ->groupBy('month')
             ->pluck('total', 'month')
             ->toArray();
@@ -154,7 +157,7 @@ class FinancialService
             ->toArray();
 
         $pengeluaranData = Pengeluaran::whereYear('tanggal', $year)
-            ->selectRaw('MONTH(tanggal) as month, SUM(nominal) as total')
+            ->selectRaw("{$monthSql} as month, SUM(nominal) as total")
             ->groupBy('month')
             ->pluck('total', 'month')
             ->toArray();

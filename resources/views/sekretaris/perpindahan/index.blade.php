@@ -23,7 +23,7 @@
     @endif
 
     <!-- Header with Gradient -->
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); position: relative; overflow: hidden;">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3); position: relative; overflow: hidden;">
         <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
         <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
             <div style="background: rgba(255,255,255,0.2); width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -122,7 +122,7 @@
                         <style>#santri_scroll_container::-webkit-scrollbar { display: none; }</style>
                         <table style="width: 100%; border-collapse: collapse;">
                             <thead style="position: sticky; top: 0; z-index: 10;">
-                                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <tr style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%);">
                                     <th style="padding: 12px 16px; text-align: center; font-size: 11px; font-weight: 600; color: white; width: 40px;"><input type="checkbox" id="select_all" style="width: 16px; height: 16px;"></th>
                                     <th style="padding: 12px 8px; text-align: center; font-size: 11px; font-weight: 600; color: white; text-transform: uppercase; width: 40px;">No</th>
                                     <th style="padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 600; color: white; text-transform: uppercase;">Santri</th>
@@ -522,14 +522,14 @@
                     <div style="background: #f9fafb; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: 600; font-size: 13px; color: #1f2937;">Kobong ${kobong.nomor_kobong}</span>
-                            <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">${total} santri</span>
+                            <span style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); color: white; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">${total} santri</span>
                         </div>
                         <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                 `;
                 
                 for (const [kelas, count] of Object.entries(kobong.kelas_counts)) {
                     if (count > 0) {
-                        html += `<span style="font-size: 10px; padding: 3px 8px; background: #e0e7ff; color: #4338ca; border-radius: 8px;">${kelas}: ${count}</span>`;
+                        html += `<span style="font-size: 10px; padding: 3px 8px; background: #ecfdf5; color: #059669; border-radius: 8px;">${kelas}: ${count}</span>`;
                     }
                 }
                 

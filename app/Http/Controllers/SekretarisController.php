@@ -162,6 +162,21 @@ class SekretarisController extends Controller
             ->with('success', 'Data santri berhasil ditambahkan');
     }
 
+    // Data Santri - Detail / Show
+    public function showSantri($id)
+    {
+        $santri = Santri::with(['kelas', 'asrama', 'kobong'])->findOrFail($id);
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'data' => $santri
+            ]);
+        }
+
+        return view('sekretaris.data-santri.show', compact('santri'));
+    }
+
     // Data Santri - Edit Form
     public function editSantri($id)
     {

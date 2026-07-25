@@ -86,6 +86,7 @@ Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->group(func
     Route::get('/data-santri', [App\Http\Controllers\SekretarisController::class, 'dataSantri'])->name('sekretaris.data-santri');
     Route::get('/data-santri/create', [App\Http\Controllers\SekretarisController::class, 'createSantri'])->name('sekretaris.data-santri.create');
     Route::post('/data-santri', [App\Http\Controllers\SekretarisController::class, 'storeSantri'])->name('sekretaris.data-santri.store');
+    Route::get('/data-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'showSantri'])->name('sekretaris.data-santri.show');
     Route::get('/data-santri/{id}/edit', [App\Http\Controllers\SekretarisController::class, 'editSantri'])->name('sekretaris.data-santri.edit');
     Route::put('/data-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'updateSantri'])->name('sekretaris.data-santri.update');
     Route::delete('/data-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'deactivateSantri'])->name('sekretaris.data-santri.deactivate');

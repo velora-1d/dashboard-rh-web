@@ -10,7 +10,7 @@
 @section('content')
 <style>
     .tunggakan-filter-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         border-radius: 16px;
         padding: 24px;
         color: white;
@@ -40,7 +40,7 @@
     }
     .tunggakan-filter-card .filter-btn {
         background: white;
-        color: #667eea;
+        color: #059669;
         border: none;
         padding: 12px 24px;
         border-radius: 10px;
@@ -58,10 +58,10 @@
         padding: 20px;
         text-align: center;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #059669;
     }
-    .stat-card.danger { border-left-color: #ef4444; }
-    .stat-card.warning { border-left-color: #f59e0b; }
+    .stat-card.danger { border-left-color: #059669; }
+    .stat-card.warning { border-left-color: #0d9488; }
     .stat-card .stat-value {
         font-size: 28px;
         font-weight: 800;
@@ -112,7 +112,7 @@
         color: #92400e;
     }
     .btn-detail {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         color: white;
         border: none;
         padding: 8px 16px;
@@ -139,7 +139,7 @@
     <!-- Page Header -->
     <div style="margin-bottom: 24px;">
         <h1 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">
-            <i class="fas fa-file-invoice-dollar" style="color: #667eea; margin-right: 12px;"></i>
+            <i class="fas fa-file-invoice-dollar" style="color: #059669; margin-right: 12px;"></i>
             Cek Tunggakan Santri
         </h1>
         <p style="color: #64748b; font-size: 15px;">Pantau status pembayaran Syahriah seluruh santri secara realtime.</p>
@@ -147,11 +147,11 @@
 
     <!-- Blast WA Card -->
     @if(auth()->user()->role !== 'rois')
-    <div style="background: linear-gradient(to right, #4f46e5, #4338ca); border-radius: 16px; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2); overflow: hidden; color: white; display: flex; align-items: center; justify-content: space-between; padding: 24px; position: relative; margin-bottom: 24px;">
-        <div style="position: relative; z-index: 2;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;">📢 Blast Tagihan WA</h3>
+    <div style="background: linear-gradient(to right, #059669, #0f766e); border-radius: 16px; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.2); overflow: hidden; color: white; display: flex; align-items: center; justify-content: space-between; padding: 24px; position: relative; margin-bottom: 24px;">
+        <div>
+            <h3 style="margin: 0 0 6px 0; font-size: 1.1rem; font-weight: 700; color: white;">Blast Tagihan WhatsApp (Semua Wali Santri)</h3>
             <p style="opacity: 0.9; margin-bottom: 16px; max-width: 600px; font-size: 0.9rem;">Kirim notifikasi tagihan otomatis ke seluruh wali santri yang memiliki tunggakan. Sistem akan mengirim pesan satu per satu dengan jeda aman (Anti-Banned).</p>
-            <button onclick="startBillingProcess()" type="button" style="background: white; color: #4338ca; padding: 10px 20px; border-radius: 10px; font-weight: 700; border: none; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
+            <button onclick="startBillingProcess()" type="button" style="background: white; color: #059669; padding: 10px 20px; border-radius: 10px; font-weight: 700; border: none; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
                 <i data-feather="send" style="width: 16px; height: 16px;"></i>
                 Mulai Proses Penagihan
             </button>
@@ -222,7 +222,7 @@
         </div>
         <div style="flex: 1; min-width: 200px;">
             <div class="stat-card danger">
-                <div class="stat-value" style="color: #dc2626;">Rp {{ number_format($grandTotalRupiah, 0, ',', '.') }}</div>
+                <div class="stat-value" style="color: #059669;">Rp {{ number_format($grandTotalRupiah, 0, ',', '.') }}</div>
                 <div class="stat-label">Total Nominal Tunggakan</div>
             </div>
         </div>
@@ -321,15 +321,16 @@
             <span style="color: #64748b; font-size: 14px;">
                 Menampilkan {{ $santriWithArrearsPaginated->firstItem() }} - {{ $santriWithArrearsPaginated->lastItem() }} dari {{ $santriWithArrearsPaginated->total() }} santri
             </span>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; align-items: center;">
                 @if($santriWithArrearsPaginated->onFirstPage())
                     <span style="padding: 8px 14px; background: #f1f5f9; color: #94a3b8; border-radius: 8px; font-size: 14px;">← Sebelumnya</span>
                 @else
-                    <a href="{{ $santriWithArrearsPaginated->previousPageUrl() }}" style="padding: 8px 14px; background: #667eea; color: white; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600;">← Sebelumnya</a>
+                    <a href="{{ $santriWithArrearsPaginated->previousPageUrl() }}" style="padding: 8px 14px; background: #059669; color: white; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600;">← Sebelumnya</a>
+                    <span style="font-size: 14px; color: #64748b; font-weight: 600;">Halaman {{ $santriWithArrearsPaginated->currentPage() }} dari {{ $santriWithArrearsPaginated->lastPage() }}</span>
                 @endif
                 
                 @if($santriWithArrearsPaginated->hasMorePages())
-                    <a href="{{ $santriWithArrearsPaginated->nextPageUrl() }}" style="padding: 8px 14px; background: #667eea; color: white; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600;">Berikutnya →</a>
+                    <a href="{{ $santriWithArrearsPaginated->nextPageUrl() }}" style="padding: 8px 14px; background: #059669; color: white; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600;">Berikutnya →</a>
                 @else
                     <span style="padding: 8px 14px; background: #f1f5f9; color: #94a3b8; border-radius: 8px; font-size: 14px;">Berikutnya →</span>
                 @endif
@@ -338,29 +339,23 @@
         @endif
     </div>
 </div>
+
     <!-- Billing Progress Modal -->
     <div id="billing-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
         <div style="background: white; padding: 32px; border-radius: 20px; width: 500px; max-width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.2);">
             <div style="text-align: center; margin-bottom: 24px;">
-                <div style="width: 64px; height: 64px; background: #eef2ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-                    <i data-feather="loader" id="billing-spinner" class="spin-icon" style="width: 32px; height: 32px; color: #4f46e5;"></i>
+                <div style="width: 64px; height: 64px; background: #ecfdf5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <i data-feather="loader" id="billing-spinner" class="spin-icon" style="width: 32px; height: 32px; color: #059669;"></i>
                     <i data-feather="check-circle" id="billing-success-icon" style="width: 32px; height: 32px; color: #10b981; display: none;"></i>
                 </div>
-                <h3 id="billing-status-title" style="font-size: 1.25rem; font-weight: 800; color: #1e2937; margin-bottom: 8px;">Menyiapkan Data...</h3>
-                <p id="billing-status-desc" style="color: #64748b;">Mohon tunggu, sedang mengambil daftar tunggakan.</p>
+                <h3 id="billing-title" style="margin: 0 0 8px 0; color: #1e293b; font-size: 1.25rem;">Proses Pengiriman Notifikasi</h3>
+                <p id="billing-subtitle" style="margin: 0 0 24px 0; color: #64748b; font-size: 0.9rem;">Mohon tunggu, sedang mengirim pesan WhatsApp...</p>
+                <div style="background: #f1f5f9; border-radius: 10px; height: 10px; overflow: hidden; margin-bottom: 12px;">
+                    <div id="billing-progress" style="background: #059669; height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+                <div id="billing-status-text" style="font-size: 0.85rem; color: #475569; font-weight: 600; margin-bottom: 24px;">Memulai... (0/0)</div>
+                <button onclick="closeBillingModal()" id="btn-close-billing" style="display: none; width: 100%; background: #059669; color: white; padding: 12px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer;">Selesai & Tutup</button>
             </div>
-
-            <!-- Progress Bar -->
-            <div style="background: #f1f5f9; height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 24px;">
-                <div id="billing-progress" style="background: #4f46e5; height: 100%; width: 0%; transition: width 0.3s ease;"></div>
-            </div>
-
-            <!-- Log Area -->
-            <div id="billing-log" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; height: 150px; overflow-y: auto; padding: 12px; font-size: 0.85rem; color: #475569; margin-bottom: 24px; font-family: monospace;">
-                <!-- Logs here -->
-            </div>
-
-            <button onclick="closeBillingModal()" id="btn-close-billing" style="display: none; width: 100%; background: #4f46e5; color: white; padding: 12px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer;">Selesai & Tutup</button>
         </div>
     </div>
 
@@ -383,7 +378,7 @@
             text: "Sistem akan mencari santri yang menunggak dan mengirim pesan WA satu per satu.",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#4f46e5',
+            confirmButtonColor: '#059669',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, Mulai!',
             cancelButtonText: 'Batal'
@@ -417,11 +412,11 @@
                 billingIndex = 0;
                 stopBilling = false;
                 
-                logBilling(`✅ Ditemukan ${data.count} santri dengan tunggakan.`);
+                logBilling(`[DITEMUKAN] ${data.count} santri dengan tunggakan.`);
                 processNextBilling();
             })
             .catch(error => {
-                logBilling('❌ Error fetching data: ' + error);
+                logBilling('[ERROR] Error fetching data: ' + error);
             });
     }
 
@@ -450,13 +445,13 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                logBilling(`✅ [${billingIndex+1}/${billingTargets.length}] Terkirim: ${target.nama}`);
+                logBilling(`[BERHASIL] [${billingIndex+1}/${billingTargets.length}] Terkirim: ${target.nama}`);
             } else {
-                logBilling(`❌ [${billingIndex+1}/${billingTargets.length}] Gagal: ${target.nama}`);
+                logBilling(`[GAGAL] [${billingIndex+1}/${billingTargets.length}] Gagal: ${target.nama}`);
             }
         })
         .catch(error => {
-            logBilling(`❌ [${billingIndex+1}/${billingTargets.length}] Error: ${target.nama}`);
+            logBilling(`[ERROR] [${billingIndex+1}/${billingTargets.length}] Error: ${target.nama}`);
         })
         .finally(() => {
             billingIndex++;
